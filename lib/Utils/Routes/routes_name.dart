@@ -3,4 +3,5 @@ class RoutesName {
   String loginScreen = "/loginScreen";
   String signUpScreen = "/signUpScreen";
   String languageScreen = "/languageScreen";
+  String homeScreen = "/homeScreen";
 }
