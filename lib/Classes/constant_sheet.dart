@@ -1,6 +1,7 @@
 import 'package:ourtalks/Components/Constants/app_assets.dart';
 import 'package:ourtalks/Components/Constants/style_sheet.dart';
 import 'package:ourtalks/Res/Services/app_services.dart';
+import 'package:ourtalks/Utils/Routes/routes_name.dart';
 
 class ConstantSheet {
   ConstantSheet._constantSheet();
@@ -24,4 +25,7 @@ class ConstantSheet {
 
   // APP COLORS
   AppColors get colors => AppColors();
+
+  // APP ROUTES NAME
+  final RoutesName routesName = RoutesName();
 }

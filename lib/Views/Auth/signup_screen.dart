@@ -8,12 +8,16 @@ import 'package:ourtalks/Data/Functions/app_functions.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/main.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class SignUpScreen extends StatelessWidget {
+  SignUpScreen({super.key});
 
+  // TEXT FIELD CONTROLLERS
+  final _nameController = TextEditingController();
+  final _userNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
+  // BOOL VALUE
   final RxBool _isPasswordobscure = true.obs;
   final RxBool _iskeboardValue = false.obs;
 
@@ -38,9 +42,9 @@ class LoginScreen extends StatelessWidget {
                       : constantSheet.services.screenHeight(context) * 0.3,
                   child: Hero(
                       tag: "image_a_boy",
-                      // transitionOnUserGestures: true,
+                      transitionOnUserGestures: true,
                       child: Image.asset(
-                        constantSheet.images.aBoyGirl,
+                        constantSheet.images.boySeeGirl,
                         color: constantSheet.colors.primary,
                         fit: _iskeboardValue.value
                             ? BoxFit.contain
@@ -53,18 +57,32 @@ class LoginScreen extends StatelessWidget {
                 child: Column(children: [
                   // TEXT
                   Text(
-                    LanguageConst.heytRdi.tr,
-                    style: constantSheet.textTheme.fs35Medium
+                    "${LanguageConst.withoutAccountEverythingquickly.tr}\n${LanguageConst.signupquickly.tr}",
+                    style: constantSheet.textTheme.fs29Medium
                         .copyWith(color: constantSheet.colors.primary),
                   ),
-                  Gap(30.sp),
+                  Gap(25.sp),
+                  // Name TEXT FIELD
+                  PrimaryTextfield(
+                    controller: _nameController,
+                    label: LanguageConst.name.tr,
+                    keybordtype: TextInputType.emailAddress,
+                  ),
+                  Gap(15.sp),
+                  // User Name TEXT FIELD
+                  PrimaryTextfield(
+                    controller: _userNameController,
+                    label: LanguageConst.userName.tr,
+                    keybordtype: TextInputType.emailAddress,
+                  ),
+                  Gap(15.sp),
                   // EMAIL TEXT FIELD
                   PrimaryTextfield(
                     controller: _emailController,
                     label: LanguageConst.email.tr,
                     keybordtype: TextInputType.emailAddress,
                   ),
-                  Gap(18.sp),
+                  Gap(15.sp),
                   // PASSWORD TEXT FIELD
                   Obx(
                     () => PrimaryTextfield(
@@ -80,27 +98,11 @@ class LoginScreen extends StatelessWidget {
                       },
                     ),
                   ),
-                  Gap(15.sp),
-                  // TEXT RICH
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text.rich(
-                        textAlign: TextAlign.center,
-                        TextSpan(
-                            text: LanguageConst.didyourpasswordleavelikeEx.tr,
-                            style: constantSheet.textTheme.fs15Normal
-                                .copyWith(color: constantSheet.colors.white),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: LanguageConst.resetit.tr,
-                                  style: TextStyle(
-                                      color: constantSheet.colors.blue))
-                            ])),
-                  ),
+
                   Gap(30.sp),
-                  // SIGN IN BUTTON
+                  // SIGN UP BUTTON
                   PrimaryButton(
-                    title: LanguageConst.signIn.tr,
+                    title: LanguageConst.signUp.tr,
                     onPressed: () {},
                     isExpanded: true,
                     isTransparent: true,
@@ -109,17 +111,17 @@ class LoginScreen extends StatelessWidget {
                   // TEXT RICH
                   GestureDetector(
                     onTap: () {
-                      Get.offNamed(constantSheet.routesName.signUpScreen);
+                      Get.offNamed(constantSheet.routesName.loginScreen);
                     },
                     child: Text.rich(
                         textAlign: TextAlign.center,
                         TextSpan(
-                            text: LanguageConst.heybroyoucgwaccount.tr,
+                            text: LanguageConst.signedupalreadyforgetting.tr,
                             style: constantSheet.textTheme.fs15Normal
                                 .copyWith(color: constantSheet.colors.white),
                             children: <TextSpan>[
                               TextSpan(
-                                  text: LanguageConst.signupquickly.tr,
+                                  text: LanguageConst.signInEmoji.tr,
                                   style: TextStyle(
                                       color: constantSheet.colors.blue))
                             ])),

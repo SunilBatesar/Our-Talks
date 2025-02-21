@@ -15,8 +15,8 @@ class AppTextTheme {
   AppTextTheme();
 
   // APP NAME STYLE
-  TextStyle appNameStyle50 =
-      GoogleFonts.parisienne(fontSize: 50.sp, fontWeight: FontWeight.w600);
+  TextStyle appNameStyle45 = GoogleFonts.montserratAlternates(
+      fontSize: 45.sp, fontWeight: FontWeight.w600);
 
   //NORMAL
   TextStyle fs12Normal =

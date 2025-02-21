@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
-import 'package:ourtalks/Utils/Routes/routes_name.dart';
 import 'package:ourtalks/main.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   nextScreenPushFunction() {
     Future.delayed(Duration(seconds: 1), () {
-      Get.toNamed(RoutesName.loginScreen);
+      Get.toNamed(constantSheet.routesName.languageScreen);
     });
   }
 
@@ -57,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   filterQuality: FilterQuality.high,
                   child: Text(
                     AppConfig.appName,
-                    style: constantSheet.textTheme.appNameStyle50
+                    style: constantSheet.textTheme.appNameStyle45
                         .copyWith(color: constantSheet.colors.primary),
                   ),
                 ),

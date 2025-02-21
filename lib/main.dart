@@ -7,7 +7,6 @@ import 'package:ourtalks/Controllers/app_initialbinding.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Res/i18n/language_translations.dart';
 import 'package:ourtalks/Utils/Routes/routes.dart';
-import 'package:ourtalks/Utils/Routes/routes_name.dart';
 
 late ConstantSheet constantSheet;
 void main() {
@@ -33,7 +32,7 @@ class MyApp extends StatelessWidget {
           translations: LanguageTranslations(),
           initialBinding: AppInitialbinding(),
           getPages: appRoutes,
-          initialRoute: RoutesName.splashScreen,
+          initialRoute: constantSheet.routesName.splashScreen,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(scaffoldBackgroundColor: constantSheet.colors.black),
         );

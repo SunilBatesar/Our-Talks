@@ -1,4 +1,6 @@
 class RoutesName {
-  static const String splashScreen = "/";
-  static const String loginScreen = "/loginScreen";
+  String splashScreen = "/";
+  String loginScreen = "/loginScreen";
+  String signUpScreen = "/signUpScreen";
+  String languageScreen = "/languageScreen";
 }
