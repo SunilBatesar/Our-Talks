@@ -11,6 +11,10 @@ class LanguageType {
     LanguageConst.password: "Password",
     LanguageConst.signIn: "Sign In",
     LanguageConst.signUp: "Sign Up",
+    LanguageConst.continues: "Continue",
+    LanguageConst.newPassword: "New password",
+    LanguageConst.confirmPassword: "Confirm password",
+    LanguageConst.save: "Save",
 
     // APP VALIDATORS
     LanguageConst.pleaseEtfield: "Please Enter this field",
@@ -36,6 +40,10 @@ class LanguageType {
         "Signed up and already forgetting me? Come back and",
     LanguageConst.signInEmoji: " sign in!\u{1F92D}",
 
+    // Verify Email Forget Password Screen
+    LanguageConst.dontlazyemailrelative:
+        "Don't be lazy to check your email, it's not a message from a relative!\u{1F605}",
+
     // LANGUAGE SCREEN
     LanguageConst.nowedontAlienlanguagePichuman:
         "No, we don’t have alien language yet! Pick a human one!\u{1F605}",
@@ -52,6 +60,10 @@ class LanguageType {
     LanguageConst.password: "पासवर्ड",
     LanguageConst.signIn: "साइन इन",
     LanguageConst.signUp: "साइन अप",
+    LanguageConst.continues: "जारी रखें",
+    LanguageConst.newPassword: "नया पासवर्ड",
+    LanguageConst.confirmPassword: "पासवर्ड पुष्टि करें",
+    LanguageConst.save: "सहेजें",
 
     // APP VALIDATORS
     LanguageConst.pleaseEtfield: "कृपया यह फ़ील्ड दर्ज करें",
@@ -76,6 +88,10 @@ class LanguageType {
     LanguageConst.signedupalreadyforgetting:
         "साइन अप करके मुझे भूल गए? वापस आओ और",
     LanguageConst.signInEmoji: " साइन इन करो!\u{1F92D}",
+
+    // Verify Email Forget Password Screen
+    LanguageConst.dontlazyemailrelative:
+        "ईमेल चेक करने में आलस मत करो, ये कोई रिश्तेदार का मैसेज नहीं है!\u{1F605}",
 
     // LANGUAGE SCREEN
     LanguageConst.nowedontAlienlanguagePichuman:

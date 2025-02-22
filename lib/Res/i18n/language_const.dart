@@ -7,6 +7,10 @@ class LanguageConst {
   static const String password = "password";
   static const String signIn = "signIn";
   static const String signUp = "signUp";
+  static const String continues = "Continue";
+  static const String newPassword = "New password";
+  static const String confirmPassword = "Confirm password";
+  static const String save = "save";
 
   // APP VALIDATORS
   static const String pleaseEtfield = "PleaseEtfield";
@@ -27,6 +31,9 @@ class LanguageConst {
       "WithoutAccountEverythingquickly!";
   static const String signedupalreadyforgetting = "Signedupalreadyforgetting";
   static const String signInEmoji = "signinEmoji";
+
+  // Verify Email Forget Password SCREEN CONST
+  static const String dontlazyemailrelative = "Dontlazyemailrelative";
 
   // LANGUAGE SCREEN CONST
   static const String nowedontAlienlanguagePichuman =

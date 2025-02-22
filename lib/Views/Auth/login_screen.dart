@@ -32,16 +32,16 @@ class LoginScreen extends StatelessWidget {
                   curve: Curves.linear,
                   width: _iskeboardValue.value
                       ? 300.h
-                      : constantSheet.services.screenWidth(context),
+                      : cnstSheet.services.screenWidth(context),
                   height: _iskeboardValue.value
                       ? 150.h
-                      : constantSheet.services.screenHeight(context) * 0.3,
+                      : cnstSheet.services.screenHeight(context) * 0.3,
                   child: Hero(
                       tag: "image_a_boy",
                       // transitionOnUserGestures: true,
                       child: Image.asset(
-                        constantSheet.images.aBoyGirl,
-                        color: constantSheet.colors.primary,
+                        cnstSheet.images.aBoyGirl,
+                        color: cnstSheet.colors.primary,
                         fit: _iskeboardValue.value
                             ? BoxFit.contain
                             : BoxFit.cover,
@@ -54,8 +54,8 @@ class LoginScreen extends StatelessWidget {
                   // TEXT
                   Text(
                     LanguageConst.heytRdi.tr,
-                    style: constantSheet.textTheme.fs35Medium
-                        .copyWith(color: constantSheet.colors.primary),
+                    style: cnstSheet.textTheme.fs35Medium
+                        .copyWith(color: cnstSheet.colors.primary),
                   ),
                   Gap(30.sp),
                   // EMAIL TEXT FIELD
@@ -67,7 +67,7 @@ class LoginScreen extends StatelessWidget {
                   Gap(18.sp),
                   // PASSWORD TEXT FIELD
                   Obx(
-                    () => PrimaryTextfield( 
+                    () => PrimaryTextfield(
                       controller: _passwordController,
                       label: LanguageConst.password.tr,
                       keybordtype: TextInputType.visiblePassword,
@@ -81,21 +81,27 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   Gap(15.sp),
-                  // TEXT RICH
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text.rich(
-                        textAlign: TextAlign.center,
-                        TextSpan(
-                            text: LanguageConst.didyourpasswordleavelikeEx.tr,
-                            style: constantSheet.textTheme.fs15Normal
-                                .copyWith(color: constantSheet.colors.white),
-                            children: <TextSpan>[
-                              TextSpan(
-                                  text: LanguageConst.resetit.tr,
-                                  style: TextStyle(
-                                      color: constantSheet.colors.blue))
-                            ])),
+                  // PASSWORD FORGET TEXT RICH
+                  GestureDetector(
+                    onTap: () {
+                      Get.offNamed(
+                          cnstSheet.routesName.verifyEmailForgetPasswordScreen);
+                    },
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text.rich(
+                          textAlign: TextAlign.center,
+                          TextSpan(
+                              text: LanguageConst.didyourpasswordleavelikeEx.tr,
+                              style: cnstSheet.textTheme.fs15Normal
+                                  .copyWith(color: cnstSheet.colors.white),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: LanguageConst.resetit.tr,
+                                    style:
+                                        TextStyle(color: cnstSheet.colors.blue))
+                              ])),
+                    ),
                   ),
                   Gap(30.sp),
                   // SIGN IN BUTTON
@@ -109,19 +115,19 @@ class LoginScreen extends StatelessWidget {
                   // TEXT RICH
                   GestureDetector(
                     onTap: () {
-                      Get.offNamed(constantSheet.routesName.signUpScreen);
+                      Get.offNamed(cnstSheet.routesName.signUpScreen);
                     },
                     child: Text.rich(
                         textAlign: TextAlign.center,
                         TextSpan(
                             text: LanguageConst.heybroyoucgwaccount.tr,
-                            style: constantSheet.textTheme.fs15Normal
-                                .copyWith(color: constantSheet.colors.white),
+                            style: cnstSheet.textTheme.fs15Normal
+                                .copyWith(color: cnstSheet.colors.white),
                             children: <TextSpan>[
                               TextSpan(
                                   text: LanguageConst.signupquickly.tr,
-                                  style: TextStyle(
-                                      color: constantSheet.colors.blue))
+                                  style:
+                                      TextStyle(color: cnstSheet.colors.blue))
                             ])),
                   )
                 ]),

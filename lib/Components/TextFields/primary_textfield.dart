@@ -35,14 +35,14 @@ class PrimaryTextfield extends StatelessWidget {
         focusNode: focusNode,
         obscureText: isobscureText,
         keyboardType: keybordtype,
-        style: constantSheet.textTheme.fs14Normal
-            .copyWith(color: constantSheet.colors.primary),
+        style: cnstSheet.textTheme.fs14Normal
+            .copyWith(color: cnstSheet.colors.white),
         decoration: InputDecoration(
             isDense: isDense,
             label: Text(
               label ?? "",
-              style: constantSheet.textTheme.fs14Normal
-                  .copyWith(color: constantSheet.colors.primary),
+              style: cnstSheet.textTheme.fs14Normal
+                  .copyWith(color: cnstSheet.colors.white),
             ),
             suffixIcon: GestureDetector(
               onTap: () {
@@ -51,22 +51,22 @@ class PrimaryTextfield extends StatelessWidget {
               child: Icon(
                 suffixicon,
                 size: 24.sp,
-                color: constantSheet.colors.primary,
+                color: cnstSheet.colors.primary,
               ),
             ),
             border: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: constantSheet.colors.primary,
+                  color: cnstSheet.colors.primary,
                 ),
                 borderRadius: BorderRadius.circular(10.r)),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: constantSheet.colors.primary,
+                  color: cnstSheet.colors.primary,
                 ),
                 borderRadius: BorderRadius.circular(10.r)),
             enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
-                  color: constantSheet.colors.primary,
+                  color: cnstSheet.colors.primary,
                 ),
                 borderRadius: BorderRadius.circular(10.r))));
   }

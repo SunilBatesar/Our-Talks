@@ -11,6 +11,10 @@ class ConstantSheet {
     return instance;
   }
 
+  // LANGUAGE CONSTS
+  // final LanguageConst _languageConst = LanguageConst();
+  // LanguageConst get languageConst => _languageConst;
+
   // APP SERVICES
   final AppServices _services = AppServices();
   AppServices get services => _services;

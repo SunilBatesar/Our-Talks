@@ -26,7 +26,7 @@ class ThemeController extends GetxController {
 
   void updateTemeColor(Color color) async {
     selectThemeColor.value = color;
-    constantSheet.colors.primaryColorUpdate(color);
+    cnstSheet.colors.primaryColorUpdate(color);
     await Prefs.setIntPrefData(Prefs.themeColorKey, color.toARGB32());
     update();
   }

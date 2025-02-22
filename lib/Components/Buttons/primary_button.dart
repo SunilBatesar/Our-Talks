@@ -26,19 +26,17 @@ class PrimaryButton extends StatelessWidget {
       style: TextButton.styleFrom(
           minimumSize: Size(100.w, 50.h),
           backgroundColor:
-              isTransparent ? Colors.transparent : constantSheet.colors.primary,
+              isTransparent ? Colors.transparent : cnstSheet.colors.primary,
           shape: RoundedRectangleBorder(
               side: BorderSide(
                   color: isTransparent
-                      ? constantSheet.colors.primary
-                      : constantSheet.colors.secondary),
+                      ? cnstSheet.colors.primary
+                      : cnstSheet.colors.secondary),
               borderRadius: BorderRadius.circular(10.r))),
       child: Text(
         title,
-        style: constantSheet.textTheme.fs16Medium.copyWith(
-            color: isTransparent
-                ? constantSheet.colors.primary
-                : constantSheet.colors.secondary),
+        style: cnstSheet.textTheme.fs16Medium
+            .copyWith(color: cnstSheet.colors.white),
       ),
     );
     return isExpanded ? Row(children: [Expanded(child: button)]) : button;
