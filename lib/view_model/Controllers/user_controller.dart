@@ -8,5 +8,6 @@ class UserController extends GetxController {
 
   void setUser(UserModel model) {
     _user.value = model;
+    update();
   }
 }

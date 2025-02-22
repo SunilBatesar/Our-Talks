@@ -9,6 +9,4 @@ class AppServices {
   // Space Size Box
   addheight(double height) => SizedBox(height: height);
   addwidth(double width) => SizedBox(width: width);
-
-  // ke haal hai bete sunil
 }
