@@ -1,5 +1,5 @@
 class UserModel {
-  final String? userID;
+  final String userID;
   final String userName;
   final String image;
   final String about;
@@ -11,7 +11,7 @@ class UserModel {
   final bool isOnline;
 
   const UserModel({
-    this.userID,
+    required this.userID,
     required this.userName,
     required this.image,
     required this.about,
@@ -47,6 +47,7 @@ class UserModel {
       };
 
   UserModel copyWith({
+    String? userID,
     String? userName,
     String? image,
     String? about,
@@ -58,6 +59,7 @@ class UserModel {
     bool? isOnline,
   }) {
     return UserModel(
+      userID: userID ?? this.userID,
       userName: userName ?? this.userName,
       image: image ?? this.image,
       about: about ?? this.about,

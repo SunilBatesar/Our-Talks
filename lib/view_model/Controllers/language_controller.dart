@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ourtalks/Models/language_model.dart';
+import 'package:ourtalks/view_model/Models/language_model.dart';
 import 'package:ourtalks/Res/i18n/language_translations.dart';
 
 class LanguageController extends GetxController {

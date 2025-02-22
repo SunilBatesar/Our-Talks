@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Classes/constant_sheet.dart';
-import 'package:ourtalks/Controllers/app_initialbinding.dart';
+import 'package:ourtalks/view_model/Getx_binding/app_initialbinding.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Res/i18n/language_translations.dart';
 import 'package:ourtalks/Utils/Routes/routes.dart';
