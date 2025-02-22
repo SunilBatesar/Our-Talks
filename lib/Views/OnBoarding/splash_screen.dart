@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
+import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/main.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,9 +20,15 @@ class _SplashScreenState extends State<SplashScreen> {
     nextScreenPushFunction();
   }
 
-  nextScreenPushFunction() {
-    Future.delayed(Duration(seconds: 1), () {
-      Get.toNamed(constantSheet.routesName.languageScreen);
+  void nextScreenPushFunction() async {
+    Future.delayed(Duration(seconds: 3), () async {
+      final praf = Prefs.getuserUID;
+
+      if (praf == null) {
+        Get.toNamed(constantSheet.routesName.languageScreen);
+      } else {
+        Get.offNamed(constantSheet.routesName.homeScreen);
+      }
     });
   }
 
