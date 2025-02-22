@@ -9,11 +9,22 @@ class LanguageConst {
   static const String signUp = "signUp";
 
   // APP VALIDATORS
-  static const String pleaseEtfield = "PleaseEtfield";
-  static const String pleaseEYEmail = "PleaseEYEmail";
-  static const String pleaseEaValidEmail = "PleaseEaValidEmail";
-  static const String pleaseEPassword = "PleaseEPassword";
-  static const String pleaseEatleast6CPassword = "PleaseEatleast6CPassword";
+  static const String pleaseEnterField = "Pleaseenterthisfield";
+  static const String pleaseEnterYourEmail = "Pleaseenteryouremail";
+  static const String pleaseEnterValidEmail = "Pleaseenteravalidemailaddress";
+  static const String onlyAllowedEmailDomains =
+      "OnlyGmailandYahooemailsareallowed";
+  static const String pleaseEnterPassword = "Pleaseenteryourpassword";
+  static const String passwordMinLength =
+      "Passwordmustbeatleast8characterslong";
+  static const String passwordUppercaseRequired =
+      "Passwordmustincludeatleastoneuppercaseletter";
+  static const String passwordLowercaseRequired =
+      "Passwordmustincludeatleastonelowercaseletter";
+  static const String passwordNumberRequired =
+      "Passwordmustincludeatleastonenumber";
+  static const String passwordSpecialCharRequired =
+      "Passwordmustincludeatleastonespecialcharacter(@\$!%*?&)";
 
   // LOGIN SCREEN CONST
   static const String heytRdi = "HeytRdi";

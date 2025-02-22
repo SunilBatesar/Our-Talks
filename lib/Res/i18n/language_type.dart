@@ -13,12 +13,21 @@ class LanguageType {
     LanguageConst.signUp: "Sign Up",
 
     // APP VALIDATORS
-    LanguageConst.pleaseEtfield: "Please Enter this field",
-    LanguageConst.pleaseEYEmail: "Please Enter Your Email",
-    LanguageConst.pleaseEaValidEmail: "Please Enter a Valid Email",
-    LanguageConst.pleaseEPassword: "Please Enter Your Password",
-    LanguageConst.pleaseEatleast6CPassword:
-        "Please Enter atleast 6 characters as Password",
+    LanguageConst.pleaseEnterField: "Please enter this field",
+    LanguageConst.pleaseEnterYourEmail: "Please enter your email",
+    LanguageConst.pleaseEnterValidEmail: "Please enter a valid email address",
+    LanguageConst.onlyAllowedEmailDomains: "Only Gmail is allowed",
+    LanguageConst.pleaseEnterPassword: "Please enter your password",
+    LanguageConst.passwordMinLength:
+        "Password must be at least 8 characters long",
+    LanguageConst.passwordUppercaseRequired:
+        "Password must include at least one uppercase letter",
+    LanguageConst.passwordLowercaseRequired:
+        "Password must include at least one lowercase letter",
+    LanguageConst.passwordNumberRequired:
+        "Password must include at least one number",
+    LanguageConst.passwordSpecialCharRequired:
+        "Password must include at least one special",
 
     // LOGIN SCREEN
     LanguageConst.heytRdi: "Hey there!\nReady to dive in?\u{1F61C}",
@@ -54,12 +63,20 @@ class LanguageType {
     LanguageConst.signUp: "साइन अप",
 
     // APP VALIDATORS
-    LanguageConst.pleaseEtfield: "कृपया यह फ़ील्ड दर्ज करें",
-    LanguageConst.pleaseEYEmail: "कृपया अपना ईमेल दर्ज करें",
-    LanguageConst.pleaseEaValidEmail: "कृपया एक मान्य ईमेल दर्ज करें",
-    LanguageConst.pleaseEPassword: "कृपया अपना पासवर्ड दर्ज करें",
-    LanguageConst.pleaseEatleast6CPassword:
-        "कृपया पासवर्ड के रूप में कम से कम 6 अक्षर दर्ज करें",
+    LanguageConst.pleaseEnterField: "कृपया यह फ़ील्ड दर्ज करें",
+    LanguageConst.pleaseEnterYourEmail: "कृपया अपना ईमेल दर्ज करें",
+    LanguageConst.pleaseEnterValidEmail: "कृपया एक मान्य ईमेल पता दर्ज करें",
+    LanguageConst.onlyAllowedEmailDomains: "केवल Gmail  की अनुमति है",
+    LanguageConst.pleaseEnterPassword: "कृपया अपना पासवर्ड दर्ज करें",
+    LanguageConst.passwordMinLength: "पासवर्ड कम से कम 8 अक्षरों का होना चाहिए",
+    LanguageConst.passwordUppercaseRequired:
+        "पासवर्ड में कम से कम एक बड़ा अक्षर होना चाहिए",
+    LanguageConst.passwordLowercaseRequired:
+        "पासवर्ड में कम से कम एक छोटा अक्षर होना चाहिए",
+    LanguageConst.passwordNumberRequired:
+        "पासवर्ड में कम से कम एक नंबर होना चाहिए",
+    LanguageConst.passwordSpecialCharRequired:
+        "पासवर्ड में कम से कम एक विशेष वर्ण (@\$!%*?&) होना चाहिए",
 
     // LOGIN SCREEN
     LanguageConst.heytRdi:

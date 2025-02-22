@@ -12,15 +12,14 @@ class ThemeController extends GetxController {
   final List<Color> themeColorsList = [
     // DEFAULT COLOR
     Color(0xffFFFFFF),
-
-    Color(0xffFFCFEF), //
-    Color(0xffFF6F00), // Deep Orange
-    Color(0xffFFB22C), // YELLOW
-    Color(0xffFF0000), // RED
-    Color(0xff1B5E20), // DARK GREEN
-    Color(0xff008000), // GREEN
-    Color(0xffF72798), //
-    Color(0xff800080), // PURPLE
+    Color(0xffFFCFEF),
+    Color(0xffFF6F00),
+    Color(0xffFFB22C),
+    Color(0xffFF0000),
+    Color(0xff1B5E20),
+    Color(0xff008000),
+    Color(0xffF72798),
+    Color(0xff800080),
     Color(0xff6A1B9A),
   ];
 

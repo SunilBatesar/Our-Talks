@@ -14,7 +14,6 @@ class AppColors {
   AppColors() {
     final value = Prefs.getIntPrefData(Prefs.themeColorKey);
     primary = Color(value ?? 0xffFFFFFF);
-    print("=============================");
   }
   // UPDATE PRIMARY COLOR
   void primaryColorUpdate(Color color) {

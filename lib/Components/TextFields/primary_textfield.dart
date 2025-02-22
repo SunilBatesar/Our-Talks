@@ -31,7 +31,7 @@ class PrimaryTextfield extends StatelessWidget {
     return TextFormField(
         controller: controller,
         validator:
-            validator != null ? (value) => validator!.validator(value) : null,
+            validator != null ? (value) => validator!.validate(value) : null,
         focusNode: focusNode,
         obscureText: isobscureText,
         keyboardType: keybordtype,
