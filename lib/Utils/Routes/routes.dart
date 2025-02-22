@@ -12,16 +12,19 @@ List<GetPage<dynamic>> appRoutes = [
       name: constantSheet.routesName.splashScreen, page: () => SplashScreen()),
   GetPage(
       name: constantSheet.routesName.languageScreen,
-      page: () => LanguageScreen()),
+      page: () => LanguageScreen(),
+      transition: Transition.upToDown),
 
   // FOLDER AUTH ROUTES
   GetPage(
-      name: constantSheet.routesName.loginScreen, page: () => LoginScreen()),
+      name: constantSheet.routesName.loginScreen,
+      page: () => LoginScreen(),
+      transition: Transition.upToDown),
+
   GetPage(
-      name: constantSheet.routesName.signUpScreen, page: () => SignUpScreen()),
-  GetPage(
-      name: constantSheet.routesName.languageScreen,
-      page: () => LanguageScreen()),
+      name: constantSheet.routesName.signUpScreen,
+      page: () => SignUpScreen(),
+      transition: Transition.upToDown),
 
   // FOLDER HOME ROUTES
   GetPage(name: constantSheet.routesName.homeScreen, page: () => HomeScreen()),

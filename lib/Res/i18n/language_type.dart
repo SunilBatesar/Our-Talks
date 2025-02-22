@@ -24,7 +24,7 @@ class LanguageType {
     LanguageConst.heytRdi: "Hey there!\nReady to dive in?\u{1F61C}",
     LanguageConst.heybroyoucgwaccount:
         "Hey guy, you can't get in without an account!",
-    LanguageConst.signupquickly: " Sign up quickly!\u{1F642}",
+    LanguageConst.signupquickly: "Sign up quickly!\u{1F642}",
     LanguageConst.didyourpasswordleavelikeEx:
         "Did your password leave you like an ex?\u{1F605}",
     LanguageConst.resetit: "Reset it!\u{2764}",
@@ -64,7 +64,7 @@ class LanguageType {
         "नमस्ते!\nक्या आप शामिल होने के लिए तैयार हैं?\u{1F61C}",
     LanguageConst.heybroyoucgwaccount:
         "अरे दोस्त, बिना अकाउंट के अंदर नहीं जा सकते!",
-    LanguageConst.signupquickly: " जल्दी से साइन अप करो!\u{1F642}",
+    LanguageConst.signupquickly: "जल्दी से साइन अप करो!\u{1F642}",
     LanguageConst.didyourpasswordleavelikeEx:
         "पासवर्ड भी Ex की तरह छोड़कर चला गया?\u{1F605}",
     LanguageConst.resetit: "Reset कर लो!\u{2764}",
