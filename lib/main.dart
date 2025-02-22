@@ -1,3 +1,4 @@
+// ignore: depend_on_referenced_packages
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,7 +10,6 @@ import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Res/i18n/language_translations.dart';
 import 'package:ourtalks/Utils/Routes/routes.dart';
 import 'package:ourtalks/firebase_options.dart';
-import 'package:ourtalks/view_model/Getx_binding/app_initialbinding.dart';
 
 late ConstantSheet constantSheet;
 Future<void> main() async {
