@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "487246472291",
+    "project_id": "ourtalks-6a660",
+    "storage_bucket": "ourtalks-6a660.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:487246472291:android:48d9b2232e46fc0814c456",
+        "android_client_info": {
+          "package_name": "com.example.ourtalks"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGukSm04-y5A2TyS1sozNC2E4hBgga5cw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
