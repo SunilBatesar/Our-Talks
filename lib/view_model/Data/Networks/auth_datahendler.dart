@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ourtalks/Controllers/user_controller.dart';
+import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/Networks/auth_function.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
