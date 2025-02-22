@@ -4,9 +4,9 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Components/Buttons/primary_button.dart';
 import 'package:ourtalks/Components/TextFields/primary_textfield.dart';
-import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({super.key});
@@ -91,8 +91,8 @@ class SignUpScreen extends StatelessWidget {
                       keybordtype: TextInputType.visiblePassword,
                       isobscureText: _isPasswordobscure.value,
                       suffixicon: _isPasswordobscure.value
-                          ? Icons.visibility_outlined
-                          : Icons.visibility_off_outlined,
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
                       suffixiconOnTap: () {
                         _isPasswordobscure.value = !_isPasswordobscure.value;
                       },

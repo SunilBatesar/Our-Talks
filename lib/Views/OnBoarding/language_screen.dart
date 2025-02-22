@@ -59,6 +59,30 @@ class LanguageScreen extends StatelessWidget {
                     },
                   ),
                   Gap(10.h),
+
+                  // THEME COLORS LIST AND UPDATE
+
+                  // GetBuilder<ThemeController>(
+                  //   builder: (controller) {
+                  //     return Row(
+                  //       children: [
+                  //         ListView.builder(
+                  //           itemCount: controller.themeColorsList.length,
+                  //           shrinkWrap: true,
+                  //           itemBuilder: (context, index) {
+                  //             final data = controller.themeColorsList[index];
+                  //             return Container(
+                  //               width: 50.sp,
+                  //               height: 50.sp,
+                  //               decoration: BoxDecoration(
+                  //                   color: data, shape: BoxShape.circle),
+                  //             );
+                  //           },
+                  //         ),
+                  //       ],
+                  //     );
+                  //   },
+                  // )
                 ],
               ),
             ),
