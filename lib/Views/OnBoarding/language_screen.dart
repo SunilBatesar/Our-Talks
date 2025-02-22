@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Components/Buttons/primary_button.dart';
-import 'package:ourtalks/view_model/Controllers/language_controller.dart';
+import 'package:ourtalks/Controllers/language_controller.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Res/i18n/language_translations.dart';
 import 'package:ourtalks/main.dart';
