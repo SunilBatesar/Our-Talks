@@ -25,12 +25,11 @@ class LanguageConst {
   // SIGN UP SCREEN CONST
   static const String withoutAccountEverythingquickly =
       "WithoutAccountEverythingquickly!";
-  static const String signedupalreadyforgetting =
-      "Signedupalreadyforgetting";
-  static const String signInEmoji =
-      "signinEmoji";
+  static const String signedupalreadyforgetting = "Signedupalreadyforgetting";
+  static const String signInEmoji = "signinEmoji";
 
   // LANGUAGE SCREEN CONST
   static const String nowedontAlienlanguagePichuman =
       "NowedontAlienlanguagePichuman";
+  static const String colorchangedupgradedfun = "Colorchangedupgradedfun";
 }

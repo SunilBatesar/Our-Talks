@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ourtalks/Res/prefs/prefs.dart';
 
 class AppColors {
-  Color primary = const Color(0xffFFFFFF);
+  late Color primary;
   Color secondary = const Color(0xff000000);
   Color black = Colors.black;
   Color white = Colors.white;
   Color red = Colors.red;
   Color blue = Colors.blue;
 
+  AppColors() {
+    final value = Prefs.getIntPrefData(Prefs.themeColorKey);
+    primary = Color(value ?? 0xffFFFFFF);
+    print("=============================");
+  }
   // UPDATE PRIMARY COLOR
   void primaryColorUpdate(Color color) {
     primary = color;

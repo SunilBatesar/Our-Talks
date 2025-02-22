@@ -39,6 +39,8 @@ class LanguageType {
     // LANGUAGE SCREEN
     LanguageConst.nowedontAlienlanguagePichuman:
         "No, we don’t have alien language yet! Pick a human one!\u{1F605}",
+    LanguageConst.colorchangedupgradedfun:
+        "Color changed, style upgraded, now double the fun!\u{1F47B}",
   };
 
   // HINDI TYPE
@@ -78,5 +80,7 @@ class LanguageType {
     // LANGUAGE SCREEN
     LanguageConst.nowedontAlienlanguagePichuman:
         "एलियन भाषा अभी उपलब्ध नहीं है, कृपया कोई मानव भाषा चुनें!\u{1F605}",
+    LanguageConst.colorchangedupgradedfun:
+        "रंग बदला, अंदाज़ बदला, अब मज़ा दोगुना!\u{1F47B}",
   };
 }

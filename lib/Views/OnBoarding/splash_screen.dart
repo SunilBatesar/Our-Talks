@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void nextScreenPushFunction() async {
     Future.delayed(Duration(seconds: 3), () async {
-      final praf = Prefs.getuserUID;
+      final praf = Prefs.getStringPrefData(Prefs.useridKey);
 
       if (praf == null) {
         Get.toNamed(constantSheet.routesName.languageScreen);

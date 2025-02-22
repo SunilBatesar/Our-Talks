@@ -14,7 +14,7 @@ class AuthDataHandler {
     try {
       final userSnapshot = await _repo.signup(user: user, password: password);
       _userController.setUser(userSnapshot);
-      await Prefs.setuserUID(userSnapshot.userID)
+      await Prefs.setStringPrefData(userSnapshot.userID, Prefs.useridKey)
           .then((_) => Get.offAllNamed(constantSheet.routesName.homeScreen));
 
       debugPrint("User signed up successfully: ${userSnapshot.toJson()}");
@@ -28,7 +28,7 @@ class AuthDataHandler {
     try {
       final userSnapshot = await _repo.login(email: email, password: password);
       _userController.setUser(userSnapshot);
-      await Prefs.setuserUID(userSnapshot.userID)
+      await Prefs.setStringPrefData(userSnapshot.userID, Prefs.useridKey)
           .then((_) => Get.offAllNamed(constantSheet.routesName.homeScreen));
       debugPrint("User logged in successfully: ${userSnapshot.toJson()}");
     } catch (e) {

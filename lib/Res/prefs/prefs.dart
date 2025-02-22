@@ -12,11 +12,28 @@ class Prefs {
     }
   }
 
-  static final String _useridKey = "userid";
+  static final String useridKey = "userid"; // USER ID(KEY)
+  static final String themeColorKey = "ThemeColorKey"; // THEME COLOR KEY
 
-  static Future<void> setuserUID(String value) async {
-    await _preferences?.setString(_useridKey, value); // Safe access
+  // SET STRING PREF DATA
+  static Future<void> setStringPrefData(String value, String key) async {
+    await _preferences?.setString(key, value); // Safe access
   }
 
-  static get getuserUID => _preferences?.getString(_useridKey);
+  // GET STRING PREF DATA
+  static getStringPrefData(String key) => _preferences?.getString(key);
+
+  static Future<void> setdat() async {
+    await _preferences?.setString("uu", "1234567890");
+  }
+
+  static get dat => _preferences?.getString("uu");
+
+  // SET INT PREF DATA
+  static Future<void> setIntPrefData(String key, int value) async {
+    await _preferences?.setInt(key, value); // Safe access
+  }
+
+  // GET INT PREF DATA
+  static getIntPrefData(String key) => _preferences?.getInt(key);
 }

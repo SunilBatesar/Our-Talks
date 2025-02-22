@@ -12,20 +12,26 @@ class ConstantSheet {
   }
 
   // APP SERVICES
-  AppServices get services => AppServices();
+  final AppServices _services = AppServices();
+  AppServices get services => _services;
 
   // APP ANIMATIONS
-  final AppAnimations animations = AppAnimations();
+  final AppAnimations _animations = AppAnimations();
+  AppAnimations get animations => _animations;
 
   // APP IMAGES
-  final AppImages images = AppImages();
+  final AppImages _images = AppImages();
+  AppImages get images => _images;
 
   // APP TEXT THEME
-  AppTextTheme get textTheme => AppTextTheme();
+  final AppTextTheme _textTheme = AppTextTheme();
+  AppTextTheme get textTheme => _textTheme;
 
   // APP COLORS
-  AppColors get colors => AppColors();
+  final AppColors _colors = AppColors();
+  AppColors get colors => _colors;
 
   // APP ROUTES NAME
-  final RoutesName routesName = RoutesName();
+  final RoutesName _routesName = RoutesName();
+  RoutesName get routesName => _routesName;
 }

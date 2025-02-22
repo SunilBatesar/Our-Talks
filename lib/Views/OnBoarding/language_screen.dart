@@ -3,136 +3,165 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Components/Buttons/primary_button.dart';
-import 'package:ourtalks/view_model/Controllers/language_controller.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Res/i18n/language_translations.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Controllers/language_controller.dart';
+import 'package:ourtalks/view_model/Controllers/theme_controller.dart';
 
 class LanguageScreen extends StatelessWidget {
-  const LanguageScreen({super.key});
+  LanguageScreen({super.key});
+
+  final ThemeController themeController = Get.find<ThemeController>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: EdgeInsets.all(15.0.sp),
-              child: Column(
+      body: Obx(
+        () => SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(15.0.sp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // TEXT
+                    Text(
+                      LanguageConst.nowedontAlienlanguagePichuman.tr,
+                      style: constantSheet.textTheme.fs15Normal
+                          .copyWith(color: constantSheet.colors.primary),
+                    ),
+                    Gap(20.h),
+                    // LANGUAGE CHANGE AND RADIO LIST TILE CALL
+                    GetBuilder<LanguageController>(
+                      builder: (controller) {
+                        return ListView.builder(
+                          itemCount: LanguageTranslations.languageList.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final data =
+                                LanguageTranslations.languageList[index];
+                            return RadioListTile(
+                              contentPadding: EdgeInsets.all(0),
+                              value: controller.languagedata.countryCode,
+                              groupValue: data.countryCode,
+                              onChanged: (value) {
+                                controller.setLanguage(
+                                    data); // CALL UPDATE LANGUAGE FUNCTION
+                              },
+                              fillColor: WidgetStateColor.resolveWith(
+                                  (states) => constantSheet.colors.primary),
+                              title: Text(
+                                data.languageName,
+                                style: constantSheet.textTheme.fs18Medium
+                                    .copyWith(
+                                        color: constantSheet.colors.primary),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                    Gap(20.h),
+                    // TEXT
+                    Text(
+                      LanguageConst.colorchangedupgradedfun.tr,
+                      style: constantSheet.textTheme.fs15Normal
+                          .copyWith(color: constantSheet.colors.primary),
+                    ),
+                    Gap(10.h),
+                    // THEME COLORS LIST AND UPDATE
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        spacing: 15.w,
+                        runSpacing: 10.h,
+                        alignment: WrapAlignment.start,
+                        runAlignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        children: List.generate(
+                          themeController.themeColorsList.length,
+                          (index) {
+                            final data = themeController.themeColorsList[index];
+                            return GestureDetector(
+                              onTap: () {
+                                themeController.updateTemeColor(data);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(5.sp),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: data ==
+                                          themeController.selectThemeColor.value
+                                      ? Border.all(color: data)
+                                      : null,
+                                ),
+                                child: Container(
+                                  width: 40.sp,
+                                  height: 40.sp,
+                                  decoration: BoxDecoration(
+                                      color: data, shape: BoxShape.circle),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              // IMAGE A BOY AND GIRL
+
+              Column(
                 children: [
-                  // TEXT
-                  Text(
-                    LanguageConst.nowedontAlienlanguagePichuman.tr,
-                    style: constantSheet.textTheme.fs15Normal
-                        .copyWith(color: constantSheet.colors.primary),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Hero(
+                        tag: "image_a_boy",
+                        transitionOnUserGestures: true,
+                        child: Image.asset(
+                          height: constantSheet.services.screenHeight(context) *
+                              0.25,
+                          width: constantSheet.services.screenWidth(context),
+                          constantSheet.images.readBoyGirl,
+                          color: constantSheet.colors.primary,
+                          fit: BoxFit.cover,
+                        )),
                   ),
-                  Gap(20.h),
-                  // LANGUAGE CHANGE AND RADIO LIST TILE CALL
-                  GetBuilder<LanguageController>(
-                    builder: (controller) {
-                      return ListView.builder(
-                        itemCount: LanguageTranslations.languageList.length,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          final data = LanguageTranslations.languageList[index];
-                          return RadioListTile(
-                            contentPadding: EdgeInsets.all(0),
-                            value: controller.languagedata.countryCode,
-                            groupValue: data.countryCode,
-                            onChanged: (value) {
-                              controller.setLanguage(
-                                  data); // CALL UPDATE LANGUAGE FUNCTION
-                            },
-                            fillColor: WidgetStateColor.resolveWith(
-                                (states) => constantSheet.colors.primary),
-                            title: Text(
-                              data.languageName,
-                              style: constantSheet.textTheme.fs18Medium
-                                  .copyWith(
-                                      color: constantSheet.colors.primary),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  Gap(10.h),
-
-                  // THEME COLORS LIST AND UPDATE
-
-                  // GetBuilder<ThemeController>(
-                  //   builder: (controller) {
-                  //     return Row(
-                  //       children: [
-                  //         ListView.builder(
-                  //           itemCount: controller.themeColorsList.length,
-                  //           shrinkWrap: true,
-                  //           itemBuilder: (context, index) {
-                  //             final data = controller.themeColorsList[index];
-                  //             return Container(
-                  //               width: 50.sp,
-                  //               height: 50.sp,
-                  //               decoration: BoxDecoration(
-                  //                   color: data, shape: BoxShape.circle),
-                  //             );
-                  //           },
-                  //         ),
-                  //       ],
-                  //     );
-                  //   },
-                  // )
+                  Row(
+                    children: [
+                      // SIGN IN BUTTON
+                      Expanded(
+                        child: PrimaryButton(
+                          title: LanguageConst.signIn.tr,
+                          onPressed: () {
+                            Get.toNamed(constantSheet.routesName.loginScreen);
+                          },
+                          isExpanded: true,
+                          isTransparent: true,
+                        ),
+                      ),
+                      Gap(10.w),
+                      // SIGN UP BUTTON
+                      Expanded(
+                        child: PrimaryButton(
+                          title: LanguageConst.signUp.tr,
+                          onPressed: () {
+                            Get.toNamed(constantSheet.routesName.signUpScreen);
+                          },
+                          isExpanded: true,
+                          isTransparent: true,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
-            ),
-            // IMAGE A BOY AND GIRL
-
-            Align(
-              alignment: Alignment.center,
-              child: Hero(
-                  tag: "image_a_boy",
-                  transitionOnUserGestures: true,
-                  child: Image.asset(
-                    height: constantSheet.services.screenHeight(context) * 0.25,
-                    width: constantSheet.services.screenWidth(context),
-                    constantSheet.images.readBoyGirl,
-                    color: constantSheet.colors.primary,
-                    fit: BoxFit.cover,
-                  )),
-            )
-          ],
-        ),
-      ),
-      // BOTTOM NAVIGATION BAR
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 10.h, left: 15.w, right: 15.w),
-        child: Row(
-          children: [
-            // SIGN IN BUTTON
-            Expanded(
-              child: PrimaryButton(
-                title: LanguageConst.signIn.tr,
-                onPressed: () {
-                  Get.toNamed(constantSheet.routesName.loginScreen);
-                },
-                isExpanded: true,
-                isTransparent: true,
-              ),
-            ),
-            Gap(10.w),
-            // SIGN UP BUTTON
-            Expanded(
-              child: PrimaryButton(
-                title: LanguageConst.signUp.tr,
-                onPressed: () {
-                  Get.toNamed(constantSheet.routesName.signUpScreen);
-                },
-                isExpanded: true,
-                isTransparent: true,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
