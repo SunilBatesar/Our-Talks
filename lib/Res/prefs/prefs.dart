@@ -31,5 +31,20 @@ class Prefs {
   }
 
   // GET INT PREF DATA
-  static getIntPrefData(String key) => _preferences?.getInt(key);
+  static getIntPrefData(String key) => _preferences?.getInt(key) ?? 0xffFFFFFF;
+  // LANGUAGE SET AND GET IN PREF
+  // SET
+  static Future<void> setLanguagePref({required LanguageModel model}) async {
+    await _preferences?.setString(_languageKey, model.toJson());
+  }
+
+  // GET
+  static LanguageModel getLanguagePref() {
+    return LanguageModel.fromJson(json: getStringPrefData(_languageKey) ?? "");
+  }
+
+  // CLEAR ALL PREF DATA
+  static Future<void> clearPrefsData() async {
+    await _preferences?.clear();
+  }
 }

@@ -4,11 +4,15 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Components/Buttons/primary_button.dart';
 import 'package:ourtalks/Components/TextFields/primary_textfield.dart';
+import 'package:ourtalks/Components/loader%20animation/loading_indicator.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
+import 'package:ourtalks/Utils/app_validators.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
 
 class VerifyEmailForgetPasswordScreen extends StatelessWidget {
   VerifyEmailForgetPasswordScreen({super.key});
+  final _globalKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -38,21 +42,31 @@ class VerifyEmailForgetPasswordScreen extends StatelessWidget {
               ),
               Gap(30.sp),
               // EMAIL TEXT FIELD
-              PrimaryTextfield(
-                controller: _emailController,
-                label: LanguageConst.email.tr,
-                keybordtype: TextInputType.emailAddress,
+              Form(
+                key: _globalKey,
+                child: PrimaryTextfield(
+                  validator: EmailValidator(),
+                  controller: _emailController,
+                  label: LanguageConst.email.tr,
+                  keybordtype: TextInputType.emailAddress,
+                ),
               ),
               // SIGN IN BUTTON
               Gap(60.sp),
-              PrimaryButton(
-                title: LanguageConst.continues.tr,
-                onPressed: () {
-                  Get.offNamed(cnstSheet.routesName.forgetPasswordScreen);
-                },
-                isExpanded: true,
-                isTransparent: true,
-              ),
+              LoadingIndicator(
+                widget: PrimaryButton(
+                  title: LanguageConst.continues.tr,
+                  onPressed: () {
+                    if (_globalKey.currentState!.validate()) {
+                      AuthDataHandler.resetPassword(
+                          email: _emailController.text.trim());
+                    }
+                    // Get.offNamed(cnstSheet.routesName.forgetPasswordScreen);
+                  },
+                  isExpanded: true,
+                  isTransparent: true,
+                ),
+              )
             ],
           ),
         ),

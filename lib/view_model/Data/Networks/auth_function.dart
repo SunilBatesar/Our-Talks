@@ -6,6 +6,8 @@ import 'package:ourtalks/view_model/Apis/firebase_apis.dart';
 abstract class Authentication {
   Future<UserModel> login({required String email, required String password});
   Future<UserModel> signup({required UserModel user, required String password});
+  Future<void> resetPassword({required String email});
+  Future<void> logout();
 }
 
 class AuthRepository extends Authentication {
@@ -51,6 +53,28 @@ class AuthRepository extends Authentication {
       return userData;
     } catch (e) {
       debugPrint("Error adding user data to Firebase: $e");
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> resetPassword({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      debugPrint("Password reset email sent to $email");
+    } catch (e) {
+      debugPrint("Error sending password reset email: $e");
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await _firebaseAuth.signOut();
+      debugPrint("User successfully logged out");
+    } catch (e) {
+      debugPrint("Error logging out: $e");
       rethrow;
     }
   }

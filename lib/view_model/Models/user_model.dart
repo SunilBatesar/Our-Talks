@@ -1,5 +1,5 @@
 class UserModel {
-  final String userID;
+  final String? userID;
   final String userName;
   final String image;
   final String about;
@@ -11,7 +11,7 @@ class UserModel {
   final bool isOnline;
 
   const UserModel({
-    required this.userID,
+    this.userID,
     required this.userName,
     required this.image,
     required this.about,

@@ -20,12 +20,14 @@ class TextValidator extends AppValidator {
 class EmailValidator extends AppValidator {
   @override
   String? validate(String? value) {
-    if (value == null || value.isEmpty) {
+    if (value == null || value.trim().isEmpty) {
       return LanguageConst.pleaseEnterYourEmail.tr;
-    } else if (!RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\$')
-        .hasMatch(value)) {
+    }
+    const emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+    if (!RegExp(emailPattern).hasMatch(value)) {
       return LanguageConst.pleaseEnterValidEmail.tr;
-    } else if (!value.endsWith("@gmail.com")) {
+    }
+    if (!value.endsWith("@gmail.com")) {
       return LanguageConst.onlyAllowedEmailDomains.tr;
     }
     return null;

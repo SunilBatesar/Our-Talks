@@ -10,4 +10,9 @@ class UserController extends GetxController {
     _user.value = model;
     update();
   }
+
+  void clearUser() {
+    _user.value = null;
+    update();
+  }
 }
