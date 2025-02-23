@@ -12,7 +12,7 @@ class AppColors {
   Color blue = Colors.blue;
 
   AppColors() {
-    final value = Prefs.getIntPrefData(Prefs.themeColorKey);
+    final value = Prefs.getColorPrefData();
     primary = Color(value ?? 0xffFFFFFF);
   }
   // UPDATE PRIMARY COLOR
@@ -25,6 +25,8 @@ class AppTextTheme {
   AppTextTheme();
 
   // APP NAME STYLE
+  TextStyle appNameStyle15 = GoogleFonts.montserratAlternates(
+      fontSize: 25.sp, fontWeight: FontWeight.w600);
   TextStyle appNameStyle45 = GoogleFonts.montserratAlternates(
       fontSize: 45.sp, fontWeight: FontWeight.w600);
 

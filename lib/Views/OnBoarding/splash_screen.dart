@@ -22,12 +22,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void nextScreenPushFunction() async {
     Future.delayed(Duration(seconds: 3), () async {
-      final praf = Prefs.getStringPrefData(Prefs.useridKey);
+      final praf = Prefs.getUserIdPref();
 
       if (praf == null) {
         Get.offNamed(cnstSheet.routesName.languageScreen);
       } else {
-        Get.offNamed(cnstSheet.routesName.homeScreen);
+        Get.offNamed(cnstSheet.routesName.navBar);
       }
     });
   }

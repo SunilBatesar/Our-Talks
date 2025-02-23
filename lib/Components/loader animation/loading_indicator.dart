@@ -12,15 +12,15 @@ class LoadingIndicator extends StatelessWidget {
   final _loadingController = Get.find<LoadingController>();
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return _loadingController.isLoading.value
+    return GetBuilder<LoadingController>(
+      builder: (controller) => _loadingController.isLoading.value
           ? Center(
               child: Lottie.asset(
                 height: 50.h,
                 cnstSheet.animations.loading,
               ),
             )
-          : widget;
-    });
+          : widget,
+    );
   }
 }

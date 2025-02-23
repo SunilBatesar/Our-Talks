@@ -13,34 +13,37 @@ class Prefs {
     }
   }
 
-  static final String useridKey = "userid"; // USER ID(KEY)
-  static final String themeColorKey = "ThemeColorKey"; // THEME COLOR KEY
+  static final String _useridKey = "userid"; // USER ID(KEY)
+  static final String _themeColorKey = "ThemeColorKey"; // THEME COLOR KEY
   static final String _languageKey = "languageKey"; // THEME COLOR KEY
 
-  // SET STRING PREF DATA
-  static Future<void> setStringPrefData(String value, String key) async {
-    await _preferences?.setString(key, value); // Safe access
+  // SET USER DATA PREF
+  static Future<void> setUserIdPref(String value) async {
+    await _preferences?.setString(_useridKey, value); // Safe access
   }
 
-  // GET STRING PREF DATA
-  static getStringPrefData(String key) => _preferences?.getString(key);
+  static getUserIdPref() =>
+      _preferences?.getString(_useridKey); // GET USER DATA PREF
 
-  // SET INT PREF DATA
-  static Future<void> setIntPrefData(String key, int value) async {
-    await _preferences?.setInt(key, value); // Safe access
+  // COLOR SET AND GET IN PREF
+  // SET COLOR PREF DATA
+  static Future<void> setColorPrefData(int value) async {
+    await _preferences?.setInt(_themeColorKey, value); // Safe access
   }
 
-  // GET INT PREF DATA
-  static getIntPrefData(String key) => _preferences?.getInt(key) ?? 0xffFFFFFF;
+  static getColorPrefData() =>
+      _preferences?.getInt(_themeColorKey) ?? 0xffFFFFFF; // GET COLOR PREF DATA
+
   // LANGUAGE SET AND GET IN PREF
-  // SET
+  // SET LANGUAGE PREF DATA
   static Future<void> setLanguagePref({required LanguageModel model}) async {
     await _preferences?.setString(_languageKey, model.toJson());
   }
 
-  // GET
+  // GET LANGUAGE PREF DATA
   static LanguageModel getLanguagePref() {
-    return LanguageModel.fromJson(json: getStringPrefData(_languageKey) ?? "");
+    return LanguageModel.fromJson(
+        json: _preferences?.getString(_languageKey) ?? "");
   }
 
   // CLEAR ALL PREF DATA

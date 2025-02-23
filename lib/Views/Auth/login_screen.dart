@@ -119,6 +119,7 @@ class LoginScreen extends StatelessWidget {
                         widget: PrimaryButton(
                       title: LanguageConst.signIn.tr,
                       onPressed: () {
+                        // CALL LOGIN FUNCTION
                         if (_globalKey.currentState!.validate()) {
                           AuthDataHandler.login(
                               email: _emailController.text.trim(),

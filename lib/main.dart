@@ -54,6 +54,7 @@ class MyApp extends StatelessWidget {
           initialRoute: cnstSheet.routesName.splashScreen, // Initial screen
           debugShowCheckedModeBanner: false, // Hide debug banner
           theme: ThemeData(
+            appBarTheme: AppBarTheme(backgroundColor: cnstSheet.colors.black),
             scaffoldBackgroundColor: cnstSheet.colors.black, // App theme color
           ),
         );

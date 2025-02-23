@@ -13,14 +13,16 @@ class AuthDataHandler {
   static final _userController = Get.find<UserController>();
   static final _loadingController = Get.find<LoadingController>();
 
+  // SIGN UP
   static Future<void> signUp(
       {required UserModel user, required String password}) async {
     try {
       _loadingController.showLoading();
       final userSnapshot = await _repo.signup(user: user, password: password);
       _userController.setUser(userSnapshot);
-      await Prefs.setStringPrefData(userSnapshot.userID!, Prefs.useridKey)
-          .then((_) => Get.offAllNamed(cnstSheet.routesName.homeScreen));
+      await Prefs.setUserIdPref(userSnapshot.userID!);
+      Get.offAllNamed(cnstSheet.routesName.homeScreen);
+      _loadingController.hideLoading(); // HIDE LODING FUNCTION
       AppUtils.showSnackBar(
           title: 'Success', message: 'User signed up successfully');
 
@@ -29,19 +31,19 @@ class AuthDataHandler {
       AppUtils.showSnackBar(
           title: 'Error', message: 'Error during sign up: $e', isError: true);
       debugPrint("Error during sign up: $e");
-    } finally {
-      _loadingController.hideLoading();
     }
   }
 
+  // LOGIN FUNCTION
   static Future<void> login(
       {required String email, required String password}) async {
     try {
       _loadingController.showLoading();
       final userSnapshot = await _repo.login(email: email, password: password);
       _userController.setUser(userSnapshot);
-      await Prefs.setStringPrefData(userSnapshot.userID!, Prefs.useridKey)
-          .then((_) => Get.offAllNamed(cnstSheet.routesName.homeScreen));
+      await Prefs.setUserIdPref(userSnapshot.userID!);
+      Get.offAllNamed(cnstSheet.routesName.homeScreen);
+      _loadingController.hideLoading(); // HIDE LODING FUNCTION
       AppUtils.showSnackBar(
           title: 'Success', message: 'User logged in successfully');
 
@@ -50,18 +52,17 @@ class AuthDataHandler {
       AppUtils.showSnackBar(
           title: 'Error', message: 'Error during login:  $e', isError: true);
       debugPrint("Error during login: $e");
-    } finally {
-      _loadingController.hideLoading();
+      _loadingController.hideLoading(); // HIDE LODING FUNCTION
     }
   }
 
-  // password reset
+  // PASSWORD RESET FUNCTION
   static Future<void> resetPassword({required String email}) async {
     try {
       _loadingController.showLoading();
-      await _repo.resetPassword(email: email).then(
-            (_) => Get.offNamed(cnstSheet.routesName.loginScreen),
-          );
+      await _repo.resetPassword(email: email);
+      Get.offNamed(cnstSheet.routesName.loginScreen);
+      _loadingController.hideLoading(); // HIDE LODING FUNCTION
       AppUtils.showSnackBar(
           title: 'Success', message: 'Password reset email sent successfully');
       debugPrint("Password reset email sent to $email");
@@ -71,12 +72,11 @@ class AuthDataHandler {
           message: 'Error sending password reset email: $e',
           isError: true);
       debugPrint("Error sending password reset email: $e");
-    } finally {
-      _loadingController.hideLoading();
+      _loadingController.hideLoading(); // HIDE LODING FUNCTION
     }
   }
 
-  // logout
+  // LOGOUT FUNCTION
   static Future<void> logout() async {
     try {
       _loadingController.showLoading();
@@ -84,6 +84,7 @@ class AuthDataHandler {
       await Prefs.clearPrefsData();
       _userController.clearUser();
       Get.offAllNamed(cnstSheet.routesName.languageScreen);
+      _loadingController.hideLoading(); // HIDE LODING FUNCTION
       AppUtils.showSnackBar(
           title: 'Success', message: 'User logged out successfully');
       debugPrint("User logged out successfully");
@@ -91,8 +92,7 @@ class AuthDataHandler {
       AppUtils.showSnackBar(
           title: 'Error', message: 'Error during logout: $e', isError: true);
       debugPrint("Error during logout: $e");
-    } finally {
-      _loadingController.hideLoading();
+      _loadingController.hideLoading(); // HIDE LODING FUNCTION
     }
   }
 }

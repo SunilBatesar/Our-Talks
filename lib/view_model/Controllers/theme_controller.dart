@@ -5,8 +5,7 @@ import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/main.dart';
 
 class ThemeController extends GetxController {
-  Rx<Color> selectThemeColor =
-      Color(Prefs.getIntPrefData(Prefs.themeColorKey)).obs;
+  Rx<Color> selectThemeColor = Color(Prefs.getColorPrefData()).obs;
 
   // THEME COLORS
   final List<Color> themeColorsList = [
@@ -26,7 +25,7 @@ class ThemeController extends GetxController {
   void updateTemeColor(Color color) async {
     selectThemeColor.value = color;
     cnstSheet.colors.primaryColorUpdate(color);
-    await Prefs.setIntPrefData(Prefs.themeColorKey, color.toARGB32());
+    await Prefs.setColorPrefData(color.toARGB32());
     update();
   }
 }
