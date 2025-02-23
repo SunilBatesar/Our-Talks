@@ -30,8 +30,8 @@ class LanguageScreen extends StatelessWidget {
                     // TEXT
                     Text(
                       LanguageConst.nowedontAlienlanguagePichuman.tr,
-                      style: constantSheet.textTheme.fs15Normal
-                          .copyWith(color: constantSheet.colors.primary),
+                      style: cnstSheet.textTheme.fs15Normal
+                          .copyWith(color: cnstSheet.colors.white),
                     ),
                     Gap(20.h),
                     // LANGUAGE CHANGE AND RADIO LIST TILE CALL
@@ -52,12 +52,11 @@ class LanguageScreen extends StatelessWidget {
                                     data); // CALL UPDATE LANGUAGE FUNCTION
                               },
                               fillColor: WidgetStateColor.resolveWith(
-                                  (states) => constantSheet.colors.primary),
+                                  (states) => cnstSheet.colors.primary),
                               title: Text(
                                 data.languageName,
-                                style: constantSheet.textTheme.fs18Medium
-                                    .copyWith(
-                                        color: constantSheet.colors.primary),
+                                style: cnstSheet.textTheme.fs18Medium
+                                    .copyWith(color: cnstSheet.colors.white),
                               ),
                             );
                           },
@@ -68,8 +67,8 @@ class LanguageScreen extends StatelessWidget {
                     // TEXT
                     Text(
                       LanguageConst.colorchangedupgradedfun.tr,
-                      style: constantSheet.textTheme.fs15Normal
-                          .copyWith(color: constantSheet.colors.primary),
+                      style: cnstSheet.textTheme.fs15Normal
+                          .copyWith(color: cnstSheet.colors.white),
                     ),
                     Gap(10.h),
                     // THEME COLORS LIST AND UPDATE
@@ -123,11 +122,11 @@ class LanguageScreen extends StatelessWidget {
                         tag: "image_a_boy",
                         transitionOnUserGestures: true,
                         child: Image.asset(
-                          height: constantSheet.services.screenHeight(context) *
-                              0.25,
-                          width: constantSheet.services.screenWidth(context),
-                          constantSheet.images.readBoyGirl,
-                          color: constantSheet.colors.primary,
+                          height:
+                              cnstSheet.services.screenHeight(context) * 0.25,
+                          width: cnstSheet.services.screenWidth(context),
+                          cnstSheet.images.readBoyGirl,
+                          color: cnstSheet.colors.primary,
                           fit: BoxFit.cover,
                         )),
                   ),
@@ -138,7 +137,7 @@ class LanguageScreen extends StatelessWidget {
                         child: PrimaryButton(
                           title: LanguageConst.signIn.tr,
                           onPressed: () {
-                            Get.toNamed(constantSheet.routesName.loginScreen);
+                            Get.toNamed(cnstSheet.routesName.loginScreen);
                           },
                           isExpanded: true,
                           isTransparent: true,
@@ -150,7 +149,7 @@ class LanguageScreen extends StatelessWidget {
                         child: PrimaryButton(
                           title: LanguageConst.signUp.tr,
                           onPressed: () {
-                            Get.toNamed(constantSheet.routesName.signUpScreen);
+                            Get.toNamed(cnstSheet.routesName.signUpScreen);
                           },
                           isExpanded: true,
                           isTransparent: true,

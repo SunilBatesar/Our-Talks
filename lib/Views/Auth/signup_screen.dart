@@ -36,16 +36,16 @@ class SignUpScreen extends StatelessWidget {
                   curve: Curves.linear,
                   width: _iskeboardValue.value
                       ? 300.h
-                      : constantSheet.services.screenWidth(context),
+                      : cnstSheet.services.screenWidth(context),
                   height: _iskeboardValue.value
                       ? 150.h
-                      : constantSheet.services.screenHeight(context) * 0.3,
+                      : cnstSheet.services.screenHeight(context) * 0.3,
                   child: Hero(
                       tag: "image_a_boy",
                       transitionOnUserGestures: true,
                       child: Image.asset(
-                        constantSheet.images.boySeeGirl,
-                        color: constantSheet.colors.primary,
+                        cnstSheet.images.boySeeGirl,
+                        color: cnstSheet.colors.primary,
                         fit: _iskeboardValue.value
                             ? BoxFit.contain
                             : BoxFit.cover,
@@ -58,8 +58,8 @@ class SignUpScreen extends StatelessWidget {
                   // TEXT
                   Text(
                     "${LanguageConst.withoutAccountEverythingquickly.tr}\n${LanguageConst.signupquickly.tr}",
-                    style: constantSheet.textTheme.fs29Medium
-                        .copyWith(color: constantSheet.colors.primary),
+                    style: cnstSheet.textTheme.fs29Medium
+                        .copyWith(color: cnstSheet.colors.primary),
                   ),
                   Gap(25.sp),
                   // Name TEXT FIELD
@@ -111,19 +111,19 @@ class SignUpScreen extends StatelessWidget {
                   // TEXT RICH
                   GestureDetector(
                     onTap: () {
-                      Get.offNamed(constantSheet.routesName.loginScreen);
+                      Get.offNamed(cnstSheet.routesName.loginScreen);
                     },
                     child: Text.rich(
                         textAlign: TextAlign.center,
                         TextSpan(
                             text: LanguageConst.signedupalreadyforgetting.tr,
-                            style: constantSheet.textTheme.fs15Normal
-                                .copyWith(color: constantSheet.colors.white),
+                            style: cnstSheet.textTheme.fs15Normal
+                                .copyWith(color: cnstSheet.colors.white),
                             children: <TextSpan>[
                               TextSpan(
                                   text: LanguageConst.signInEmoji.tr,
-                                  style: TextStyle(
-                                      color: constantSheet.colors.blue))
+                                  style:
+                                      TextStyle(color: cnstSheet.colors.blue))
                             ])),
                   )
                 ]),

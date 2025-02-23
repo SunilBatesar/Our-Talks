@@ -15,7 +15,7 @@ class AuthDataHandler {
       final userSnapshot = await _repo.signup(user: user, password: password);
       _userController.setUser(userSnapshot);
       await Prefs.setStringPrefData(userSnapshot.userID, Prefs.useridKey)
-          .then((_) => Get.offAllNamed(constantSheet.routesName.homeScreen));
+          .then((_) => Get.offAllNamed(cnstSheet.routesName.homeScreen));
 
       debugPrint("User signed up successfully: ${userSnapshot.toJson()}");
     } catch (e) {
@@ -29,7 +29,7 @@ class AuthDataHandler {
       final userSnapshot = await _repo.login(email: email, password: password);
       _userController.setUser(userSnapshot);
       await Prefs.setStringPrefData(userSnapshot.userID, Prefs.useridKey)
-          .then((_) => Get.offAllNamed(constantSheet.routesName.homeScreen));
+          .then((_) => Get.offAllNamed(cnstSheet.routesName.homeScreen));
       debugPrint("User logged in successfully: ${userSnapshot.toJson()}");
     } catch (e) {
       debugPrint("Error during login: $e");

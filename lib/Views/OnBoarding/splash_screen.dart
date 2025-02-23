@@ -25,9 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
       final praf = Prefs.getStringPrefData(Prefs.useridKey);
 
       if (praf == null) {
-        Get.toNamed(constantSheet.routesName.languageScreen);
+        Get.offNamed(cnstSheet.routesName.languageScreen);
       } else {
-        Get.offNamed(constantSheet.routesName.homeScreen);
+        Get.offNamed(cnstSheet.routesName.homeScreen);
       }
     });
   }
@@ -36,15 +36,15 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          width: constantSheet.services.screenWidth(context),
-          height: constantSheet.services.screenHeight(context),
+          width: cnstSheet.services.screenWidth(context),
+          height: cnstSheet.services.screenHeight(context),
           decoration: BoxDecoration(
               gradient: LinearGradient(
             colors: [
-              constantSheet.colors.secondary,
-              constantSheet.colors.secondary,
-              constantSheet.colors.primary,
-              constantSheet.colors.primary,
+              cnstSheet.colors.secondary,
+              cnstSheet.colors.secondary,
+              cnstSheet.colors.primary,
+              cnstSheet.colors.primary,
             ],
             stops: [0.0, 0.50, 0.50, 1.0],
             begin: Alignment.centerLeft,
@@ -56,15 +56,15 @@ class _SplashScreenState extends State<SplashScreen> {
                 alignment: Alignment.centerLeft,
                 child: Transform.rotate(
                   angle: 4.5.sp / 5,
-                  origin: Offset(-75.sp,
-                      constantSheet.services.screenWidth(context) * 0.2),
+                  origin: Offset(
+                      -75.sp, cnstSheet.services.screenWidth(context) * 0.2),
                   alignment: Alignment.centerLeft,
                   transformHitTests: false,
                   filterQuality: FilterQuality.high,
                   child: Text(
                     AppConfig.appName,
-                    style: constantSheet.textTheme.appNameStyle45
-                        .copyWith(color: constantSheet.colors.primary),
+                    style: cnstSheet.textTheme.appNameStyle45
+                        .copyWith(color: cnstSheet.colors.primary),
                   ),
                 ),
               ),
@@ -72,7 +72,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Lottie.asset(
-                      constantSheet.animations.walking,
+                      cnstSheet.animations.walking,
                       // animate: false,
                     )),
               ),

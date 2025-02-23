@@ -14,27 +14,27 @@ class HomeScreen extends StatelessWidget {
           Container(
             height: 100,
             width: 100,
-            color: constantSheet.colors.blue,
+            color: cnstSheet.colors.blue,
           ),
           Container(
             height: 100,
             width: 100,
-            color: constantSheet.colors.blue,
+            color: cnstSheet.colors.blue,
           ),
           Container(
             height: 100,
             width: 100,
-            color: constantSheet.colors.blue,
+            color: cnstSheet.colors.blue,
           ),
           Container(
             height: 100,
             width: 100,
-            color: constantSheet.colors.blue,
+            color: cnstSheet.colors.blue,
           ),
           Container(
             height: 100,
             width: 100,
-            color: constantSheet.colors.blue,
+            color: cnstSheet.colors.blue,
           ),
           // Container(
           //   height: 100,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ourtalks/view_model/Models/language_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Prefs {
@@ -14,6 +15,7 @@ class Prefs {
 
   static final String useridKey = "userid"; // USER ID(KEY)
   static final String themeColorKey = "ThemeColorKey"; // THEME COLOR KEY
+  static final String _languageKey = "languageKey"; // THEME COLOR KEY
 
   // SET STRING PREF DATA
   static Future<void> setStringPrefData(String value, String key) async {
@@ -29,5 +31,5 @@ class Prefs {
   }
 
   // GET INT PREF DATA
-  static getIntPrefData(String key) => _preferences?.getInt(key) ?? 0xffFFFFFF;
+  static getIntPrefData(String key) => _preferences?.getInt(key);
 }

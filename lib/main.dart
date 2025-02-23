@@ -12,7 +12,7 @@ import 'package:ourtalks/firebase_options.dart';
 import 'package:ourtalks/view_model/Getx_binding/app_initialbinding.dart';
 
 // Global instance of ConstantSheet
-late ConstantSheet constantSheet;
+late ConstantSheet cnstSheet;
 
 // Main entry point of the application
 Future<void> main() async {
@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       // ScreenUtil helps with responsive UI across different screen sizes
       builder: (context, child) {
-        constantSheet = ConstantSheet.instance; // Access global instance
+        cnstSheet = ConstantSheet.instance; // Access global instance
 
         return GetMaterialApp(
           locale: LanguageTranslations.localeLanguage, // App language locale
@@ -51,11 +51,10 @@ class MyApp extends StatelessWidget {
           translations: LanguageTranslations(), // Internationalization support
           initialBinding: AppInitialbinding(), // GetX initial bindings
           getPages: appRoutes, // Application routes
-          initialRoute: constantSheet.routesName.splashScreen, // Initial screen
+          initialRoute: cnstSheet.routesName.splashScreen, // Initial screen
           debugShowCheckedModeBanner: false, // Hide debug banner
           theme: ThemeData(
-            scaffoldBackgroundColor:
-                constantSheet.colors.black, // App theme color
+            scaffoldBackgroundColor: cnstSheet.colors.black, // App theme color
           ),
         );
       },
