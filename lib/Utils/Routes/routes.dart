@@ -4,18 +4,21 @@ import 'package:ourtalks/Views/Auth/login_screen.dart';
 import 'package:ourtalks/Views/Auth/signup_screen.dart';
 import 'package:ourtalks/Views/Auth/verify_email_forget_password_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/account_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/language_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/theme_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/update_profile_screen.dart';
 import 'package:ourtalks/Views/NavBar/Home/home_screen.dart';
 import 'package:ourtalks/Views/NavBar/nav_bar.dart';
-import 'package:ourtalks/Views/OnBoarding/language_screen.dart';
 import 'package:ourtalks/Views/OnBoarding/splash_screen.dart';
+import 'package:ourtalks/Views/OnBoarding/welcome_screen.dart';
 import 'package:ourtalks/main.dart';
 
 List<GetPage<dynamic>> appRoutes = [
   // FOLDER ON BOARDING ROUTES
   GetPage(name: cnstSheet.routesName.splashScreen, page: () => SplashScreen()),
   GetPage(
-      name: cnstSheet.routesName.languageScreen,
-      page: () => LanguageScreen(),
+      name: cnstSheet.routesName.welcomeScreen,
+      page: () => WelcomeScreen(),
       transition: Transition.upToDown),
 
   // FOLDER AUTH ROUTES
@@ -42,4 +45,11 @@ List<GetPage<dynamic>> appRoutes = [
   GetPage(name: cnstSheet.routesName.homeScreen, page: () => HomeScreen()),
   GetPage(
       name: cnstSheet.routesName.accountScreen, page: () => AccountScreen()),
+  // ACCONT
+  GetPage(name: cnstSheet.routesName.themeScreen, page: () => ThemeScreen()),
+  GetPage(
+      name: cnstSheet.routesName.languageScreen, page: () => LanguageScreen()),
+  GetPage(
+      name: cnstSheet.routesName.updateProfileScreen,
+      page: () => UpdateProfileScreen()),
 ];

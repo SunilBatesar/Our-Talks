@@ -18,5 +18,6 @@ class LanguageController extends GetxController {
     Get.updateLocale(localeValue); // UPDATE LOCALE
     await Prefs.setLanguagePref(model: model); // SET PREFS LANGUAGE
     _languagedata(model); // SET NEW LANGUAGE DATA
+    update();
   }
 }

@@ -58,6 +58,19 @@ class LanguageType {
         "No, we don’t have alien language yet! Pick a human one!\u{1F605}",
     LanguageConst.colorchangedupgradedfun:
         "Color changed, style upgraded, now double the fun!\u{1F47B}",
+
+    // USER PROFILE IMAGE SHOW SCREEN
+    LanguageConst.ohWhohandsomeGuyMe:
+        "Oh! Who is this handsome guy? Oh... It's me!\u{1F60E}",
+
+    // ACCOUNT
+    LanguageConst.updateProfile: "Update Profile",
+    LanguageConst.theme: "Theme",
+    LanguageConst.language: "Language",
+    LanguageConst.notificationsSettings: "Notifications Settings",
+    LanguageConst.termsConditions: "Terms & Conditions",
+    LanguageConst.helpSupport: "Help & Support",
+    LanguageConst.logout: "Logout",
   };
 
   // HINDI TYPE
@@ -115,5 +128,18 @@ class LanguageType {
         "एलियन भाषा अभी उपलब्ध नहीं है, कृपया कोई मानव भाषा चुनें!\u{1F605}",
     LanguageConst.colorchangedupgradedfun:
         "रंग बदला, अंदाज़ बदला, अब मज़ा दोगुना!\u{1F47B}",
+
+    // USER PROFILE IMAGE SHOW SCREEN
+    LanguageConst.ohWhohandsomeGuyMe:
+        "अरे! इतना हैंडसम कौन है? ओह… मैं ही हूँ!\u{1F60E}",
+
+    // ACCOUNT
+    LanguageConst.updateProfile: "प्रोफ़ाइल अपडेट करें",
+    LanguageConst.theme: "थीम",
+    LanguageConst.language: "भाषा",
+    LanguageConst.notificationsSettings: "नोटिफिकेशन सेटिंग्स",
+    LanguageConst.termsConditions: "नियम और शर्तें",
+    LanguageConst.helpSupport: "मदद और समर्थन",
+    LanguageConst.logout: "लॉगआउट",
   };
 }

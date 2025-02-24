@@ -83,7 +83,7 @@ class AuthDataHandler {
       await _repo.logout();
       await Prefs.clearPrefsData();
       _userController.clearUser();
-      Get.offAllNamed(cnstSheet.routesName.languageScreen);
+      Get.offAllNamed(cnstSheet.routesName.welcomeScreen);
       _loadingController.hideLoading(); // HIDE LODING FUNCTION
       AppUtils.showSnackBar(
           title: 'Success', message: 'User logged out successfully');

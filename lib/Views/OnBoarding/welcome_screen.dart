@@ -9,8 +9,8 @@ import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/language_controller.dart';
 import 'package:ourtalks/view_model/Controllers/theme_controller.dart';
 
-class LanguageScreen extends StatelessWidget {
-  LanguageScreen({super.key});
+class WelcomeScreen extends StatelessWidget {
+  WelcomeScreen({super.key});
 
   final ThemeController themeController = Get.find<ThemeController>();
 

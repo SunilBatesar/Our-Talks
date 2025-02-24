@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             appBarTheme: AppBarTheme(backgroundColor: cnstSheet.colors.black),
             scaffoldBackgroundColor: cnstSheet.colors.black, // App theme color
-          ),
+          ), // CALL APPTHEMEDATA CLASS AND THEME DATA
         );
       },
       designSize: Size(AppConfig.appScreenWidth,

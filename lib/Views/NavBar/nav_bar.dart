@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Views/NavBar/Account/account_screen.dart';
 import 'package:ourtalks/Views/NavBar/Home/home_screen.dart';
 import 'package:ourtalks/main.dart';
@@ -26,14 +25,6 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // CALL APP BAR AND SHOW APP NAME
-      appBar: AppBar(
-        title: Text(
-          AppConfig.appName,
-          style: cnstSheet.textTheme.appNameStyle15
-              .copyWith(color: cnstSheet.colors.primary),
-        ),
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex), // CALL WIDGET
       ),

@@ -50,4 +50,16 @@ class LanguageConst {
   static const String nowedontAlienlanguagePichuman =
       "NowedontAlienlanguagePichuman";
   static const String colorchangedupgradedfun = "Colorchangedupgradedfun";
+
+  // USER PROFILE IMAGE SHOW SCREEN
+  static const String ohWhohandsomeGuyMe = "OhWhohandsomeGuyMe";
+
+  // ACCOUNT
+  static const String updateProfile = "UpdateProfile";
+  static const String theme = "theme";
+  static const String language = "language";
+  static const String notificationsSettings = "NotificationsSettings";
+  static const String termsConditions = "TermsConditions";
+  static const String helpSupport = "HelpSupport";
+  static const String logout = "Logout";
 }

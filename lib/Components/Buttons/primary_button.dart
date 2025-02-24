@@ -35,8 +35,10 @@ class PrimaryButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r))),
       child: Text(
         title,
-        style: cnstSheet.textTheme.fs16Medium
-            .copyWith(color: cnstSheet.colors.white),
+        style: cnstSheet.textTheme.fs16Medium.copyWith(
+            color: isTransparent
+                ? cnstSheet.colors.white
+                : cnstSheet.colors.black),
       ),
     );
     return isExpanded ? Row(children: [Expanded(child: button)]) : button;

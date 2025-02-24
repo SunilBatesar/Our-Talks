@@ -25,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
       final praf = Prefs.getUserIdPref();
 
       if (praf == null) {
-        Get.offNamed(cnstSheet.routesName.languageScreen);
+        Get.offNamed(cnstSheet.routesName.welcomeScreen);
       } else {
         Get.offNamed(cnstSheet.routesName.navBar);
       }
