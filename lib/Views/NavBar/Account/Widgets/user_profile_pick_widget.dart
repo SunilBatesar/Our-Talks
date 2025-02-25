@@ -172,12 +172,12 @@ class _UserBannerPickWidgetState extends State<UserBannerPickWidget> {
         children: [
           Icon(
             Icons.add,
-            size: 50.sp,
+            size: 40.sp,
             color: cnstSheet.colors.primary.withAlpha(150),
           ),
           Text(
             LanguageConst.banner.tr,
-            style: cnstSheet.textTheme.fs18Bold
+            style: cnstSheet.textTheme.fs15Normal
                 .copyWith(color: cnstSheet.colors.white.withAlpha(150)),
           )
         ],

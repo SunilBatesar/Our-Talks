@@ -4,6 +4,11 @@ import 'package:ourtalks/Res/i18n/language_const.dart';
 class LanguageType {
   // ENGLISH US TYPE
   static final Map<String, String> englishUSType = {
+    // APP DEVELOPER KE LIYE KUCH LINES😜
+    LanguageConst.developedby: "Developed by",
+    LanguageConst.foundbugReportloveanger:
+        "Found a bug? Report with love, not anger!\u{1F61C}",
+
     // NAV BAR
     LanguageConst.home: "Home",
     LanguageConst.search: "Search",
@@ -32,6 +37,11 @@ class LanguageType {
     LanguageConst.permissionRequired: "Permission Required",
     LanguageConst.pleaseenablecameragallerypermissions:
         "Oh dear user, grant permission, or the camera and gallery will be heartbroken!\u{1F602}",
+
+    // LOG OUT DILOG
+    LanguageConst.waitLoggingout: "Wait! Logging out?",
+    LanguageConst.ohThinklogoutstillrememberpassword:
+        "Oh no! \u{1F632} Think before you go...If you log out, do you still remember the password?\u{1F602}",
 
     // APP VALIDATORS
     LanguageConst.pleaseEnterField: "Please enter this field",
@@ -94,6 +104,11 @@ class LanguageType {
 
   // HINDI TYPE
   static final Map<String, String> hindiType = {
+    // APP DEVELOPER KE LIYE KUCH LINES😜
+    LanguageConst.developedby: "निर्माता",
+    LanguageConst.foundbugReportloveanger:
+        "अगर कोई बग मिले तो प्यार से बताना, गुस्से से नहीं!\u{1F61C}",
+
     // NAV BAR
     LanguageConst.home: "घर",
     LanguageConst.search: "खोज",
@@ -121,6 +136,11 @@ class LanguageType {
     LanguageConst.permissionRequired: "अनुमति आवश्यक",
     LanguageConst.pleaseenablecameragallerypermissions:
         "हे यूज़र महाराज, परमिशन दे दो, वरना कैमरा और गैलरी हमसे रूठ जाएंगे!\u{1F602}",
+
+    // LOG OUT DILOG
+    LanguageConst.waitLoggingout: "रुको! लॉगआउट कर रहे हो?",
+    LanguageConst.ohThinklogoutstillrememberpassword:
+        "अरे-अरे! \u{1F632} जाने से पहले सोच लो... लॉगआउट किया तो फिर पासवर्ड याद है ना? \u{1F602}",
 
     // APP VALIDATORS
     LanguageConst.pleaseEnterField: "कृपया यह फ़ील्ड दर्ज करें",

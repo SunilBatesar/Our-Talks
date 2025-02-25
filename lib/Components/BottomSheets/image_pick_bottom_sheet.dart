@@ -103,35 +103,50 @@ class ImagePickBottomSheet extends StatelessWidget {
   }
 }
 
+bool _isRequesting = false; // Flag to prevent multiple requests
 // GET CAMERA AND GALLERY PERMISSION
 Future<bool> requestPermissions() async {
-  Map<Permission, PermissionStatus> status = await [
-    Permission.camera,
-    Permission.storage,
-    Permission.photos
-  ].request();
-  final camera = status[Permission.camera];
-  final storage = status[Permission.storage];
-  final photos = status[Permission.photos];
-
-  if (camera!.isGranted && storage!.isGranted || photos!.isGranted) {
-    return true;
-  } else if (camera.isDenied ||
-      camera.isPermanentlyDenied ||
-      storage!.isDenied ||
-      storage.isPermanentlyDenied ||
-      photos.isDenied ||
-      photos.isPermanentlyDenied) {
-    AppUtils.showPermissionDialog(
-        title: LanguageConst.permissionRequired.tr,
-        content: LanguageConst.pleaseenablecameragallerypermissions.tr,
-        onTap: () async {
-          await openAppSettings();
-        });
-    return false;
-  } else {
-    return false;
+  if (_isRequesting) return false;
+  _isRequesting = true; // REQUEST START
+  try {
+    if (await Permission.camera.isGranted &&
+        await Permission.storage.isGranted &&
+        await Permission.photos.isGranted) {
+      return true;
+    }
+    Map<Permission, PermissionStatus> status = await [
+      Permission.camera,
+      Permission.storage,
+      Permission.photos
+    ].request();
+    final camera = status[Permission.camera];
+    final storage = status[Permission.storage];
+    final photos = status[Permission.photos];
+    _isRequesting = false; // REQUEST END
+    if (camera!.isGranted && storage!.isGranted || photos!.isGranted) {
+      return true;
+    } else if (camera.isDenied ||
+        camera.isPermanentlyDenied ||
+        storage!.isDenied ||
+        storage.isPermanentlyDenied ||
+        photos.isDenied ||
+        photos.isPermanentlyDenied) {
+      AppUtils.showPermissionDialog(
+          title: LanguageConst.permissionRequired.tr,
+          content: LanguageConst.pleaseenablecameragallerypermissions.tr,
+          onTap: () async {
+            await openAppSettings();
+          });
+      return false;
+    } else {
+      return false;
+    }
+  } catch (e) {
+    debugPrint(e.toString());
+  } finally {
+    _isRequesting = false; // REQUEST END
   }
+  return false;
 }
 
 // IMAGE PICK

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
+import 'package:ourtalks/Utils/utils.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/menu_tile.dart';
 import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dart';
 import 'package:ourtalks/main.dart';
@@ -139,7 +140,30 @@ class AccountScreen extends StatelessWidget {
                     },
                   ).marginOnly(bottom: 10.h);
                 },
-              )
+              ),
+              Center(
+                child: Text(
+                  "Version:1.0.0",
+                  style: cnstSheet.textTheme.fs14Normal
+                      .copyWith(color: cnstSheet.colors.primary),
+                ),
+              ),
+              Gap(5.h),
+              Center(
+                child: Text(
+                  "${LanguageConst.developedby.tr}: Sunil Batesar and Naveen",
+                  style: cnstSheet.textTheme.fs14Normal
+                      .copyWith(color: cnstSheet.colors.white),
+                ),
+              ),
+              Gap(5.h),
+              Center(
+                child: Text(
+                  LanguageConst.foundbugReportloveanger.tr,
+                  style: cnstSheet.textTheme.fs14Normal
+                      .copyWith(color: cnstSheet.colors.white),
+                ),
+              ),
             ],
           ),
         ),
@@ -156,7 +180,12 @@ class AccountScreen extends StatelessWidget {
       case LanguageConst.language:
         Get.toNamed(cnstSheet.routesName.languageScreen);
       case LanguageConst.logout:
-        AuthDataHandler.logout();
+        AppUtils.showPermissionDialog(
+            title: LanguageConst.waitLoggingout.tr,
+            content: LanguageConst.ohThinklogoutstillrememberpassword.tr,
+            onTap: () async {
+              await AuthDataHandler.logout();
+            });
 
       default:
         null;

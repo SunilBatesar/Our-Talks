@@ -1,5 +1,9 @@
 // LANGUAGE CONST
 class LanguageConst {
+  // APP DEVELOPER KE LIYE KUCH LINES😜
+  static const String developedby = "Developedby";
+  static const String foundbugReportloveanger = "FoundbugReportloveanger!";
+   
   // NAV BAR
   static const String home = "Home";
   static const String search = "Search";
@@ -28,6 +32,10 @@ class LanguageConst {
   static const String permissionRequired = "PermissionRequired";
   static const String pleaseenablecameragallerypermissions =
       "Pleaseenablecameragallerypermissions";
+  // LOG OUT DILOG
+  static const String waitLoggingout = "waitLoggingout";
+  static const String ohThinklogoutstillrememberpassword =
+      "OhThinklogoutstillrememberpassword";
 
   // APP VALIDATORS
   static const String pleaseEnterField = "Pleaseenterthisfield";

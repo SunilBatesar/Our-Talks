@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
+import 'package:ourtalks/main.dart';
 
 class AppUtils {
   static fieldFocusChange(
@@ -32,22 +34,39 @@ class AppUtils {
   }
 
   static void showPermissionDialog(
-      {required String title,required String content,required Function onTap}) {
+      {required String title,
+      required String content,
+      required Function onTap}) {
     Get.dialog(
       AlertDialog(
-        title: Text(title),
-        content: Text(content),
+        elevation: 0.5,
+        backgroundColor: cnstSheet.colors.black,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.r),
+            side: BorderSide(color: cnstSheet.colors.primary)),
+        title: Text(title,
+            style: cnstSheet.textTheme.fs16Medium
+                .copyWith(color: cnstSheet.colors.white)),
+        content: Text(content,
+            style: cnstSheet.textTheme.fs15Normal
+                .copyWith(color: cnstSheet.colors.white)),
         actions: [
           TextButton(
             onPressed: () => Get.back(),
-            child: Text(LanguageConst.cancel.tr),
+            child: Text(
+              LanguageConst.cancel.tr,
+              style: cnstSheet.textTheme.fs14Normal
+                  .copyWith(color: cnstSheet.colors.blue),
+            ),
           ),
           TextButton(
             onPressed: () {
               Get.back();
               onTap();
             },
-            child: Text(LanguageConst.openSettings.tr),
+            child: Text(LanguageConst.openSettings.tr,
+                style: cnstSheet.textTheme.fs14Normal
+                    .copyWith(color: cnstSheet.colors.blue)),
           ),
         ],
       ),
