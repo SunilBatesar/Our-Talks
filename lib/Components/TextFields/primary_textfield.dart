@@ -9,10 +9,12 @@ class PrimaryTextfield extends StatelessWidget {
   final AppValidator? validator;
   final bool? isDense;
   final bool isobscureText;
+  final bool readOnly;
   final IconData? suffixicon;
   final Function? suffixiconOnTap;
   final FocusNode? focusNode;
   final TextInputType? keybordtype;
+  final Function(String)? fieldSubmitted;
   const PrimaryTextfield({
     super.key,
     this.label,
@@ -20,10 +22,12 @@ class PrimaryTextfield extends StatelessWidget {
     this.validator,
     this.isDense = false,
     this.isobscureText = false,
+    this.readOnly = false,
     this.suffixicon,
     this.suffixiconOnTap,
     this.focusNode,
     this.keybordtype,
+    this.fieldSubmitted,
   });
 
   @override
@@ -32,11 +36,15 @@ class PrimaryTextfield extends StatelessWidget {
         controller: controller,
         validator:
             validator != null ? (value) => validator!.validate(value) : null,
+        onFieldSubmitted:
+            fieldSubmitted != null ? (value) => fieldSubmitted!(value) : null,
         focusNode: focusNode,
         obscureText: isobscureText,
         keyboardType: keybordtype,
+        readOnly: readOnly,
         style: cnstSheet.textTheme.fs14Normal
             .copyWith(color: cnstSheet.colors.white),
+        cursorColor: cnstSheet.colors.primary,
         decoration: InputDecoration(
             isDense: isDense,
             label: Text(

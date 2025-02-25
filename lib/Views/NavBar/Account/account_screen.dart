@@ -69,15 +69,17 @@ class AccountScreen extends StatelessWidget {
                   ),
                   Positioned(
                     left: 15.w,
-                    child: Obx(() {
-                      double imageHeightWidth =
-                          _isbanerShowFull.value ? 0 : 80.sp;
-                      return GestureDetector(
-                        onTap: () {
-                          Get.to(() => UserProfileImageShowScreen());
-                        },
-                        child: AnimatedContainer(
-                          duration: Duration(milliseconds: 200),
+                    child: GestureDetector(
+                      onTap: () {
+                        Get.to(() => UserProfileImageShowScreen(
+                              image: "",
+                            ));
+                      },
+                      child: Obx(() {
+                        double imageHeightWidth =
+                            _isbanerShowFull.value ? 0 : 80.sp;
+                        return AnimatedContainer(
+                          duration: Duration(milliseconds: 400),
                           height: imageHeightWidth,
                           width: imageHeightWidth,
                           padding: EdgeInsets.all(5.sp),
@@ -88,8 +90,7 @@ class AccountScreen extends StatelessWidget {
                               style: BorderStyle.solid,
                             ),
                           ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(1000),
+                          child: ClipOval(
                             child: CachedNetworkImage(
                               imageUrl:
                                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqU4vLfw1UL-mlkkZSzi3q441eQwhFjW8A9g&s",
@@ -107,9 +108,9 @@ class AccountScreen extends StatelessWidget {
                                   Center(child: Icon(Icons.error)),
                             ),
                           ),
-                        ),
-                      );
-                    }),
+                        );
+                      }),
+                    ),
                   ),
                 ],
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ourtalks/Res/i18n/language_const.dart';
 
 class AppUtils {
   static fieldFocusChange(
@@ -27,6 +28,30 @@ class AppUtils {
         isError ? Icons.error : Icons.check_circle,
         color: Colors.white,
       ),
+    );
+  }
+
+  static void showPermissionDialog(
+      {required String title,required String content,required Function onTap}) {
+    Get.dialog(
+      AlertDialog(
+        title: Text(title),
+        content: Text(content),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text(LanguageConst.cancel.tr),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+              onTap();
+            },
+            child: Text(LanguageConst.openSettings.tr),
+          ),
+        ],
+      ),
+      barrierDismissible: false,
     );
   }
 }

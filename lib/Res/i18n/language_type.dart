@@ -4,6 +4,11 @@ import 'package:ourtalks/Res/i18n/language_const.dart';
 class LanguageType {
   // ENGLISH US TYPE
   static final Map<String, String> englishUSType = {
+    // NAV BAR
+    LanguageConst.home: "Home",
+    LanguageConst.search: "Search",
+    LanguageConst.account: "Account",
+
     // BUTTON AND TEXT FIELD
     LanguageConst.name: "Name",
     LanguageConst.userName: "User Name",
@@ -15,6 +20,18 @@ class LanguageType {
     LanguageConst.newPassword: "New password",
     LanguageConst.confirmPassword: "Confirm password",
     LanguageConst.save: "Save",
+    LanguageConst.camera: "Camera",
+    LanguageConst.gallery: "Gallery",
+    LanguageConst.about: "About",
+    LanguageConst.cropImage: "Crop Image",
+    LanguageConst.done: "Done",
+    LanguageConst.cancel: "Cancel",
+
+    // DILOG
+    LanguageConst.openSettings: "Open Settings",
+    LanguageConst.permissionRequired: "Permission Required",
+    LanguageConst.pleaseenablecameragallerypermissions:
+        "Oh dear user, grant permission, or the camera and gallery will be heartbroken!\u{1F602}",
 
     // APP VALIDATORS
     LanguageConst.pleaseEnterField: "Please enter this field",
@@ -71,10 +88,16 @@ class LanguageType {
     LanguageConst.termsConditions: "Terms & Conditions",
     LanguageConst.helpSupport: "Help & Support",
     LanguageConst.logout: "Logout",
+    // - USER PROFILE UPDATE
+    LanguageConst.banner: "Banner",
   };
 
   // HINDI TYPE
   static final Map<String, String> hindiType = {
+    // NAV BAR
+    LanguageConst.home: "घर",
+    LanguageConst.search: "खोज",
+    LanguageConst.account: "खाता",
     // BUTTON AND TEXT FIELD
     LanguageConst.name: "नाम",
     LanguageConst.userName: "उपयोगकर्ता नाम",
@@ -86,6 +109,18 @@ class LanguageType {
     LanguageConst.newPassword: "नया पासवर्ड",
     LanguageConst.confirmPassword: "पासवर्ड पुष्टि करें",
     LanguageConst.save: "सहेजें",
+    LanguageConst.camera: "कैमरा",
+    LanguageConst.gallery: "गैलरी",
+    LanguageConst.about: "के बारे में",
+    LanguageConst.cropImage: "छवि क्रॉप करें",
+    LanguageConst.done: "समाप्त",
+    LanguageConst.cancel: "रद्द करें",
+
+    // DILOG
+    LanguageConst.openSettings: "सेटिंग्स खोलें",
+    LanguageConst.permissionRequired: "अनुमति आवश्यक",
+    LanguageConst.pleaseenablecameragallerypermissions:
+        "हे यूज़र महाराज, परमिशन दे दो, वरना कैमरा और गैलरी हमसे रूठ जाएंगे!\u{1F602}",
 
     // APP VALIDATORS
     LanguageConst.pleaseEnterField: "कृपया यह फ़ील्ड दर्ज करें",
@@ -141,5 +176,7 @@ class LanguageType {
     LanguageConst.termsConditions: "नियम और शर्तें",
     LanguageConst.helpSupport: "मदद और समर्थन",
     LanguageConst.logout: "लॉगआउट",
+    // - USER PROFILE UPDATE
+    LanguageConst.banner: "बैनर",
   };
 }

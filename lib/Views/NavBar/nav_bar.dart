@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Views/NavBar/Account/account_screen.dart';
 import 'package:ourtalks/Views/NavBar/Home/home_screen.dart';
 import 'package:ourtalks/main.dart';
@@ -49,15 +51,15 @@ class _NavBarState extends State<NavBar> {
             tabs: [
               GButton(
                 icon: Icons.home_outlined,
-                text: 'Home',
+                text: LanguageConst.home.tr,
               ),
               GButton(
                 icon: Icons.favorite_border_rounded,
-                text: 'Story',
+                text: LanguageConst.search.tr,
               ),
               GButton(
                 icon: Icons.person_2_outlined,
-                text: 'Account',
+                text: LanguageConst.account.tr,
               ),
             ],
             textStyle: cnstSheet.textTheme.fs14Normal

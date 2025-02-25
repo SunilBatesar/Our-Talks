@@ -1,5 +1,10 @@
 // LANGUAGE CONST
 class LanguageConst {
+  // NAV BAR
+  static const String home = "Home";
+  static const String search = "Search";
+  static const String account = "account";
+
   // BUTTONS AND TEXT FIELD
   static const String name = "name";
   static const String userName = "user name";
@@ -11,6 +16,18 @@ class LanguageConst {
   static const String newPassword = "New password";
   static const String confirmPassword = "Confirm password";
   static const String save = "save";
+  static const String camera = "Camera";
+  static const String gallery = "gallery";
+  static const String about = "about";
+  static const String cropImage = "cropImage";
+  static const String done = "done";
+  static const String cancel = "cancel";
+
+  // DILOG
+  static const String openSettings = "openSettings";
+  static const String permissionRequired = "PermissionRequired";
+  static const String pleaseenablecameragallerypermissions =
+      "Pleaseenablecameragallerypermissions";
 
   // APP VALIDATORS
   static const String pleaseEnterField = "Pleaseenterthisfield";
@@ -62,4 +79,6 @@ class LanguageConst {
   static const String termsConditions = "TermsConditions";
   static const String helpSupport = "HelpSupport";
   static const String logout = "Logout";
+  // - USER PROFILE UPDATE
+  static const String banner = "banner";
 }
