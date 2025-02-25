@@ -54,3 +54,23 @@ class PasswordValidator extends AppValidator {
     return null;
   }
 }
+
+// USERNAME VALIDATOR
+class UserNameValidator extends AppValidator {
+  @override
+  String? validate(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return LanguageConst.pleaseEnterField.tr;
+    }
+    if (value.length < 3 || value.length > 30) {
+      return "Username must be between 3 and 30 characters";
+    }
+    if (!RegExp(r'^[a-zA-Z0-9._]+$').hasMatch(value)) {
+      return "Use only letters, numbers, periods, and underscores";
+    }
+    if (value.endsWith('.') || value.endsWith('_')) {
+      return "Username can't end with a period or underscore";
+    }
+    return null;
+  }
+}

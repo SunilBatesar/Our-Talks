@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class LoadingController extends GetxController {
-  RxBool isLoading = false.obs;
+  bool isLoading = false;
 
   void showLoading() {
-    isLoading.value = true;
-    debugPrint("Loading शुरू हुआ=============: ${isLoading.value}");
+    isLoading = true;
+    debugPrint("Loading शुरू हुआ=============: $isLoading");
     update();
   }
 
   void hideLoading() {
-    isLoading.value = false;
-    debugPrint("Loading खत्म हुआ-------------: ${isLoading.value}");
+    isLoading = false;
+    debugPrint("Loading खत्म हुआ-------------: $isLoading");
     update();
   }
 }

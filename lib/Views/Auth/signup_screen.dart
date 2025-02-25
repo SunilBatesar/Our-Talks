@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -25,6 +26,10 @@ class SignUpScreen extends StatelessWidget {
   // BOOL VALUE
   final RxBool _isPasswordobscure = true.obs;
   final RxBool _iskeboardValue = false.obs;
+
+  // check user name
+  final RxString _checkuserNameController = ''.obs;
+  final RxBool _isUserNameAvailable = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +84,69 @@ class SignUpScreen extends StatelessWidget {
                     Gap(15.sp),
                     // User Name TEXT FIELD
                     PrimaryTextfield(
-                      validator: TextValidator(),
+                      validator: UserNameValidator(),
                       controller: _userNameController,
                       label: LanguageConst.userName.tr,
                       keybordtype: TextInputType.emailAddress,
+                      onChanged: (v) {
+                        final error = UserNameValidator().validate(v);
+                        if (error == null) {
+                          _checkuserNameController.value = v;
+                        } else {
+                          _checkuserNameController.value = "";
+                        }
+                      },
                     ),
+
+                    StreamBuilder<QuerySnapshot>(
+                      stream: _checkuserNameController.value.isEmpty
+                          ? null
+                          : FirebaseFirestore.instance
+                              .collection('Users')
+                              .where('userName',
+                                  isEqualTo: _checkuserNameController.value)
+                              .snapshots(),
+                      builder: (context, snapshot) {
+                        if (_checkuserNameController.value.isEmpty) {
+                          return SizedBox.shrink();
+                        }
+
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Text(
+                            "Checking...",
+                            style: cnstSheet.textTheme.fs16Medium
+                                .copyWith(color: Colors.blue),
+                          );
+                        }
+
+                        if (snapshot.hasError) {
+                          return Text(
+                            "Error checking username",
+                            style: cnstSheet.textTheme.fs16Medium
+                                .copyWith(color: cnstSheet.colors.red),
+                          );
+                        }
+
+                        final isAvailable = snapshot.data!.docs.isEmpty;
+                        _isUserNameAvailable.value = isAvailable;
+                        return Align(
+                          alignment: Alignment.centerRight,
+                          child: isAvailable
+                              ? Text(
+                                  "Username available",
+                                  style: cnstSheet.textTheme.fs16Medium
+                                      .copyWith(color: Colors.green),
+                                )
+                              : Text(
+                                  "Username not available",
+                                  style: cnstSheet.textTheme.fs16Medium
+                                      .copyWith(color: cnstSheet.colors.red),
+                                ),
+                        );
+                      },
+                    ),
+
                     Gap(15.sp),
                     // EMAIL TEXT FIELD
                     PrimaryTextfield(
@@ -112,33 +175,40 @@ class SignUpScreen extends StatelessWidget {
 
                     Gap(30.sp),
                     // SIGN UP BUTTON
+
                     LoadingIndicator(
                       widget: PrimaryButton(
                         title: LanguageConst.signUp.tr,
-                        onPressed: () {
-                          if (_globalKey.currentState!.validate()) {
-                            final userdata = UserModel(
-                              userName: _userNameController.text.trim(),
-                              image: "",
-                              about:
-                                  "I am using our-talks app to connect and share thoughts!",
-                              name: _nameController.text.trim(),
-                              createdAt: DateTime.now().toIso8601String(),
-                              lastActive: DateTime.now().toIso8601String(),
-                              email: _emailController.text.trim(),
-                              pushToken: "",
-                            );
+                        onPressed: _isUserNameAvailable.value
+                            ? () {
+                                if (_globalKey.currentState!.validate()) {
+                                  final userdata = UserModel(
+                                    userName: _userNameController.text.trim(),
+                                    image: "",
+                                    about:
+                                        "I am using our-talks app to connect and share thoughts!",
+                                    name: _nameController.text.trim(),
+                                    createdAt: DateTime.now().toIso8601String(),
+                                    lastActive:
+                                        DateTime.now().toIso8601String(),
+                                    email: _emailController.text.trim(),
+                                    pushToken: "",
+                                  );
 
-                            AuthDataHandler.signUp(
-                              user: userdata,
-                              password: _passwordController.text.trim(),
-                            );
-                          }
-                        },
+                                  AuthDataHandler.signUp(
+                                    user: userdata,
+                                    password: _passwordController.text.trim(),
+                                  );
+                                }
+                              }
+                            : () {
+                                if (_globalKey.currentState!.validate()) {}
+                              },
                         isExpanded: true,
                         isTransparent: true,
                       ),
                     ),
+
                     Gap(55.sp),
                     // TEXT RICH
                     GestureDetector(

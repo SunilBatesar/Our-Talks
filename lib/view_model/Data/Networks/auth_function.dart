@@ -57,6 +57,8 @@ class AuthRepository extends Authentication {
     }
   }
 
+  // ****************************************
+
   @override
   Future<void> resetPassword({required String email}) async {
     try {

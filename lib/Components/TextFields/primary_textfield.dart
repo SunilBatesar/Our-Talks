@@ -13,22 +13,24 @@ class PrimaryTextfield extends StatelessWidget {
   final Function? suffixiconOnTap;
   final FocusNode? focusNode;
   final TextInputType? keybordtype;
-  const PrimaryTextfield({
-    super.key,
-    this.label,
-    required this.controller,
-    this.validator,
-    this.isDense = false,
-    this.isobscureText = false,
-    this.suffixicon,
-    this.suffixiconOnTap,
-    this.focusNode,
-    this.keybordtype,
-  });
+  final Function(String)? onChanged;
+  const PrimaryTextfield(
+      {super.key,
+      this.label,
+      required this.controller,
+      this.validator,
+      this.isDense = false,
+      this.isobscureText = false,
+      this.suffixicon,
+      this.suffixiconOnTap,
+      this.focusNode,
+      this.keybordtype,
+      this.onChanged});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        onChanged: onChanged,
         controller: controller,
         validator:
             validator != null ? (value) => validator!.validate(value) : null,
