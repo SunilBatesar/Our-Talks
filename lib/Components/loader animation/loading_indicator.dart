@@ -13,7 +13,7 @@ class LoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<LoadingController>(
-      builder: (controller) => _loadingController.isLoading.value
+      builder: (controller) => _loadingController.isLoading
           ? Center(
               child: Lottie.asset(
                 height: 50.h,

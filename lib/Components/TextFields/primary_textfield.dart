@@ -14,6 +14,7 @@ class PrimaryTextfield extends StatelessWidget {
   final Function? suffixiconOnTap;
   final FocusNode? focusNode;
   final TextInputType? keybordtype;
+  final Function(String)? onChanged;
   final Function(String)? fieldSubmitted;
   const PrimaryTextfield({
     super.key,
@@ -27,12 +28,14 @@ class PrimaryTextfield extends StatelessWidget {
     this.suffixiconOnTap,
     this.focusNode,
     this.keybordtype,
+    this.onChanged,
     this.fieldSubmitted,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+        onChanged: onChanged,
         controller: controller,
         validator:
             validator != null ? (value) => validator!.validate(value) : null,

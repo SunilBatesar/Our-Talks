@@ -21,7 +21,7 @@ class AuthDataHandler {
       final userSnapshot = await _repo.signup(user: user, password: password);
       _userController.setUser(userSnapshot);
       await Prefs.setUserIdPref(userSnapshot.userID!);
-      Get.offAllNamed(cnstSheet.routesName.homeScreen);
+      Get.offAllNamed(cnstSheet.routesName.navBar);
       _loadingController.hideLoading(); // HIDE LODING FUNCTION
       AppUtils.showSnackBar(
           title: 'Success', message: 'User signed up successfully');
@@ -42,7 +42,7 @@ class AuthDataHandler {
       final userSnapshot = await _repo.login(email: email, password: password);
       _userController.setUser(userSnapshot);
       await Prefs.setUserIdPref(userSnapshot.userID!);
-      Get.offAllNamed(cnstSheet.routesName.homeScreen);
+      Get.offAllNamed(cnstSheet.routesName.navBar);
       _loadingController.hideLoading(); // HIDE LODING FUNCTION
       AppUtils.showSnackBar(
           title: 'Success', message: 'User logged in successfully');
@@ -56,12 +56,14 @@ class AuthDataHandler {
     }
   }
 
+  // ***********************************
+
   // PASSWORD RESET FUNCTION
   static Future<void> resetPassword({required String email}) async {
     try {
       _loadingController.showLoading();
       await _repo.resetPassword(email: email);
-      Get.offNamed(cnstSheet.routesName.loginScreen);
+      Get.offNamed(cnstSheet.routesName.welcomeScreen);
       _loadingController.hideLoading(); // HIDE LODING FUNCTION
       AppUtils.showSnackBar(
           title: 'Success', message: 'Password reset email sent successfully');
