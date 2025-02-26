@@ -155,6 +155,7 @@ Future<String> pickImage(ImageSource source) async {
   return "";
 }
 
+//
 // IMAGE CROP FUNCTION
 Future<String> _cropImage(File imageFile) async {
   CroppedFile? croppedFile = await ImageCropper().cropImage(
