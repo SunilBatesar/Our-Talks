@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Utils/utils.dart';
+import 'package:ourtalks/Views/NavBar/Account/Widgets/find_app_version.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/menu_tile.dart';
 import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dart';
 import 'package:ourtalks/main.dart';
@@ -13,18 +14,11 @@ import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/LocalData/local_data.dart';
 import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
 import 'package:ourtalks/view_model/Models/account_menu_model.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class AccountScreen extends StatelessWidget {
   AccountScreen({super.key});
 
   final _isbanerShowFull = false.obs;
-
-  // get app version
-  Future<String> _getAppVersion() async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    return "Version: ${packageInfo.version} (${packageInfo.buildNumber})";
-  }
 
   // find user from controller
   final _userdata = Get.find<UserController>().user;
@@ -161,28 +155,7 @@ class AccountScreen extends StatelessWidget {
                 },
               ),
               Center(
-                child: FutureBuilder<String>(
-                  future: _getAppVersion(),
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Text(
-                        "Loading version...",
-                        style: cnstSheet.textTheme.fs14Normal,
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text(
-                        "Version: error",
-                        style: cnstSheet.textTheme.fs14Normal
-                            .copyWith(color: cnstSheet.colors.red),
-                      );
-                    }
-                    return Text(
-                      snapshot.data ?? "Version: Unknown",
-                      style: cnstSheet.textTheme.fs14Normal
-                          .copyWith(color: cnstSheet.colors.primary),
-                    );
-                  },
-                ),
+                child: FindAppVersion(),
               ),
               Gap(5.h),
               Center(
