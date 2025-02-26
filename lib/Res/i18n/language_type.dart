@@ -31,6 +31,7 @@ class LanguageType {
     LanguageConst.cropImage: "Crop Image",
     LanguageConst.done: "Done",
     LanguageConst.cancel: "Cancel",
+    LanguageConst.delete: "Delete",
 
     // DILOG
     LanguageConst.openSettings: "Open Settings",
@@ -138,6 +139,7 @@ class LanguageType {
     LanguageConst.cropImage: "छवि क्रॉप करें",
     LanguageConst.done: "समाप्त",
     LanguageConst.cancel: "रद्द करें",
+    LanguageConst.delete: "हटाएं",
 
     // DILOG
     LanguageConst.openSettings: "सेटिंग्स खोलें",

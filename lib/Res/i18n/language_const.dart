@@ -26,6 +26,7 @@ class LanguageConst {
   static const String cropImage = "cropImage";
   static const String done = "done";
   static const String cancel = "cancel";
+  static const String delete = "delete";
 
   // DILOG
   static const String openSettings = "openSettings";

@@ -30,7 +30,7 @@ class PrimaryContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: alignment ?? Alignment.center,
+      alignment: alignment,
       height: height,
       width: width ?? cnstSheet.services.screenWidth(context),
       padding: padding ?? EdgeInsets.all(10.sp),

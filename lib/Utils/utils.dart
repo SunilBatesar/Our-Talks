@@ -36,6 +36,7 @@ class AppUtils {
   static void showPermissionDialog(
       {required String title,
       required String content,
+      required String submitButnText,
       required Function onTap}) {
     Get.dialog(
       AlertDialog(
@@ -64,7 +65,7 @@ class AppUtils {
               Get.back();
               onTap();
             },
-            child: Text(LanguageConst.openSettings.tr,
+            child: Text(submitButnText,
                 style: cnstSheet.textTheme.fs14Normal
                     .copyWith(color: cnstSheet.colors.blue)),
           ),

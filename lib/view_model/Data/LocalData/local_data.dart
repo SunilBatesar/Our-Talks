@@ -51,4 +51,24 @@ class LocalData {
         title: LanguageConst.shareApp,
         icon: Icons.share),
   ];
+
+  // IMAGE PICK BOTTOM SHET LOCAL DATA
+  static List<AccountMenuModel> imagePickBottomSheetLocalData = [
+    AccountMenuModel(
+        id: LanguageConst.camera,
+        title: LanguageConst.camera,
+        icon: Icons.camera_alt_outlined),
+    AccountMenuModel(
+        id: LanguageConst.gallery,
+        title: LanguageConst.gallery,
+        icon: Icons.photo_library_outlined),
+    AccountMenuModel(
+        id: LanguageConst.delete,
+        title: LanguageConst.delete,
+        icon: Icons.delete_outline_outlined),
+    AccountMenuModel(
+        id: LanguageConst.cancel,
+        title: LanguageConst.cancel,
+        icon: Icons.cancel_outlined),
+  ];
 }

@@ -221,6 +221,7 @@ class AccountScreen extends StatelessWidget {
         AppUtils.showPermissionDialog(
             title: LanguageConst.waitLoggingout.tr,
             content: LanguageConst.ohThinklogoutstillrememberpassword.tr,
+            submitButnText: LanguageConst.logout.tr,
             onTap: () async {
               await AuthDataHandler.logout();
             });
