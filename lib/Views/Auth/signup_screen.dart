@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
@@ -8,6 +7,7 @@ import 'package:ourtalks/Components/TextFields/primary_textfield.dart';
 import 'package:ourtalks/Components/loader%20animation/loading_indicator.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Utils/app_validators.dart';
+import 'package:ourtalks/Views/Auth/widget/username_checker.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
@@ -97,55 +97,9 @@ class SignUpScreen extends StatelessWidget {
                         }
                       },
                     ),
-
-                    StreamBuilder<QuerySnapshot>(
-                      stream: _checkuserNameController.value.isEmpty
-                          ? null
-                          : FirebaseFirestore.instance
-                              .collection('Users')
-                              .where('userName',
-                                  isEqualTo: _checkuserNameController.value)
-                              .snapshots(),
-                      builder: (context, snapshot) {
-                        if (_checkuserNameController.value.isEmpty) {
-                          return SizedBox.shrink();
-                        }
-
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Text(
-                            "Checking...",
-                            style: cnstSheet.textTheme.fs16Medium
-                                .copyWith(color: Colors.blue),
-                          );
-                        }
-
-                        if (snapshot.hasError) {
-                          return Text(
-                            "Error checking username",
-                            style: cnstSheet.textTheme.fs16Medium
-                                .copyWith(color: cnstSheet.colors.red),
-                          );
-                        }
-
-                        final isAvailable = snapshot.data!.docs.isEmpty;
-                        _isUserNameAvailable.value = isAvailable;
-                        return Align(
-                          alignment: Alignment.centerRight,
-                          child: isAvailable
-                              ? Text(
-                                  "Username available",
-                                  style: cnstSheet.textTheme.fs16Medium
-                                      .copyWith(color: Colors.green),
-                                )
-                              : Text(
-                                  "Username not available",
-                                  style: cnstSheet.textTheme.fs16Medium
-                                      .copyWith(color: cnstSheet.colors.red),
-                                ),
-                        );
-                      },
-                    ),
+                    UsernameChecker(
+                        username: _checkuserNameController.value,
+                        isUserNameAvailable: _isUserNameAvailable),
 
                     Gap(15.sp),
                     // EMAIL TEXT FIELD
