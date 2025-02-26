@@ -8,20 +8,38 @@ import 'package:ourtalks/Utils/utils.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/menu_tile.dart';
 import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/LocalData/local_data.dart';
 import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
 import 'package:ourtalks/view_model/Models/account_menu_model.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class AccountScreen extends StatelessWidget {
   AccountScreen({super.key});
 
   final _isbanerShowFull = false.obs;
+
+  // get app version
+  Future<String> _getAppVersion() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return "Version: ${packageInfo.version} (${packageInfo.buildNumber})";
+  }
+
+  // find user from controller
+  final _userdata = Get.find<UserController>().user;
+
+  // capital first letter function
+  String _capitalizeFirstLetter(String text) {
+    if (text.isEmpty) return text;
+    return text[0].toUpperCase() + text.substring(1).toLowerCase();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Sunil",
+          _capitalizeFirstLetter(_userdata!.name),
           style: cnstSheet.textTheme.appNameStyle15
               .copyWith(color: cnstSheet.colors.primary),
         ),
@@ -74,7 +92,7 @@ class AccountScreen extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         Get.to(() => UserProfileImageShowScreen(
-                              image: "",
+                              image: _userdata.userDP,
                             ));
                       },
                       child: Obx(() {
@@ -118,13 +136,13 @@ class AccountScreen extends StatelessWidget {
               ),
               Gap(10.h),
               Text(
-                "batesar_sunil",
+                _userdata.userName,
                 style: cnstSheet.textTheme.fs18Bold
                     .copyWith(color: cnstSheet.colors.white),
               ),
               Gap(3.h),
               Text(
-                "Ram Ram Tau \n Jatt",
+                _userdata.about!,
                 style: cnstSheet.textTheme.fs16Medium
                     .copyWith(color: cnstSheet.colors.white),
               ),
@@ -142,10 +160,27 @@ class AccountScreen extends StatelessWidget {
                 },
               ),
               Center(
-                child: Text(
-                  "Version:1.0.0",
-                  style: cnstSheet.textTheme.fs14Normal
-                      .copyWith(color: cnstSheet.colors.primary),
+                child: FutureBuilder<String>(
+                  future: _getAppVersion(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Text(
+                        "Loading version...",
+                        style: cnstSheet.textTheme.fs14Normal,
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text(
+                        "Version: error",
+                        style: cnstSheet.textTheme.fs14Normal
+                            .copyWith(color: cnstSheet.colors.red),
+                      );
+                    }
+                    return Text(
+                      snapshot.data ?? "Version: Unknown",
+                      style: cnstSheet.textTheme.fs14Normal
+                          .copyWith(color: cnstSheet.colors.primary),
+                    );
+                  },
                 ),
               ),
               Gap(5.h),

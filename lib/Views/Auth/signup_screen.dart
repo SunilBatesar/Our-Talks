@@ -184,7 +184,6 @@ class SignUpScreen extends StatelessWidget {
                                 if (_globalKey.currentState!.validate()) {
                                   final userdata = UserModel(
                                     userName: _userNameController.text.trim(),
-                                    image: "",
                                     about:
                                         "I am using our-talks app to connect and share thoughts!",
                                     name: _nameController.text.trim(),
@@ -192,7 +191,6 @@ class SignUpScreen extends StatelessWidget {
                                     lastActive:
                                         DateTime.now().toIso8601String(),
                                     email: _emailController.text.trim(),
-                                    pushToken: "",
                                   );
 
                                   AuthDataHandler.signUp(

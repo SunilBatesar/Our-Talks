@@ -32,7 +32,7 @@ class HomeScreen extends StatelessWidget {
                 itemBuilder: (context, index) => UserMessageTile(
                   model: UserModel(
                       userName: "batesar_sunil",
-                      image:
+                      userDP:
                           "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqU4vLfw1UL-mlkkZSzi3q441eQwhFjW8A9g&s",
                       about: "Ram Ram Tau",
                       name: "Sunil",

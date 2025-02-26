@@ -2,17 +2,24 @@ import 'package:get/get.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class UserController extends GetxController {
-  final Rx<UserModel?> _user = Rx<UserModel?>(null);
+  UserModel? _user;
 
-  UserModel? get alluser => _user.value;
+  UserModel? get user => _user;
 
   void setUser(UserModel model) {
-    _user.value = model;
+    _user = model;
     update();
   }
 
   void clearUser() {
-    _user.value = null;
+    _user = null;
     update();
+  }
+
+  void updateUser(UserModel model) {
+    if (_user != null && _user!.userID == model.userID) {
+      _user = model;
+      update();
+    }
   }
 }
