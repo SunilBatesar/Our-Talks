@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Components/AppBar/primary_app_bar.dart';
 import 'package:ourtalks/Components/Buttons/primary_button.dart';
+import 'package:ourtalks/Components/Heading/heading_text_2.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/theme_controller.dart';
@@ -27,12 +28,8 @@ class ThemeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // TEXT
-              Text(
-                LanguageConst.colorchangedupgradedfun.tr,
-                style: cnstSheet.textTheme.fs15Normal
-                    .copyWith(color: cnstSheet.colors.white),
-              ),
+              // CALL HEADING TEXT 2
+              HeadingText2(text: LanguageConst.colorchangedupgradedfun.tr),
               Gap(10.h),
               // THEME COLORS LIST AND UPDATE
               Align(

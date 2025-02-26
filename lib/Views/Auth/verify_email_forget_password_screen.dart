@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:ourtalks/Components/AppBar/primary_app_bar.dart';
 import 'package:ourtalks/Components/Buttons/primary_button.dart';
 import 'package:ourtalks/Components/TextFields/primary_textfield.dart';
 import 'package:ourtalks/Components/loader%20animation/loading_indicator.dart';
@@ -17,6 +18,7 @@ class VerifyEmailForgetPasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PrimaryAppBar(),
       body: SafeArea(
           child: SingleChildScrollView(
         child: Padding(

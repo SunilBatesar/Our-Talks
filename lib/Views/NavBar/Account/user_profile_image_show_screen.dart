@@ -2,7 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:get/get_utils/src/extensions/widget_extensions.dart';
 import 'package:ourtalks/Components/AppBar/primary_app_bar.dart';
+import 'package:ourtalks/Components/Heading/heading_text_2.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/main.dart';
 
@@ -18,14 +20,9 @@ class UserProfileImageShowScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.all(8.0.sp).copyWith(bottom: 20.h),
-            child: Text(
-              LanguageConst.ohWhohandsomeGuyMe.tr,
-              style: cnstSheet.textTheme.fs15Normal
-                  .copyWith(color: cnstSheet.colors.white),
-            ),
-          ),
+          // CALL HEADING TEXT 2
+          HeadingText2(text: LanguageConst.ohWhohandsomeGuyMe.tr)
+              .marginAll(10.sp),
           Center(
             child: SizedBox(
               width: cnstSheet.services.screenWidth(context),

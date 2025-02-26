@@ -3,7 +3,7 @@ class LanguageConst {
   // APP DEVELOPER KE LIYE KUCH LINES😜
   static const String developedby = "Developedby";
   static const String foundbugReportloveanger = "FoundbugReportloveanger!";
-   
+
   // NAV BAR
   static const String home = "Home";
   static const String search = "Search";
@@ -89,4 +89,10 @@ class LanguageConst {
   static const String logout = "Logout";
   // - USER PROFILE UPDATE
   static const String banner = "banner";
+  // - HELP AND SUPPORT
+  static const String ourhelpline24x7sleepnight = "Ourhelpline24x7sleepnight";
+  static const String help = "help";
+  static const String whatsApp = "whatsApp";
+  static const String shareApp = "share app";
+  static const String feedback = "feedback";
 }

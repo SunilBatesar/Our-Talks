@@ -33,4 +33,22 @@ class LocalData {
         title: LanguageConst.logout,
         icon: Icons.logout_outlined),
   ];
+  static List<AccountMenuModel> helpAndSupportDataList = [
+    AccountMenuModel(
+        id: LanguageConst.help,
+        title: LanguageConst.help,
+        icon: Icons.person_2_outlined),
+    AccountMenuModel(
+        id: LanguageConst.whatsApp,
+        title: LanguageConst.whatsApp,
+        icon: Icons.chat),
+    AccountMenuModel(
+        id: LanguageConst.feedback,
+        title: LanguageConst.feedback,
+        icon: Icons.feed_outlined),
+    AccountMenuModel(
+        id: LanguageConst.shareApp,
+        title: LanguageConst.shareApp,
+        icon: Icons.share),
+  ];
 }

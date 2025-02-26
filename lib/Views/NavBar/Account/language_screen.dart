@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Components/AppBar/primary_app_bar.dart';
+import 'package:ourtalks/Components/Heading/heading_text_2.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Res/i18n/language_translations.dart';
 import 'package:ourtalks/main.dart';
@@ -19,12 +20,8 @@ class LanguageScreen extends StatelessWidget {
         padding: EdgeInsets.all(15.0.sp),
         child: Column(
           children: [
-            // TEXT
-            Text(
-              LanguageConst.nowedontAlienlanguagePichuman.tr,
-              style: cnstSheet.textTheme.fs15Normal
-                  .copyWith(color: cnstSheet.colors.white),
-            ),
+            // CALL HEADING TEXT 2
+            HeadingText2(text: LanguageConst.nowedontAlienlanguagePichuman.tr),
             Gap(20.h),
             // LANGUAGE CHANGE AND RADIO LIST TILE CALL
             GetBuilder<LanguageController>(

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Components/Buttons/primary_button.dart';
+import 'package:ourtalks/Components/Heading/heading_text_2.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Res/i18n/language_translations.dart';
 import 'package:ourtalks/main.dart';
@@ -27,12 +28,9 @@ class WelcomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // TEXT
-                    Text(
-                      LanguageConst.nowedontAlienlanguagePichuman.tr,
-                      style: cnstSheet.textTheme.fs15Normal
-                          .copyWith(color: cnstSheet.colors.white),
-                    ),
+                    // CALL HEADING TEXT 2
+                    HeadingText2(
+                        text: LanguageConst.nowedontAlienlanguagePichuman.tr),
                     Gap(20.h),
                     // LANGUAGE CHANGE AND RADIO LIST TILE CALL
                     GetBuilder<LanguageController>(
@@ -64,12 +62,9 @@ class WelcomeScreen extends StatelessWidget {
                       },
                     ),
                     Gap(20.h),
-                    // TEXT
-                    Text(
-                      LanguageConst.colorchangedupgradedfun.tr,
-                      style: cnstSheet.textTheme.fs15Normal
-                          .copyWith(color: cnstSheet.colors.white),
-                    ),
+                    // CALL HEADING TEXT 2
+                    HeadingText2(
+                        text: LanguageConst.colorchangedupgradedfun.tr),
                     Gap(10.h),
                     // THEME COLORS LIST AND UPDATE
                     Align(

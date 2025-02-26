@@ -100,6 +100,14 @@ class LanguageType {
     LanguageConst.logout: "Logout",
     // - USER PROFILE UPDATE
     LanguageConst.banner: "Banner",
+
+    // - HELP AND SUPPORT
+    LanguageConst.ourhelpline24x7sleepnight:
+        "Our helpline is open 24x7 (but we do sleep at night! \u{1F634}\u{1F602})",
+    LanguageConst.help: "Help",
+    LanguageConst.whatsApp: "WhatsApp",
+    LanguageConst.shareApp: "Share App",
+    LanguageConst.feedback: "Feedback",
   };
 
   // HINDI TYPE
@@ -198,5 +206,13 @@ class LanguageType {
     LanguageConst.logout: "लॉगआउट",
     // - USER PROFILE UPDATE
     LanguageConst.banner: "बैनर",
+
+    // - HELP AND SUPPORT
+    LanguageConst.ourhelpline24x7sleepnight:
+        "हमारी हेल्पलाइन 24x7 खुली है (पर हम रात को सोते भी हैं! \u{1F634}\u{1F602})",
+    LanguageConst.help: "सहायता",
+    LanguageConst.whatsApp: "व्हाट्सएप",
+    LanguageConst.shareApp: "ऐप साझा करें",
+    LanguageConst.feedback: "प्रतिक्रिया"
   };
 }
