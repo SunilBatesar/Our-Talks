@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,7 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
       if (praf == null) {
         Get.offNamed(cnstSheet.routesName.welcomeScreen);
       } else {
-        Get.offNamed(cnstSheet.routesName.navBar);
+        final alluser = AuthDataHandler.getUserById(praf);
+        alluser.then((_) => Get.offNamed(cnstSheet.routesName.navBar));
       }
     });
   }

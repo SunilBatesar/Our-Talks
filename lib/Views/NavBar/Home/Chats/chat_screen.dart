@@ -29,7 +29,7 @@ class ChatScreen extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(1000.sp),
               child: CachedNetworkImage(
-                imageUrl: model.image,
+                imageUrl: model.userDP!,
                 height: 35.sp,
                 width: 35.sp,
                 fit: BoxFit.cover,

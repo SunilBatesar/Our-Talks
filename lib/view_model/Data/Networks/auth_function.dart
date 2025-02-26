@@ -8,6 +8,8 @@ abstract class Authentication {
   Future<UserModel> signup({required UserModel user, required String password});
   Future<void> resetPassword({required String email});
   Future<void> logout();
+  Future<UserModel> getUserById(String userId);
+  Future<void> updateUser(String userId, UserModel user);
 }
 
 class AuthRepository extends Authentication {
@@ -78,6 +80,33 @@ class AuthRepository extends Authentication {
     } catch (e) {
       debugPrint("Error logging out: $e");
       rethrow;
+    }
+  }
+
+  @override
+  Future<UserModel> getUserById(String userId) async {
+    try {
+      final userDoc = await FirebaseApis.userDocumentRef(userId).get();
+      if (userDoc.exists) {
+        return UserModel.fromJson(
+            userDoc.data() as Map<String, dynamic>, userDoc.id);
+      } else {
+        throw Exception("User not found");
+      }
+    } catch (e) {
+      debugPrint("Error fetching user: $e");
+      rethrow;
+    }
+  }
+
+  // Update an existing task in Firestore
+  @override
+  Future<void> updateUser(String userId, UserModel model) async {
+    try {
+      // Update the task in Firestore
+      await FirebaseApis.userDocumentRef(userId).update(model.toJson());
+    } catch (e) {
+      debugPrint("user update error: $e"); // Log error
     }
   }
 }

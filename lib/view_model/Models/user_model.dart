@@ -1,31 +1,34 @@
 class UserModel {
   final String? userID;
   final String userName;
-  final String image;
-  final String about;
+  final String? userDP;
+  final String? banner;
+  final String? about;
   final String name;
   final String createdAt;
   final String lastActive;
   final String email;
-  final String pushToken;
+  final String? pushToken;
   final bool isOnline;
 
   const UserModel({
     this.userID,
     required this.userName,
-    required this.image,
-    required this.about,
+    this.userDP,
+    this.banner,
+    this.about,
     required this.name,
     required this.createdAt,
     required this.lastActive,
     required this.email,
-    required this.pushToken,
+    this.pushToken,
     this.isOnline = false,
   });
 
   UserModel.fromJson(Map<String, dynamic> json, this.userID)
       : userName = json['userName'] ?? '',
-        image = json['image'] ?? '',
+        userDP = json['userDP'] ?? '',
+        banner = json['banner'] ?? '',
         about = json['about'] ?? '',
         name = json['name'] ?? '',
         createdAt = json['createdAt'] ?? '',
@@ -36,20 +39,22 @@ class UserModel {
 
   Map<String, dynamic> toJson() => {
         'userName': userName,
-        'image': image,
-        'about': about,
+        'userDP': userDP ?? '',
+        'banner': banner ?? '',
+        'about': about ?? '',
         'name': name,
         'createdAt': createdAt,
         'lastActive': lastActive,
         'email': email,
-        'pushToken': pushToken,
+        'pushToken': pushToken ?? '',
         'isOnline': isOnline,
       };
 
   UserModel copyWith({
     String? userID,
     String? userName,
-    String? image,
+    String? userDP,
+    String? banner,
     String? about,
     String? name,
     String? createdAt,
@@ -61,7 +66,8 @@ class UserModel {
     return UserModel(
       userID: userID ?? this.userID,
       userName: userName ?? this.userName,
-      image: image ?? this.image,
+      userDP: userDP ?? this.userDP,
+      banner: banner ?? this.banner,
       about: about ?? this.about,
       name: name ?? this.name,
       createdAt: createdAt ?? this.createdAt,

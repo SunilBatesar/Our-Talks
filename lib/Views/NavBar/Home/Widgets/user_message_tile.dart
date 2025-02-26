@@ -20,7 +20,7 @@ class UserMessageTile extends StatelessWidget {
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(1000.sp),
         child: CachedNetworkImage(
-          imageUrl: model.image,
+          imageUrl: model.userDP!,
           height: 50.sp,
           width: 50.sp,
           fit: BoxFit.cover,

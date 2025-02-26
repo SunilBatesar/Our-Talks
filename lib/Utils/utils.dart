@@ -21,14 +21,14 @@ class AppUtils {
       title,
       message,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: isError ? Colors.red : Colors.green,
-      colorText: Colors.white,
+      backgroundColor: isError ? cnstSheet.colors.red : Colors.green,
+      colorText: cnstSheet.colors.white,
       borderRadius: 10,
       margin: const EdgeInsets.all(10),
       duration: duration,
       icon: Icon(
         isError ? Icons.error : Icons.check_circle,
-        color: Colors.white,
+        color: cnstSheet.colors.white,
       ),
     );
   }

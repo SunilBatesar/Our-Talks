@@ -83,8 +83,9 @@ class AuthDataHandler {
     try {
       _loadingController.showLoading();
       await _repo.logout();
+
+      _userController.clearUser(); // Clear only the logged-out user
       await Prefs.clearPrefsData();
-      _userController.clearUser();
       Get.offAllNamed(cnstSheet.routesName.welcomeScreen);
       _loadingController.hideLoading(); // HIDE LODING FUNCTION
       AppUtils.showSnackBar(
@@ -95,6 +96,38 @@ class AuthDataHandler {
           title: 'Error', message: 'Error during logout: $e', isError: true);
       debugPrint("Error during logout: $e");
       _loadingController.hideLoading(); // HIDE LODING FUNCTION
+    }
+  }
+
+  // GET ALL USERS FUNCTION
+  static Future<void> getUserById(String userid) async {
+    try {
+      final allUsers = await _repo.getUserById(userid);
+      _userController.setUser(allUsers);
+      _loadingController.hideLoading();
+    } catch (e) {
+      AppUtils.showSnackBar(
+          title: 'Error', message: 'Error fetching data: $e', isError: true);
+      debugPrint("Error fetching users: $e");
+    }
+  }
+
+  // UPDATE USER FUNCTION
+  static Future<void> updateUser(
+      {required String userId, required UserModel model}) async {
+    try {
+      _loadingController.showLoading();
+      await _repo.updateUser(userId, model);
+      _userController.updateUser(model);
+      _loadingController.hideLoading();
+      AppUtils.showSnackBar(
+          title: 'Success', message: 'User updated successfully');
+      debugPrint("User updated successfully: \${user.toJson()}");
+    } catch (e) {
+      AppUtils.showSnackBar(
+          title: 'Error', message: 'Error updating user: $e', isError: true);
+      debugPrint("Error updating user: $e");
+      _loadingController.hideLoading();
     }
   }
 }
