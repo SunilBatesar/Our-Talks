@@ -11,7 +11,6 @@ import 'package:ourtalks/Components/TextFields/primary_textfield.dart';
 import 'package:ourtalks/Components/loader%20animation/loading_indicator.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Utils/app_validators.dart';
-import 'package:ourtalks/Views/Auth/widget/username_checker.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/user_profile_pick_widget.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
@@ -29,10 +28,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   // USER DP
   // File
   File? imageFile;
-  String userDp = '';
+  String userDp = _userdata!.userDP!;
   // BANNER
   File? bannerFile;
-  String bannerUrl = '';
+  String bannerUrl = _userdata!.banner!;
 
   // globle key
   final _globalKey = GlobalKey<FormState>();
@@ -45,8 +44,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   final _emailController = TextEditingController(text: _userdata!.email);
 
   // check user name
-  final RxString _checkuserNameController = ''.obs;
-  final RxBool _isUserNameAvailable = false.obs;
+  // final RxString _checkuserNameController = ''.obs;
+  // final RxBool _isUserNameAvailable = false.obs;
 
   @override
   void dispose() {
@@ -120,18 +119,11 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   validator: UserNameValidator(),
                   controller: _userNameController,
                   label: LanguageConst.userName.tr,
-                  onChanged: (v) {
-                    final error = UserNameValidator().validate(v);
-                    if (error == null) {
-                      _checkuserNameController.value = v;
-                    } else {
-                      _checkuserNameController.value = "";
-                    }
-                  },
                 ),
-                UsernameChecker(
-                    username: _checkuserNameController.value,
-                    isUserNameAvailable: _isUserNameAvailable),
+
+                // UsernameChecker(
+                //     username: _checkuserNameController.value,
+                //     isUserNameAvailable: _isUserNameAvailable),
                 Gap(10.h),
                 // USER ABOUT TEXT FIELD
                 PrimaryTextfield(
@@ -159,20 +151,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           child: LoadingIndicator(
               widget: PrimaryButton(
             title: LanguageConst.save.tr,
-            onPressed: _isUserNameAvailable.value
-                ? () {
-                    if (_globalKey.currentState!.validate()) {
-                      AuthDataHandler.updateUser(
-                          userId: _userdata!.userID!,
-                          model: _userdata!.copyWith(
-                              name: _nameController.text.trim(),
-                              userName: _userNameController.text.trim(),
-                              about: _aboutController.text.trim()));
-                    }
-                  }
-                : () {
-                    if (_globalKey.currentState!.validate()) {}
-                  },
+            onPressed: () {
+              if (_globalKey.currentState!.validate()) {
+                AuthDataHandler.updateUser(
+                    userId: _userdata!.userID!,
+                    model: _userdata!.copyWith(
+                        name: _nameController.text.trim(),
+                        // userName: _userNameController.text.trim(),
+                        about: _aboutController.text.trim()));
+              }
+            },
             isTransparent: true,
           )),
         ),
