@@ -8,6 +8,7 @@ import 'package:ourtalks/Components/AppBar/primary_app_bar.dart';
 import 'package:ourtalks/Components/BottomSheets/image_pick_bottom_sheet.dart';
 import 'package:ourtalks/Components/Buttons/primary_button.dart';
 import 'package:ourtalks/Components/TextFields/primary_textfield.dart';
+import 'package:ourtalks/Components/loader%20animation/loading_indicator.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/user_profile_pick_widget.dart';
 
@@ -124,11 +125,12 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         child: Padding(
           padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 0),
           // SAVE BUTTON
-          child: PrimaryButton(
+          child: LoadingIndicator(
+              widget: PrimaryButton(
             title: LanguageConst.save.tr,
             onPressed: () {},
             isTransparent: true,
-          ),
+          )),
         ),
       ),
     );

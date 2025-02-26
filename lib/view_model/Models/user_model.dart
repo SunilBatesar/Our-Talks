@@ -39,14 +39,14 @@ class UserModel {
 
   Map<String, dynamic> toJson() => {
         'userName': userName,
-        'userDP': userDP,
-        'banner': banner,
-        'about': about,
+        'userDP': userDP ?? '',
+        'banner': banner ?? '',
+        'about': about ?? '',
         'name': name,
         'createdAt': createdAt,
         'lastActive': lastActive,
         'email': email,
-        'pushToken': pushToken,
+        'pushToken': pushToken ?? '',
         'isOnline': isOnline,
       };
 
