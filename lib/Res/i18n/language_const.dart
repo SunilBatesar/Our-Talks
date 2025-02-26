@@ -27,6 +27,8 @@ class LanguageConst {
   static const String done = "done";
   static const String cancel = "cancel";
   static const String delete = "delete";
+  static const String deleteAccount = "deleteAccount";
+  static const String deleteAccountContentLines = "deleteAccountContentLines";
 
   // DILOG
   static const String openSettings = "openSettings";

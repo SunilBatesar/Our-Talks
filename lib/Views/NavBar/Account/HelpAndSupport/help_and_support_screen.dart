@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:ourtalks/Components/AppBar/primary_app_bar.dart';
 import 'package:ourtalks/Components/Heading/heading_text_2.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
+import 'package:ourtalks/Utils/utils.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/menu_tile.dart';
+import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/view_model/Data/LocalData/local_data.dart';
 import 'package:ourtalks/view_model/Models/account_menu_model.dart';
@@ -37,6 +39,21 @@ class HelpAndSupportScreen extends StatelessWidget {
                 ).marginOnly(bottom: 10.h);
               },
             ),
+            Gap(50.h),
+            TextButton(
+                onPressed: () {
+                  AppUtils.showPermissionDialog(
+                      title: LanguageConst.deleteAccount.tr,
+                      content: LanguageConst.deleteAccountContentLines.tr,
+                      submitButnText: LanguageConst.deleteAccount.tr,
+                      submitButnTextColorRed: true,
+                      onTap: () {});
+                },
+                child: Text(
+                  LanguageConst.deleteAccount.tr,
+                  style: cnstSheet.textTheme.fs15Normal
+                      .copyWith(color: cnstSheet.colors.red),
+                )),
           ],
         ),
       ),

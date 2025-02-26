@@ -37,7 +37,8 @@ class AppUtils {
       {required String title,
       required String content,
       required String submitButnText,
-      required Function onTap}) {
+      required Function onTap,
+      bool submitButnTextColorRed = false}) {
     Get.dialog(
       AlertDialog(
         elevation: 0.5,
@@ -66,8 +67,10 @@ class AppUtils {
               onTap();
             },
             child: Text(submitButnText,
-                style: cnstSheet.textTheme.fs14Normal
-                    .copyWith(color: cnstSheet.colors.blue)),
+                style: cnstSheet.textTheme.fs14Normal.copyWith(
+                    color: submitButnTextColorRed
+                        ? cnstSheet.colors.red
+                        : cnstSheet.colors.blue)),
           ),
         ],
       ),

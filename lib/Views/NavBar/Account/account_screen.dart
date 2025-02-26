@@ -107,8 +107,7 @@ class AccountScreen extends StatelessWidget {
                           ),
                           child: ClipOval(
                             child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqU4vLfw1UL-mlkkZSzi3q441eQwhFjW8A9g&s",
+                              imageUrl: _userdata.userDP ?? "",
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Center(
                                 child: SizedBox(
