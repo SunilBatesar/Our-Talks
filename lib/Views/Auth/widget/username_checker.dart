@@ -35,7 +35,11 @@ class UsernameChecker extends StatelessWidget {
         }
 
         final isAvailable = snapshot.data!.docs.isEmpty;
-        isUserNameAvailable.value = isAvailable;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (isUserNameAvailable.value != isAvailable) {
+            isUserNameAvailable.value = isAvailable;
+          }
+        });
 
         return Align(
           alignment: Alignment.centerRight,
