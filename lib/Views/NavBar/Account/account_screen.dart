@@ -21,7 +21,7 @@ class AccountScreen extends StatelessWidget {
   final _isbanerShowFull = false.obs;
 
   // find user from controller
-  final _userdata = Get.find<UserController>().user;
+  final _usercontroller = Get.find<UserController>();
 
   // capital first letter function
   String _capitalizeFirstLetter(String text) {
@@ -31,10 +31,12 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userdata = _usercontroller.user;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _capitalizeFirstLetter(_userdata!.name),
+          _capitalizeFirstLetter(userdata!.name),
           style: cnstSheet.textTheme.appNameStyle15
               .copyWith(color: cnstSheet.colors.primary),
         ),
@@ -65,7 +67,11 @@ class AccountScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10.r),
                         child: CachedNetworkImage(
                           imageUrl:
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkBIy4nua2A6YJPNFdcLDXpuR7bU4NYH53sw&s",
+
+                              // userdata.userDP ??
+                              userdata.banner?.isNotEmpty == true
+                                  ? userdata.banner!
+                                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkBIy4nua2A6YJPNFdcLDXpuR7bU4NYH53sw&s",
                           fit: BoxFit.cover,
                           placeholder: (context, url) => Center(
                             child: SizedBox(
@@ -86,9 +92,11 @@ class AccountScreen extends StatelessWidget {
                     left: 15.w,
                     child: GestureDetector(
                       onTap: () {
-                        Get.to(() => UserProfileImageShowScreen(
-                              image: _userdata.userDP,
-                            ));
+                        if (userdata.userDP!.isNotEmpty) {
+                          Get.to(() => UserProfileImageShowScreen(
+                                image: userdata.userDP!,
+                              ));
+                        }
                       },
                       child: Obx(() {
                         double imageHeightWidth =
@@ -107,7 +115,9 @@ class AccountScreen extends StatelessWidget {
                           ),
                           child: ClipOval(
                             child: CachedNetworkImage(
-                              imageUrl: _userdata.userDP ?? "",
+                              imageUrl: userdata.userDP?.isNotEmpty == true
+                                  ? userdata.userDP!
+                                  : "https://i.pinimg.com/736x/fa/74/d4/fa74d45f820e06fa3a178d4a9845c0b9.jpg",
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Center(
                                 child: SizedBox(
@@ -130,13 +140,13 @@ class AccountScreen extends StatelessWidget {
               ),
               Gap(10.h),
               Text(
-                _userdata.userName,
+                userdata.userName,
                 style: cnstSheet.textTheme.fs18Bold
                     .copyWith(color: cnstSheet.colors.white),
               ),
               Gap(3.h),
               Text(
-                _userdata.about!,
+                userdata.about!,
                 style: cnstSheet.textTheme.fs16Medium
                     .copyWith(color: cnstSheet.colors.white),
               ),
@@ -182,7 +192,8 @@ class AccountScreen extends StatelessWidget {
   void menuTileTapFunction(AccountMenuModel model) {
     switch (model.id) {
       case LanguageConst.updateProfile:
-        Get.toNamed(cnstSheet.routesName.updateProfileScreen);
+        Get.toNamed(cnstSheet.routesName.updateProfileScreen,
+            arguments: _usercontroller.user);
       case LanguageConst.theme:
         Get.toNamed(cnstSheet.routesName.themeScreen);
       case LanguageConst.language:

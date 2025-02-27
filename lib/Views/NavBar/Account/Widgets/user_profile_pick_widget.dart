@@ -80,8 +80,7 @@ class _UserProfilePickWidgetState extends State<UserProfilePickWidget> {
       );
     } else if (widget.userDp.isNotEmpty) {
       return CachedNetworkImage(
-        imageUrl:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSCl66MbhXC8vY3H5WCmunsEFcUj6HcpNjgA&s",
+        imageUrl: widget.userDp,
         fit: BoxFit.cover,
         placeholder: (context, url) => Center(
           child: SizedBox(
@@ -92,7 +91,10 @@ class _UserProfilePickWidgetState extends State<UserProfilePickWidget> {
                 strokeWidth: 3,
               )),
         ),
-        errorWidget: (context, url, error) => Center(child: Icon(Icons.error)),
+        errorWidget: (context, url, error) => Center(
+            child: Icon(
+          Icons.error,
+        )),
       );
     } else {
       return Image.asset(
@@ -151,8 +153,7 @@ class _UserBannerPickWidgetState extends State<UserBannerPickWidget> {
       return CachedNetworkImage(
         height: 150.sp,
         width: cnstSheet.services.screenWidth(context),
-        imageUrl:
-            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSCl66MbhXC8vY3H5WCmunsEFcUj6HcpNjgA&s",
+        imageUrl: widget.bannerUrl,
         fit: BoxFit.cover,
         placeholder: (context, url) => Center(
           child: SizedBox(

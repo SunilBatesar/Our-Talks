@@ -11,9 +11,10 @@ import 'package:ourtalks/Components/TextFields/primary_textfield.dart';
 import 'package:ourtalks/Components/loader%20animation/loading_indicator.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Utils/app_validators.dart';
+import 'package:ourtalks/Views/Auth/widget/username_checker.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/user_profile_pick_widget.dart';
-import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
+import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -22,30 +23,42 @@ class UpdateProfileScreen extends StatefulWidget {
   State<UpdateProfileScreen> createState() => _UpdateProfileScreenState();
 }
 
-final _userdata = Get.find<UserController>().user;
-
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
+  late UserModel _userdata;
   // USER DP
-  // File
   File? imageFile;
-  String userDp = _userdata!.userDP!;
+  late String userDp;
   // BANNER
   File? bannerFile;
-  String bannerUrl = _userdata!.banner!;
+  late String bannerUrl;
 
   // globle key
   final _globalKey = GlobalKey<FormState>();
 
   // TEXT FIELD CONTROLLER
+  late TextEditingController _nameController;
+  late TextEditingController _userNameController;
+  late TextEditingController _aboutController;
+  late TextEditingController _emailController;
 
-  final _nameController = TextEditingController(text: _userdata!.name);
-  final _userNameController = TextEditingController(text: _userdata!.userName);
-  final _aboutController = TextEditingController(text: _userdata!.about);
-  final _emailController = TextEditingController(text: _userdata!.email);
+  @override
+  void initState() {
+    super.initState();
+    _userdata = Get.arguments;
+    userDp = _userdata.userDP ?? '';
+    bannerUrl = _userdata.banner ?? '';
+
+    _nameController = TextEditingController(text: _userdata.name);
+    _userNameController = TextEditingController(text: _userdata.userName);
+    _aboutController = TextEditingController(text: _userdata.about);
+    _emailController = TextEditingController(text: _userdata.email);
+    _checkuserNameController.value = _userdata.userName;
+    _isUserNameAvailable.value = true;
+  }
 
   // check user name
-  // final RxString _checkuserNameController = ''.obs;
-  // final RxBool _isUserNameAvailable = false.obs;
+  final RxString _checkuserNameController = ''.obs;
+  final RxBool _isUserNameAvailable = false.obs;
 
   @override
   void dispose() {
@@ -119,11 +132,21 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   validator: UserNameValidator(),
                   controller: _userNameController,
                   label: LanguageConst.userName.tr,
+                  onChanged: (v) {
+                    final error = UserNameValidator().validate(v);
+                    if (error == null) {
+                      _checkuserNameController.value = v;
+                    } else {
+                      _checkuserNameController.value = "";
+                    }
+                  },
                 ),
 
-                // UsernameChecker(
-                //     username: _checkuserNameController.value,
-                //     isUserNameAvailable: _isUserNameAvailable),
+                Obx(
+                  () => UsernameChecker(
+                      username: _checkuserNameController.value,
+                      isUserNameAvailable: _isUserNameAvailable),
+                ),
                 Gap(10.h),
                 // USER ABOUT TEXT FIELD
                 PrimaryTextfield(
@@ -149,19 +172,26 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 0),
           // SAVE BUTTON
           child: LoadingIndicator(
-              widget: PrimaryButton(
-            title: LanguageConst.save.tr,
-            onPressed: () {
-              if (_globalKey.currentState!.validate()) {
-                AuthDataHandler.updateUser(
-                    userId: _userdata!.userID!,
-                    model: _userdata!.copyWith(
-                        name: _nameController.text.trim(),
-                        // userName: _userNameController.text.trim(),
-                        about: _aboutController.text.trim()));
-              }
-            },
-            isTransparent: true,
+              widget: Obx(
+            () => PrimaryButton(
+              title: LanguageConst.save.tr,
+              onPressed: _isUserNameAvailable.value ||
+                      _userNameController.text.trim() == _userdata.userName
+                  ? () {
+                      if (_globalKey.currentState!.validate()) {
+                        AuthDataHandler.updateUser(
+                          userId: _userdata.userID!,
+                          model: _userdata.copyWith(
+                            name: _nameController.text.trim(),
+                            userName: _userNameController.text.trim(),
+                            about: _aboutController.text.trim(),
+                          ),
+                        );
+                      }
+                    }
+                  : () {},
+              isTransparent: true,
+            ),
           )),
         ),
       ),

@@ -16,117 +16,126 @@ class AuthDataHandler {
   // SIGN UP
   static Future<void> signUp(
       {required UserModel user, required String password}) async {
-    try {
-      _loadingController.showLoading();
-      final userSnapshot = await _repo.signup(user: user, password: password);
-      _userController.setUser(userSnapshot);
-      await Prefs.setUserIdPref(userSnapshot.userID!);
-      Get.offAllNamed(cnstSheet.routesName.navBar);
-      _loadingController.hideLoading(); // HIDE LODING FUNCTION
-      AppUtils.showSnackBar(
-          title: 'Success', message: 'User signed up successfully');
-
-      debugPrint("User signed up successfully: ${userSnapshot.toJson()}");
-    } catch (e) {
-      AppUtils.showSnackBar(
-          title: 'Error', message: 'Error during sign up: $e', isError: true);
-      debugPrint("Error during sign up: $e");
-    }
+    await _handleAuthOperation(
+        operation: () => _repo.signup(user: user, password: password),
+        onSuccess: (userSnapshot) async {
+          _userController.setUser(userSnapshot);
+          await Prefs.setUserIdPref(userSnapshot.userID!);
+          Get.offAllNamed(cnstSheet.routesName.navBar);
+          debugPrint("User signed up successfully: ${userSnapshot.toJson()}");
+          return;
+        },
+        successMessage: 'User signed up successfully',
+        errorMessage: 'Error during sign up');
   }
 
   // LOGIN FUNCTION
   static Future<void> login(
       {required String email, required String password}) async {
-    try {
-      _loadingController.showLoading();
-      final userSnapshot = await _repo.login(email: email, password: password);
-      _userController.setUser(userSnapshot);
-      await Prefs.setUserIdPref(userSnapshot.userID!);
-      Get.offAllNamed(cnstSheet.routesName.navBar);
-      _loadingController.hideLoading(); // HIDE LODING FUNCTION
-      AppUtils.showSnackBar(
-          title: 'Success', message: 'User logged in successfully');
-
-      debugPrint("User logged in successfully: ${userSnapshot.toJson()}");
-    } catch (e) {
-      AppUtils.showSnackBar(
-          title: 'Error', message: 'Error during login:  $e', isError: true);
-      debugPrint("Error during login: $e");
-      _loadingController.hideLoading(); // HIDE LODING FUNCTION
-    }
+    await _handleAuthOperation(
+        operation: () => _repo.login(email: email, password: password),
+        onSuccess: (userSnapshot) async {
+          _userController.setUser(userSnapshot);
+          await Prefs.setUserIdPref(userSnapshot.userID!);
+          Get.offAllNamed(cnstSheet.routesName.navBar);
+          debugPrint("User logged in successfully: ${userSnapshot.toJson()}");
+          return;
+        },
+        successMessage: 'User logged in successfully',
+        errorMessage: 'Error during login');
   }
-
-  // ***********************************
 
   // PASSWORD RESET FUNCTION
   static Future<void> resetPassword({required String email}) async {
-    try {
-      _loadingController.showLoading();
-      await _repo.resetPassword(email: email);
-      Get.offNamed(cnstSheet.routesName.welcomeScreen);
-      _loadingController.hideLoading(); // HIDE LODING FUNCTION
-      AppUtils.showSnackBar(
-          title: 'Success', message: 'Password reset email sent successfully');
-      debugPrint("Password reset email sent to $email");
-    } catch (e) {
-      AppUtils.showSnackBar(
-          title: 'Error',
-          message: 'Error sending password reset email: $e',
-          isError: true);
-      debugPrint("Error sending password reset email: $e");
-      _loadingController.hideLoading(); // HIDE LODING FUNCTION
-    }
+    await _handleAuthOperation(
+        operation: () => _repo.resetPassword(email: email),
+        onSuccess: (_) async {
+          Get.offNamed(cnstSheet.routesName.welcomeScreen);
+          debugPrint("Password reset email sent to $email");
+          return;
+        },
+        successMessage: 'Password reset email sent successfully',
+        errorMessage: 'Error sending password reset email');
   }
 
   // LOGOUT FUNCTION
   static Future<void> logout() async {
-    try {
-      _loadingController.showLoading();
-      await _repo.logout();
-
-      _userController.clearUser(); // Clear only the logged-out user
-      await Prefs.clearPrefsData();
-      Get.offAllNamed(cnstSheet.routesName.welcomeScreen);
-      _loadingController.hideLoading(); // HIDE LODING FUNCTION
-      AppUtils.showSnackBar(
-          title: 'Success', message: 'User logged out successfully');
-      debugPrint("User logged out successfully");
-    } catch (e) {
-      AppUtils.showSnackBar(
-          title: 'Error', message: 'Error during logout: $e', isError: true);
-      debugPrint("Error during logout: $e");
-      _loadingController.hideLoading(); // HIDE LODING FUNCTION
-    }
+    await _handleAuthOperation(
+        operation: () async {
+          await _repo.logout();
+          _userController.clearUser();
+          await Prefs.clearPrefsData();
+        },
+        onSuccess: (_) async {
+          Get.offAllNamed(cnstSheet.routesName.welcomeScreen);
+          debugPrint("User logged out successfully");
+          return;
+        },
+        successMessage: 'User logged out successfully',
+        errorMessage: 'Error during logout');
   }
 
-  // GET ALL USERS FUNCTION
-  static Future<void> getUserById(String userid) async {
-    try {
-      final allUsers = await _repo.getUserById(userid);
-      _userController.setUser(allUsers);
-      _loadingController.hideLoading();
-    } catch (e) {
-      AppUtils.showSnackBar(
-          title: 'Error', message: 'Error fetching data: $e', isError: true);
-      debugPrint("Error fetching users: $e");
-    }
+  // GET USER BY ID FUNCTION
+  static Future<void> getUserById(String userId) async {
+    await _handleAuthOperation(
+        operation: () => _repo.getUserById(userId),
+        onSuccess: (user) async {
+          _userController.setUser(user);
+          return;
+        },
+        successMessage: 'User data fetched successfully',
+        errorMessage: 'Error fetching user data');
   }
 
   // UPDATE USER FUNCTION
   static Future<void> updateUser(
       {required String userId, required UserModel model}) async {
+    await _handleAuthOperation(
+        operation: () async => await _repo.updateUser(userId, model),
+        onSuccess: (_) async {
+          _userController.updateUser(model);
+          Get.offAllNamed(cnstSheet.routesName.navBar);
+          debugPrint("User updated successfully: ${model.toJson()}");
+          return;
+        },
+        successMessage: 'User updated successfully',
+        errorMessage: 'Error updating user');
+  }
+
+  // DELETE USER FUNCTION
+  static Future<void> deleteUserPermanent(String userPassword) async {
+    final uid = Prefs.getUserIdPref();
+    await _handleAuthOperation(
+        operation: () => _repo.deleteUser(uid, userPassword),
+        onSuccess: (_) async {
+          _userController.clearUser();
+          await Prefs.clearPrefsData();
+          Get.offAllNamed(cnstSheet.routesName.welcomeScreen);
+          debugPrint("User account deleted permanently");
+          return;
+        },
+        successMessage: 'User account deleted permanently',
+        errorMessage: 'Error during account deletion');
+  }
+
+  // GENERIC OPERATION HANDLER
+  static Future<void> _handleAuthOperation<T>(
+      {required Future<T> Function() operation,
+      required Future<void> Function(T) onSuccess,
+      required String successMessage,
+      required String errorMessage}) async {
     try {
       _loadingController.showLoading();
-      await _repo.updateUser(userId, model);
-      _userController.updateUser(model);
+      final result = await operation();
+      await onSuccess(result);
+      _loadingController.hideLoading();
+      AppUtils.showSnackBar(title: 'Success', message: successMessage);
+    } catch (e) {
       _loadingController.hideLoading();
       AppUtils.showSnackBar(
-          title: 'Success', message: 'User updated successfully');
-      debugPrint("User updated successfully: \${user.toJson()}");
-    } catch (e) {
-      AppUtils.showSnackBar(
-          title: 'Error', message: 'Error updating user: $e', isError: true);
-      debugPrint("Error updating user: $e");
+          title: 'Error', message: '$errorMessage: $e', isError: true);
+      debugPrint("$errorMessage: $e");
+    } finally {
       _loadingController.hideLoading();
     }
   }
