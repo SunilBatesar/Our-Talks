@@ -13,4 +13,5 @@ class RoutesName {
   String languageScreen = "/languageScreen";
   String updateProfileScreen = "/UpdateProfileScreen";
   String helpAndSupportScreen = "/HelpAndSupportScreen";
+  String deleteAccountScreen = "/DeleteAccountScreen";
 }

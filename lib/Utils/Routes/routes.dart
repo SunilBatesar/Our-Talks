@@ -3,6 +3,7 @@ import 'package:ourtalks/Views/Auth/forget_password_screen.dart';
 import 'package:ourtalks/Views/Auth/login_screen.dart';
 import 'package:ourtalks/Views/Auth/signup_screen.dart';
 import 'package:ourtalks/Views/Auth/verify_email_forget_password_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/HelpAndSupport/delete_account_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/HelpAndSupport/help_and_support_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/account_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/language_screen.dart';
@@ -56,4 +57,7 @@ List<GetPage<dynamic>> appRoutes = [
   GetPage(
       name: cnstSheet.routesName.helpAndSupportScreen,
       page: () => HelpAndSupportScreen()),
+  GetPage(
+      name: cnstSheet.routesName.deleteAccountScreen,
+      page: () => DeleteAccountScreen()),
 ];

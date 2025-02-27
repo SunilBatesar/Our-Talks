@@ -6,6 +6,7 @@ import 'package:ourtalks/Res/prefs/prefs.dart';
 class AppColors {
   late Color primary;
   Color secondary = const Color(0xff000000);
+  Color gray = const Color(0xff808080);
   Color black = Colors.black;
   Color white = Colors.white;
   Color red = Colors.red;

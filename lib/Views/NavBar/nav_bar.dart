@@ -5,6 +5,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Views/NavBar/Account/account_screen.dart';
 import 'package:ourtalks/Views/NavBar/Home/home_screen.dart';
+import 'package:ourtalks/Views/NavBar/search_user_screen.dart';
 import 'package:ourtalks/main.dart';
 
 class NavBar extends StatefulWidget {
@@ -19,9 +20,7 @@ class _NavBarState extends State<NavBar> {
   // NAV BAR SHOW SCREEN(WIDGET) LIST
   static final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(), // HOME SCREEN
-    Text(
-      'Likes',
-    ),
+    SearchUserScreen(),
     AccountScreen(), // ACCOUNT SCREEN
   ];
   @override
@@ -54,7 +53,7 @@ class _NavBarState extends State<NavBar> {
                 text: LanguageConst.home.tr,
               ),
               GButton(
-                icon: Icons.favorite_border_rounded,
+                icon: Icons.search_outlined,
                 text: LanguageConst.search.tr,
               ),
               GButton(

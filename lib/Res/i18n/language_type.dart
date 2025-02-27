@@ -35,6 +35,7 @@ class LanguageType {
     LanguageConst.deleteAccount: "Delete Account",
     LanguageConst.deleteAccountContentLines:
         "Are you sure you want to delete your account?\nOnce deleted, all your data will be permanently removed.\nThis action cannot be undone.\nAre you sure?",
+    LanguageConst.searchUserName: "Search User Name",
 
     // DILOG
     LanguageConst.openSettings: "Open Settings",
@@ -112,6 +113,9 @@ class LanguageType {
     LanguageConst.whatsApp: "WhatsApp",
     LanguageConst.shareApp: "Share App",
     LanguageConst.feedback: "Feedback",
+    // - SEARCH USER
+    LanguageConst.bettertypeUserNotFound:
+        "Better type the correct name… unless you enjoy being called ‘User Not Found’!\u{1F605}",
   };
 
   // HINDI TYPE
@@ -146,6 +150,7 @@ class LanguageType {
     LanguageConst.deleteAccount: "खाता हटाएं",
     LanguageConst.deleteAccountContentLines:
         "क्या आप वाकई अपना खाता हटाना चाहते हैं?\nखाता हटाने के बाद आपका सारा डेटा स्थायी रूप से हटा दिया जाएगा।\nयह प्रक्रिया वापस नहीं की जा सकती।\nक्या आप सुनिश्चित हैं?",
+    LanguageConst.searchUserName: "उपयोगकर्ता नाम खोजें",
 
     // DILOG
     LanguageConst.openSettings: "सेटिंग्स खोलें",
@@ -221,6 +226,9 @@ class LanguageType {
     LanguageConst.help: "सहायता",
     LanguageConst.whatsApp: "व्हाट्सएप",
     LanguageConst.shareApp: "ऐप साझा करें",
-    LanguageConst.feedback: "प्रतिक्रिया"
+    LanguageConst.feedback: "प्रतिक्रिया",
+    // - SEARCH USER
+    LanguageConst.bettertypeUserNotFound:
+        "सही नाम टाइप करो… वरना ‘यूज़र नॉट फाउंड’ कहलाने में मज़ा आएगा!\u{1F605}",
   };
 }

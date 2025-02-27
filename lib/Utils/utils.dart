@@ -21,7 +21,7 @@ class AppUtils {
       title,
       message,
       snackPosition: SnackPosition.TOP,
-      backgroundColor: isError ? cnstSheet.colors.red : Colors.green,
+      backgroundColor: isError ? cnstSheet.colors.red : cnstSheet.colors.gray,
       colorText: cnstSheet.colors.white,
       borderRadius: 10,
       margin: const EdgeInsets.all(10),

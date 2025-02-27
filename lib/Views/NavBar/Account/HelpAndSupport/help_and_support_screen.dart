@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:ourtalks/Components/AppBar/primary_app_bar.dart';
 import 'package:ourtalks/Components/Heading/heading_text_2.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
-import 'package:ourtalks/Utils/utils.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/menu_tile.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
@@ -42,12 +41,7 @@ class HelpAndSupportScreen extends StatelessWidget {
             Gap(50.h),
             TextButton(
                 onPressed: () {
-                  AppUtils.showPermissionDialog(
-                      title: LanguageConst.deleteAccount.tr,
-                      content: LanguageConst.deleteAccountContentLines.tr,
-                      submitButnText: LanguageConst.deleteAccount.tr,
-                      submitButnTextColorRed: true,
-                      onTap: () {});
+                  Get.toNamed(cnstSheet.routesName.deleteAccountScreen);
                 },
                 child: Text(
                   LanguageConst.deleteAccount.tr,

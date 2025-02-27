@@ -29,6 +29,7 @@ class LanguageConst {
   static const String delete = "delete";
   static const String deleteAccount = "deleteAccount";
   static const String deleteAccountContentLines = "deleteAccountContentLines";
+  static const String searchUserName = "searchUserName";
 
   // DILOG
   static const String openSettings = "openSettings";
@@ -98,4 +99,6 @@ class LanguageConst {
   static const String whatsApp = "whatsApp";
   static const String shareApp = "share app";
   static const String feedback = "feedback";
+  // - SEARCH USER
+  static const String bettertypeUserNotFound = "BettertypeUserNotFound";
 }

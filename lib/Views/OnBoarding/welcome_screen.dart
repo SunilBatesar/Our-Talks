@@ -76,7 +76,9 @@ class WelcomeScreen extends StatelessWidget {
                         runAlignment: WrapAlignment.start,
                         crossAxisAlignment: WrapCrossAlignment.start,
                         children: List.generate(
-                          themeController.themeColorsList.length,
+                          themeController.themeColorsList.length < 5
+                              ? themeController.themeColorsList.length
+                              : 5,
                           (index) {
                             final data = themeController.themeColorsList[index];
                             return GestureDetector(
