@@ -32,11 +32,13 @@ class DeleteAccountScreen extends StatelessWidget {
             padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 0),
             child: Column(
               children: [
+                // TEXT
                 HeadingText2(
                     text: LanguageConst.deleteAccountContentLines.tr,
                     style: cnstSheet.textTheme.fs15Normal
                         .copyWith(color: cnstSheet.colors.red)),
                 Gap(30.h),
+                // PASSWORD TEXT FIELD
                 Obx(
                   () => PrimaryTextfield(
                     validator: PasswordValidator(),
@@ -55,6 +57,7 @@ class DeleteAccountScreen extends StatelessWidget {
               ],
             ),
           ),
+          // IMAGE
           Expanded(
             child: Center(
               child: Image.asset(
@@ -70,9 +73,11 @@ class DeleteAccountScreen extends StatelessWidget {
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 0),
+          // DELETE ACCOUNT BUTTON
           child: PrimaryButton(
             title: LanguageConst.deleteAccount.tr,
             onPressed: () {
+              // DELETE ACCOUNT DIALOG
               AppUtils.showPermissionDialog(
                   title: LanguageConst.deleteAccount.tr,
                   content: LanguageConst.deleteAccountContentLines.tr,
