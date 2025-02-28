@@ -18,7 +18,8 @@ class LanguageConst {
   static const String signUp = "signUp";
   static const String continues = "Continue";
   static const String newPassword = "New password";
-  static const String confirmPassword = "Confirm password";
+  static const String confirmNewPassword = "ConfirmNewpassword";
+  static const String currentpassword  = "Currentpassword";
   static const String save = "save";
   static const String camera = "Camera";
   static const String gallery = "gallery";
@@ -85,9 +86,7 @@ class LanguageConst {
 
   // ACCOUNT
   static const String updateProfile = "UpdateProfile";
-  static const String theme = "theme";
-  static const String language = "language";
-  static const String notificationsSettings = "NotificationsSettings";
+  static const String settings = "settings";
   static const String shareApp = "share app";
   static const String termsConditions = "TermsConditions";
   static const String privacyPolicy = "privacyPolicy";
@@ -100,6 +99,16 @@ class LanguageConst {
   static const String help = "help";
   static const String whatsApp = "whatsApp";
   static const String feedback = "feedback";
+  // - SETTING
+  static const String changepassword = "Changepassword";
+  static const String theme = "theme";
+  static const String language = "language";
+  static const String notificationsSettings = "NotificationsSettings";
+  static const String noteChangingsettingslifedefinitelychangeapp =
+      "NoteChangingsettingslifedefinitelychangeapp";
+       // - - CHANGE PASSWORD
+  static const String theoptionchangepasswordsetting1234not =
+      "Theoptionchangepasswordsetting1234not!";
   // - SEARCH USER
   static const String bettertypeUserNotFound = "BettertypeUserNotFound";
   // - ACCOUNT SETTING
@@ -127,7 +136,8 @@ class LanguageConst {
   static const String termsContact = "termsContact";
   static const String termsContactDesc = "termsContactDesc";
   // - PRIVACY POLICY
-  static const String yourdatanothingsecretgossip = "Yourdatanothingsecretgossip";
+  static const String yourdatanothingsecretgossip =
+      "Yourdatanothingsecretgossip";
   static const String privacyEffectiveDate = "privacyEffectiveDate";
   static const String privacyIntro = "privacyIntro";
   static const String privacyConsent = "privacyConsent";
@@ -144,7 +154,8 @@ class LanguageConst {
   static const String privacyOptOutDesc = "privacyOptOutDesc";
   static const String privacyDataUsage = "privacyDataUsage";
   static const String privacyServiceProvision = "privacyServiceProvision";
-  static const String privacyServiceProvisionDesc = "privacyServiceProvisionDesc";
+  static const String privacyServiceProvisionDesc =
+      "privacyServiceProvisionDesc";
   static const String privacyAppImprovement = "privacyAppImprovement";
   static const String privacyAppImprovementDesc = "privacyAppImprovementDesc";
   static const String privacySecurity = "privacySecurity";
@@ -153,7 +164,8 @@ class LanguageConst {
   static const String privacyNoSelling = "privacyNoSelling";
   static const String privacyNoSellingDesc = "privacyNoSellingDesc";
   static const String privacyServiceProviders = "privacyServiceProviders";
-  static const String privacyServiceProvidersDesc = "privacyServiceProvidersDesc";
+  static const String privacyServiceProvidersDesc =
+      "privacyServiceProvidersDesc";
   static const String privacyLegalCompliance = "privacyLegalCompliance";
   static const String privacyLegalComplianceDesc = "privacyLegalComplianceDesc";
   static const String privacyDataSecurity = "privacyDataSecurity";

@@ -1,15 +1,16 @@
 import 'package:get/get.dart';
-import 'package:ourtalks/Views/Auth/forget_password_screen.dart';
 import 'package:ourtalks/Views/Auth/login_screen.dart';
 import 'package:ourtalks/Views/Auth/signup_screen.dart';
 import 'package:ourtalks/Views/Auth/verify_email_forget_password_screen.dart';
-import 'package:ourtalks/Views/NavBar/Account/Account_Setting/privacy_policy_screen.dart';
-import 'package:ourtalks/Views/NavBar/Account/Account_Setting/terms_and_conditions_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/HelpAndSupport/delete_account_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/HelpAndSupport/help_and_support_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/Settings/change_password_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/Settings/language_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/Settings/setting_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/Settings/theme_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/account_screen.dart';
-import 'package:ourtalks/Views/NavBar/Account/language_screen.dart';
-import 'package:ourtalks/Views/NavBar/Account/theme_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/privacy_policy_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/terms_and_conditions_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/update_profile_screen.dart';
 import 'package:ourtalks/Views/NavBar/Home/home_screen.dart';
 import 'package:ourtalks/Views/NavBar/nav_bar.dart';
@@ -34,10 +35,6 @@ List<GetPage<dynamic>> appRoutes = [
       name: cnstSheet.routesName.verifyEmailForgetPasswordScreen,
       page: () => VerifyEmailForgetPasswordScreen(),
       transition: Transition.upToDown),
-  GetPage(
-      name: cnstSheet.routesName.forgetPasswordScreen,
-      page: () => ForgetPasswordScreen(),
-      transition: Transition.upToDown),
 
   GetPage(
       name: cnstSheet.routesName.signUpScreen,
@@ -50,9 +47,6 @@ List<GetPage<dynamic>> appRoutes = [
   GetPage(
       name: cnstSheet.routesName.accountScreen, page: () => AccountScreen()),
   // ACCOUNT
-  GetPage(name: cnstSheet.routesName.themeScreen, page: () => ThemeScreen()),
-  GetPage(
-      name: cnstSheet.routesName.languageScreen, page: () => LanguageScreen()),
   GetPage(
       name: cnstSheet.routesName.updateProfileScreen,
       page: () => UpdateProfileScreen()),
@@ -62,11 +56,19 @@ List<GetPage<dynamic>> appRoutes = [
   GetPage(
       name: cnstSheet.routesName.deleteAccountScreen,
       page: () => DeleteAccountScreen()),
-  // - ACCOUNT SETTING
   GetPage(
       name: cnstSheet.routesName.termsAndConditionsScreen,
       page: () => TermsAndConditionsScreen()),
   GetPage(
       name: cnstSheet.routesName.privacyPolicyScreen,
       page: () => PrivacyPolicyScreen()),
+  // -SETTING
+  GetPage(
+      name: cnstSheet.routesName.settingScreen, page: () => SettingScreen()),
+  GetPage(name: cnstSheet.routesName.themeScreen, page: () => ThemeScreen()),
+  GetPage(
+      name: cnstSheet.routesName.changePasswordScreen,
+      page: () => ChangePasswordScreen()),
+  GetPage(
+      name: cnstSheet.routesName.languageScreen, page: () => LanguageScreen()),
 ];

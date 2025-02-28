@@ -5,7 +5,6 @@ class RoutesName {
   String welcomeScreen = "/welcomeScreen";
   String homeScreen = "/homeScreen";
   String verifyEmailForgetPasswordScreen = "/VerifyEmailForgetPasswordScreen";
-  String forgetPasswordScreen = "/ForgetPasswordScreen";
   String navBar = "/NavBar";
   String accountScreen = "/accountScreen";
   String chatScreen = "/ChatScreen";
@@ -16,4 +15,6 @@ class RoutesName {
   String deleteAccountScreen = "/DeleteAccountScreen";
   String termsAndConditionsScreen = "/TermsAndConditionsScreen";
   String privacyPolicyScreen = "/PrivacyPolicyScreen";
+  String settingScreen = "/SettingScreen";
+  String changePasswordScreen = "/ChangePasswordScreen";
 }

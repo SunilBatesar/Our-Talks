@@ -7,6 +7,7 @@ class AppImages {
   String girl = "assets/images/girl.png";
   String talk = "assets/images/talk.png";
   String hands = "assets/images/hands.png";
+  String heartHand = "assets/images/heart_hand.png";
 }
 
 class AppIcone {}

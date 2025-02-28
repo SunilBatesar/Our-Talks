@@ -3,23 +3,16 @@ import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/view_model/Models/account_menu_model.dart';
 
 class LocalData {
+  // ACCOUNT SCREEN DATA
   static List<AccountMenuModel> accountMenuDataList = [
     AccountMenuModel(
         id: LanguageConst.updateProfile,
         title: LanguageConst.updateProfile,
         icon: Icons.person_2_outlined),
     AccountMenuModel(
-        id: LanguageConst.theme,
-        title: LanguageConst.theme,
-        icon: Icons.color_lens_outlined),
-    AccountMenuModel(
-        id: LanguageConst.language,
-        title: LanguageConst.language,
-        icon: Icons.language_outlined),
-    AccountMenuModel(
-        id: LanguageConst.notificationsSettings,
-        title: LanguageConst.notificationsSettings,
-        icon: Icons.notifications_none_outlined),
+        id: LanguageConst.settings,
+        title: LanguageConst.settings,
+        icon: Icons.settings_outlined),
     AccountMenuModel(
         id: LanguageConst.shareApp,
         title: LanguageConst.shareApp,
@@ -41,6 +34,26 @@ class LocalData {
         title: LanguageConst.logout,
         icon: Icons.logout_outlined),
   ];
+  // SETTINGS SCREEN DATA
+  static List<AccountMenuModel> settingsDataList = [
+    AccountMenuModel(
+        id: LanguageConst.theme,
+        title: LanguageConst.theme,
+        icon: Icons.color_lens_outlined),
+    AccountMenuModel(
+        id: LanguageConst.language,
+        title: LanguageConst.language,
+        icon: Icons.language_outlined),
+    AccountMenuModel(
+        id: LanguageConst.notificationsSettings,
+        title: LanguageConst.notificationsSettings,
+        icon: Icons.notifications_none_outlined),
+    AccountMenuModel(
+        id: LanguageConst.changepassword,
+        title: LanguageConst.changepassword,
+        icon: Icons.lock_reset_outlined),
+  ];
+  // HELP AND SUPPORT SCREEN DATA
   static List<AccountMenuModel> helpAndSupportDataList = [
     AccountMenuModel(
         id: LanguageConst.help,
@@ -75,6 +88,4 @@ class LocalData {
         title: LanguageConst.cancel,
         icon: Icons.cancel_outlined),
   ];
-
-   
 }

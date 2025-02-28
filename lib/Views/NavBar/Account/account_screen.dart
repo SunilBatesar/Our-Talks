@@ -194,10 +194,8 @@ class AccountScreen extends StatelessWidget {
       case LanguageConst.updateProfile:
         Get.toNamed(cnstSheet.routesName.updateProfileScreen,
             arguments: _usercontroller.user);
-      case LanguageConst.theme:
-        Get.toNamed(cnstSheet.routesName.themeScreen);
-      case LanguageConst.language:
-        Get.toNamed(cnstSheet.routesName.languageScreen);
+      case LanguageConst.settings:
+        Get.toNamed(cnstSheet.routesName.settingScreen);
       case LanguageConst.termsConditions:
         Get.toNamed(cnstSheet.routesName.termsAndConditionsScreen);
       case LanguageConst.privacyPolicy:

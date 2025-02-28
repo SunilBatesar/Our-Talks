@@ -23,7 +23,8 @@ class LanguageType {
     LanguageConst.signUp: "Sign Up",
     LanguageConst.continues: "Continue",
     LanguageConst.newPassword: "New password",
-    LanguageConst.confirmPassword: "Confirm password",
+    LanguageConst.confirmNewPassword: "Confirm new password",
+    LanguageConst.currentpassword: "Current password",
     LanguageConst.save: "Save",
     LanguageConst.camera: "Camera",
     LanguageConst.gallery: "Gallery",
@@ -97,14 +98,13 @@ class LanguageType {
 
     // ACCOUNT
     LanguageConst.updateProfile: "Update Profile",
-    LanguageConst.theme: "Theme",
-    LanguageConst.language: "Language",
-    LanguageConst.notificationsSettings: "Notifications Settings",
+    LanguageConst.settings: "Settings",
     LanguageConst.shareApp: "Share App",
     LanguageConst.termsConditions: "Terms & Conditions",
     LanguageConst.privacyPolicy: "Privacy Policy",
     LanguageConst.helpSupport: "Help & Support",
     LanguageConst.logout: "Logout",
+
     // - USER PROFILE UPDATE
     LanguageConst.banner: "Banner",
 
@@ -114,6 +114,19 @@ class LanguageType {
     LanguageConst.help: "Help",
     LanguageConst.whatsApp: "WhatsApp",
     LanguageConst.feedback: "Feedback",
+
+    // - SETTING
+    LanguageConst.changepassword: "Change password",
+    LanguageConst.theme: "Theme",
+    LanguageConst.language: "Language",
+    LanguageConst.notificationsSettings: "Notifications Settings",
+    LanguageConst.noteChangingsettingslifedefinitelychangeapp:
+        "Note: Changing settings here won’t change your life, but it will definitely change the app!\u{1F602}",
+
+    // - - CHANGE PASSWORD
+    LanguageConst.theoptionchangepasswordsetting1234not:
+        "The option to change your password is given, but setting it as ‘1234’ is not!\u{1F61C}",
+
     // - SEARCH USER
     LanguageConst.bettertypeUserNotFound:
         "Better type the correct name… unless you enjoy being called ‘User Not Found’!\u{1F605}",
@@ -234,6 +247,7 @@ class LanguageType {
     LanguageConst.home: "घर",
     LanguageConst.search: "खोज",
     LanguageConst.account: "खाता",
+
     // BUTTON AND TEXT FIELD
     LanguageConst.name: "नाम",
     LanguageConst.userName: "उपयोगकर्ता नाम",
@@ -243,7 +257,8 @@ class LanguageType {
     LanguageConst.signUp: "साइन अप",
     LanguageConst.continues: "जारी रखें",
     LanguageConst.newPassword: "नया पासवर्ड",
-    LanguageConst.confirmPassword: "पासवर्ड पुष्टि करें",
+    LanguageConst.confirmNewPassword: "नया पासवर्ड पुष्टि करें",
+    LanguageConst.currentpassword: "वर्तमान पासवर्ड",
     LanguageConst.save: "सहेजें",
     LanguageConst.camera: "कैमरा",
     LanguageConst.gallery: "गैलरी",
@@ -316,14 +331,13 @@ class LanguageType {
 
     // ACCOUNT
     LanguageConst.updateProfile: "प्रोफ़ाइल अपडेट करें",
-    LanguageConst.theme: "थीम",
-    LanguageConst.language: "भाषा",
-    LanguageConst.notificationsSettings: "नोटिफिकेशन सेटिंग्स",
+    LanguageConst.settings: "सेटिंग्स",
     LanguageConst.shareApp: "ऐप साझा करें",
     LanguageConst.termsConditions: "नियम और शर्तें",
     LanguageConst.privacyPolicy: "गोपनीयता नीति",
     LanguageConst.helpSupport: "मदद और समर्थन",
     LanguageConst.logout: "लॉगआउट",
+
     // - USER PROFILE UPDATE
     LanguageConst.banner: "बैनर",
 
@@ -333,9 +347,23 @@ class LanguageType {
     LanguageConst.help: "सहायता",
     LanguageConst.whatsApp: "व्हाट्सएप",
     LanguageConst.feedback: "प्रतिक्रिया",
+
+    // - SETTING
+    LanguageConst.changepassword: "पासवर्ड बदलें",
+    LanguageConst.theme: "थीम",
+    LanguageConst.language: "भाषा",
+    LanguageConst.notificationsSettings: "नोटिफिकेशन सेटिंग्स",
+    LanguageConst.noteChangingsettingslifedefinitelychangeapp:
+        "ध्यान दें: इस स्क्रीन पर बदलाव करने से आपकी लाइफ तो नहीं बदलेगी, लेकिन ऐप ज़रूर बदल जाएगा!\u{1F602}",
+
+    // - - CHANGE PASSWORD
+    LanguageConst.theoptionchangepasswordsetting1234not:
+        "पासवर्ड बदलने का ऑप्शन दिया गया है, लेकिन ‘1234’ रखने का नहीं!\u{1F61C}",
+
     // - SEARCH USER
     LanguageConst.bettertypeUserNotFound:
         "सही नाम टाइप करो… वरना ‘यूज़र नॉट फाउंड’ कहलाने में मज़ा आएगा!\u{1F605}",
+
     // - ACCOUNT SETTING
     // - TERMS AND CONDITIONS
 
