@@ -13,6 +13,7 @@ class TermsAndConditionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TERMS DATA LIST
     final List<TitleAndSubTitleModel> termsList = [
       TitleAndSubTitleModel(
           title: LanguageConst.termsAcceptance.tr,

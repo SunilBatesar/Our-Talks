@@ -154,7 +154,8 @@ class LanguageType {
     LanguageConst.termsContactDesc:
         "For questions, please contact us at support@our-talks.com. We aim to respond to inquiries within 48 hours.",
     // - PRIVACY POLICY
-    LanguageConst.privacyPolicyTitle: "Privacy Policy",
+    LanguageConst.yourdatanothingsecretgossip:
+        "Your data is nothing less than a secret to us, and we don't gossip!\u{1F910}",
     LanguageConst.privacyEffectiveDate: "Effective Date",
     LanguageConst.privacyIntro:
         "Our-Talks operates the Our-Talks chat application, which provides a seamless and secure messaging service ('Service'). This Privacy Policy informs users about our practices regarding the collection, use, and disclosure of personal information when using our Service.",
@@ -372,7 +373,8 @@ class LanguageType {
         "यदि आपके कोई प्रश्न हैं, तो कृपया हमसे support@our-talks.com पर संपर्क करें। हम 48 घंटे के भीतर उत्तर देने का प्रयास करेंगे।",
     // ==**==
     // - PRIVACY POLICY
-    LanguageConst.privacyPolicyTitle: "गोपनीयता नीति",
+    LanguageConst.yourdatanothingsecretgossip:
+        "आपका डेटा हमारे लिए किसी राज़ से कम नहीं, और हम इसे लेकर गॉसिप नहीं करते!\u{1F910}",
     LanguageConst.privacyEffectiveDate: "प्रभावी तिथि",
     LanguageConst.privacyIntro:
         "Our-Talks, Our-Talks चैट एप्लिकेशन संचालित करता है, जो एक सहज और सुरक्षित मैसेजिंग सेवा ('सेवा') प्रदान करता है। यह गोपनीयता नीति उपयोगकर्ताओं को हमारी जानकारी संग्रह, उपयोग और प्रकटीकरण प्रक्रियाओं के बारे में सूचित करती है।",

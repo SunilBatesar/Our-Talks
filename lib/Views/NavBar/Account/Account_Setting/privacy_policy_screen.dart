@@ -35,7 +35,7 @@ class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
               Align(
                   alignment: Alignment.centerLeft,
                   child: HeadingText2(
-                      text: LanguageConst.onlybravedaretoenter.tr)),
+                      text: LanguageConst.yourdatanothingsecretgossip.tr)),
               Gap(15.h),
               Obx(
                 () => ListView.builder(

@@ -127,7 +127,7 @@ class LanguageConst {
   static const String termsContact = "termsContact";
   static const String termsContactDesc = "termsContactDesc";
   // - PRIVACY POLICY
-  static const String privacyPolicyTitle = "privacyPolicyTitle";
+  static const String yourdatanothingsecretgossip = "Yourdatanothingsecretgossip";
   static const String privacyEffectiveDate = "privacyEffectiveDate";
   static const String privacyIntro = "privacyIntro";
   static const String privacyConsent = "privacyConsent";
