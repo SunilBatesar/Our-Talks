@@ -62,7 +62,7 @@ class DeleteAccountScreen extends StatelessWidget {
               ],
             ),
           ),
-          // IMAGE
+          // HANDS IMAGE
           Expanded(
             child: Center(
               child: Image.asset(
