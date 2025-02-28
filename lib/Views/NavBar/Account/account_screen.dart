@@ -11,6 +11,7 @@ import 'package:ourtalks/Views/NavBar/Account/Widgets/menu_tile.dart';
 import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
+import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/view_model/Data/LocalData/local_data.dart';
 import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
 import 'package:ourtalks/view_model/Models/account_menu_model.dart';
@@ -198,6 +199,8 @@ class AccountScreen extends StatelessWidget {
         Get.toNamed(cnstSheet.routesName.themeScreen);
       case LanguageConst.language:
         Get.toNamed(cnstSheet.routesName.languageScreen);
+      case LanguageConst.shareApp:
+        AppFunctions.appshare();
       case LanguageConst.termsConditions:
         Get.toNamed(cnstSheet.routesName.termsAndConditionsScreen);
       case LanguageConst.privacyPolicy:

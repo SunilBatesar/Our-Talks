@@ -144,8 +144,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
                 Obx(
                   () => UsernameChecker(
-                      username: _checkuserNameController.value,
-                      isUserNameAvailable: _isUserNameAvailable),
+                    originalUsername: _userdata.userName,
+                    username: _checkuserNameController.value,
+                    isUserNameAvailable: _isUserNameAvailable,
+                  ),
                 ),
                 Gap(10.h),
                 // USER ABOUT TEXT FIELD
@@ -172,23 +174,22 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 0),
           // SAVE BUTTON
           child: LoadingIndicator(
-              widget: Obx(() => PrimaryButton(
-                    title: LanguageConst.save.tr,
-                    onPressed: _isUserNameAvailable.value ||
-                            _userNameController.text.trim() ==
-                                _userdata.userName
-                        ? () => AppButtonhitFunction.updateProfile(
-                              formKey: _globalKey,
-                              imageFile: imageFile,
-                              bannerImageFile: bannerFile,
-                              userData: _userdata,
-                              nameController: _nameController,
-                              userNameController: _userNameController,
-                              aboutController: _aboutController,
-                            )
-                        : () {},
-                    isTransparent: true,
-                  ))),
+              widget: PrimaryButton(
+            title: LanguageConst.save.tr,
+            onPressed: _isUserNameAvailable.value ||
+                    _userNameController.text.trim() == _userdata.userName
+                ? () => AppButtonhitFunction.updateProfile(
+                      formKey: _globalKey,
+                      imageFile: imageFile,
+                      bannerImageFile: bannerFile,
+                      userData: _userdata,
+                      nameController: _nameController,
+                      userNameController: _userNameController,
+                      aboutController: _aboutController,
+                    )
+                : () {},
+            isTransparent: true,
+          )),
         ),
       ),
     );
