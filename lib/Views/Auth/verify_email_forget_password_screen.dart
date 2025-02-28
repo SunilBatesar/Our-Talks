@@ -9,14 +9,18 @@ import 'package:ourtalks/Components/loader%20animation/loading_indicator.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Utils/app_validators.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
 
 class VerifyEmailForgetPasswordScreen extends StatelessWidget {
   VerifyEmailForgetPasswordScreen({super.key});
+  final _usercontroler = Get.find<UserController>();
   final _globalKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
+  // final _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final userEmail = _usercontroler.user!.email;
+    final emailController = TextEditingController(text: userEmail);
     return Scaffold(
       appBar: PrimaryAppBar(),
       body: SafeArea(
@@ -48,9 +52,11 @@ class VerifyEmailForgetPasswordScreen extends StatelessWidget {
                 key: _globalKey,
                 child: PrimaryTextfield(
                   validator: EmailValidator(),
-                  controller: _emailController,
+                  controller: emailController,
                   label: LanguageConst.email.tr,
                   keybordtype: TextInputType.emailAddress,
+                  readOnly: true,
+                  suffixicon: Icons.lock,
                 ),
               ),
               // SIGN IN BUTTON
@@ -61,7 +67,7 @@ class VerifyEmailForgetPasswordScreen extends StatelessWidget {
                   onPressed: () {
                     if (_globalKey.currentState!.validate()) {
                       AuthDataHandler.resetPassword(
-                          email: _emailController.text.trim());
+                          email: emailController.text.trim());
                     }
                     // Get.offNamed(cnstSheet.routesName.forgetPasswordScreen);
                   },

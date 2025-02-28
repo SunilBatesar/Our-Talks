@@ -12,6 +12,8 @@ abstract class Authentication {
   Future<UserModel> getUserById(String userId);
   Future<void> updateUser(String userId, UserModel user);
   Future<void> deleteUser(String userId, String userpassword);
+  Future<void> changeUserPassword(
+      String userId, String currentPassword, String newPassword);
 }
 
 class AuthRepository extends Authentication {
@@ -119,32 +121,91 @@ class AuthRepository extends Authentication {
     }
   }
 
+  @override
+  Future<void> changeUserPassword(
+      String userId, String currentPassword, String newPassword) async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      if (user != null && user.uid == userId) {
+        final credential = EmailAuthProvider.credential(
+          email: user.email!,
+          password: currentPassword,
+        );
+        await user.reauthenticateWithCredential(credential);
+        await user.updatePassword(newPassword);
+        debugPrint("Password successfully changed for user: $userId");
+      }
+    } catch (e) {
+      _handleAuthError(e, 'Error during password change');
+      rethrow;
+    }
+  }
+
   void _handleAuthError(dynamic e, String contextMessage) {
     String errorMessage;
+
     if (e is FirebaseAuthException) {
       switch (e.code) {
+        // Authentication Errors
         case 'email-already-in-use':
-          errorMessage = 'This email address is already in use.';
+          errorMessage = 'This email is already registered.';
           break;
         case 'wrong-password':
           errorMessage = 'Incorrect password. Please try again.';
           break;
         case 'user-not-found':
-          errorMessage = 'No user found with this email address.';
+          errorMessage = 'No account found with this email.';
           break;
         case 'weak-password':
-          errorMessage = 'The provided password is too weak.';
+          errorMessage = 'Password must be at least 6 characters.';
           break;
         case 'invalid-email':
-          errorMessage = 'The email address is not valid.';
+          errorMessage = 'Please enter a valid email address.';
           break;
+        case 'too-many-requests':
+          errorMessage = 'Too many attempts. Try again later.';
+          break;
+        case 'user-disabled':
+          errorMessage = 'This account has been disabled.';
+          break;
+
+        // Password Reset
+        case 'expired-action-code':
+          errorMessage = 'Password reset link has expired.';
+          break;
+        case 'invalid-action-code':
+          errorMessage = 'Invalid password reset link.';
+          break;
+
+        // Reauthentication
+        case 'requires-recent-login':
+          errorMessage = 'Please log in again to perform this action.';
+          break;
+
+        // Custom Errors
+        case 'user-data-not-found':
+          errorMessage = 'Account data missing. Please contact support.';
+          break;
+        case 'same-password':
+          errorMessage = 'New password must be different.';
+          break;
+
+        // General
         default:
           errorMessage =
-              'An unexpected error occurred. Please try again later.';
+              'Authentication error: ${e.message ?? 'Unknown error'}';
       }
     } else {
-      errorMessage = 'An unexpected error occurred. Please try again later.';
+      errorMessage = 'An unexpected error occurred. Please try again.';
     }
-    AppUtils.showSnackBar(title: 'Error', message: errorMessage, isError: true);
+
+    AppUtils.showSnackBar(
+      title: 'Error',
+      message: errorMessage,
+      isError: true,
+    );
+
+    // Log detailed error for debugging
+    debugPrint('$contextMessage: ${e.toString()}');
   }
 }

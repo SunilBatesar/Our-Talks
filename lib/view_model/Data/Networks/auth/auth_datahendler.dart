@@ -50,7 +50,7 @@ class AuthDataHandler {
     await _handleAuthOperation(
         operation: () => _repo.resetPassword(email: email),
         onSuccess: (_) async {
-          Get.offNamed(cnstSheet.routesName.welcomeScreen);
+          Get.back();
           debugPrint("Password reset email sent to $email");
           return;
         },
@@ -116,6 +116,21 @@ class AuthDataHandler {
         },
         successMessage: 'User account deleted permanently',
         errorMessage: 'Error during account deletion');
+  }
+
+  static Future<void> changeUserPassword(
+      String currentPassword, String newPassword) async {
+    final uid = Prefs.getUserIdPref();
+    await _handleAuthOperation(
+      operation: () =>
+          _repo.changeUserPassword(uid, currentPassword, newPassword),
+      onSuccess: (_) async {
+        debugPrint("User password changed successfully");
+        return;
+      },
+      successMessage: 'User password changed successfully',
+      errorMessage: 'Error during password change',
+    );
   }
 
   // GENERIC OPERATION HANDLER

@@ -55,6 +55,22 @@ class PasswordValidator extends AppValidator {
   }
 }
 
+class ConfirmPasswordValidator extends AppValidator {
+  final String? originalPassword;
+
+  ConfirmPasswordValidator(this.originalPassword);
+
+  @override
+  String? validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return LanguageConst.pleaseEnterConfirmPassword.tr;
+    } else if (value != originalPassword) {
+      return LanguageConst.passwordsDoNotMatch.tr;
+    }
+    return null;
+  }
+}
+
 // USERNAME VALIDATOR
 class UserNameValidator extends AppValidator {
   @override

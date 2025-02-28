@@ -65,6 +65,9 @@ class LanguageType {
         "Password must include at least one number",
     LanguageConst.passwordSpecialCharRequired:
         "Password must include at least one special",
+    LanguageConst.pleaseEnterConfirmPassword:
+        "Please enter the confirm password",
+    LanguageConst.passwordsDoNotMatch: "Passwords do not match",
 
     // LOGIN SCREEN
     LanguageConst.heytRdi: "Hey there!\nReady to dive in?\u{1F61C}",
@@ -298,6 +301,8 @@ class LanguageType {
         "पासवर्ड में कम से कम एक नंबर होना चाहिए",
     LanguageConst.passwordSpecialCharRequired:
         "पासवर्ड में कम से कम एक विशेष वर्ण (@\$!%*?&) होना चाहिए",
+    LanguageConst.pleaseEnterConfirmPassword: "कृपया पुष्टि पासवर्ड दर्ज करें",
+    LanguageConst.passwordsDoNotMatch: "पासवर्ड मेल नहीं खा रहे हैं",
 
     // LOGIN SCREEN
     LanguageConst.heytRdi:

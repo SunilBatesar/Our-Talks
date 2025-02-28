@@ -19,7 +19,7 @@ class LanguageConst {
   static const String continues = "Continue";
   static const String newPassword = "New password";
   static const String confirmNewPassword = "ConfirmNewpassword";
-  static const String currentpassword  = "Currentpassword";
+  static const String currentpassword = "Currentpassword";
   static const String save = "save";
   static const String camera = "Camera";
   static const String gallery = "gallery";
@@ -59,6 +59,8 @@ class LanguageConst {
       "Passwordmustincludeatleastonenumber";
   static const String passwordSpecialCharRequired =
       "Passwordmustincludeatleastonespecialcharacter(@\$!%*?&)";
+  static const String pleaseEnterConfirmPassword = "pleaseEnterConfirmPassword";
+  static const String passwordsDoNotMatch = "passwordsDoNotMatch";
 
   // LOGIN SCREEN CONST
   static const String heytRdi = "HeytRdi";
@@ -106,7 +108,7 @@ class LanguageConst {
   static const String notificationsSettings = "NotificationsSettings";
   static const String noteChangingsettingslifedefinitelychangeapp =
       "NoteChangingsettingslifedefinitelychangeapp";
-       // - - CHANGE PASSWORD
+  // - - CHANGE PASSWORD
   static const String theoptionchangepasswordsetting1234not =
       "Theoptionchangepasswordsetting1234not!";
   // - SEARCH USER
