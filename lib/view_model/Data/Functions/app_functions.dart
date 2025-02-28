@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AppFunctions {
@@ -34,6 +35,21 @@ class AppFunctions {
       }
     } catch (e) {
       debugPrint("Error launching WhatsApp: $e");
+    }
+  }
+
+  // share app
+  static Future<void> appshare() async {
+    try {
+      final String message =
+          "Check out ${AppConfig.appName} - a secure and friendly chat app! 💬\n\nDownload it now: ${AppConfig.appPlayStoreLink}";
+
+      await Share.share(
+        message,
+        subject: "Let's chat on ${AppConfig.appName}!",
+      );
+    } catch (e) {
+      debugPrint("Error sharing app: $e");
     }
   }
 }

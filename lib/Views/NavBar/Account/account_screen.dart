@@ -11,6 +11,7 @@ import 'package:ourtalks/Views/NavBar/Account/Widgets/menu_tile.dart';
 import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
+import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/view_model/Data/LocalData/local_data.dart';
 import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
 import 'package:ourtalks/view_model/Models/account_menu_model.dart';
@@ -157,8 +158,8 @@ class AccountScreen extends StatelessWidget {
                   final data = LocalData.accountMenuDataList[index];
                   return MenuTile(
                     model: data,
-                    onTap: () {
-                      menuTileTapFunction(data);
+                    onTap: () async {
+                      await menuTileTapFunction(data);
                     },
                   ).marginOnly(bottom: 10.h);
                 },
@@ -189,13 +190,15 @@ class AccountScreen extends StatelessWidget {
     );
   }
 
-  void menuTileTapFunction(AccountMenuModel model) {
+  Future<void> menuTileTapFunction(AccountMenuModel model) async {
     switch (model.id) {
       case LanguageConst.updateProfile:
         Get.toNamed(cnstSheet.routesName.updateProfileScreen,
             arguments: _usercontroller.user);
       case LanguageConst.settings:
         Get.toNamed(cnstSheet.routesName.settingScreen);
+      case LanguageConst.shareApp:
+        await AppFunctions.appshare();
       case LanguageConst.termsConditions:
         Get.toNamed(cnstSheet.routesName.termsAndConditionsScreen);
       case LanguageConst.privacyPolicy:

@@ -1,4 +1,3 @@
-// username_checker.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,13 +5,21 @@ import 'package:get/get.dart';
 class UsernameChecker extends StatelessWidget {
   final String username;
   final RxBool isUserNameAvailable;
+  final String? originalUsername; // Add optional original username parameter
 
-  const UsernameChecker(
-      {super.key, required this.username, required this.isUserNameAvailable});
+  const UsernameChecker({
+    super.key,
+    required this.username,
+    required this.isUserNameAvailable,
+    this.originalUsername, // New optional parameter
+  });
 
   @override
   Widget build(BuildContext context) {
-    if (username.isEmpty) return const SizedBox.shrink();
+    // Hide if username is empty or matches original username
+    if (username.isEmpty || username == originalUsername) {
+      return const SizedBox.shrink();
+    }
 
     return StreamBuilder<QuerySnapshot>(
       stream: FirebaseFirestore.instance
