@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -9,82 +10,130 @@ class CloudinaryFunctions {
   static final _loadingController = Get.find<LoadingController>();
   static const _cloudName = 'dwlkcrsdw';
   static const _upload = "upload";
-  final _url = 'https://api.cloudinary.com/v1_1/$_cloudName/';
-  final _uploadPreset =
-      'userimage'; // Set up an unsigned upload preset in Cloudinary
+  static const _apiKey = '159913318993972'; // Add your API key
+  static const _apiSecret =
+      '6a39msxJlwo-coDHRfmLWMfAJIs'; // Add your API secret
 
-  Future<String?> uploadImageToCloudinary(File imageFile, String folder) async {
-    final url = Uri.parse("$_url$_upload");
+  final _url = 'https://api.cloudinary.com/v1_1/$_cloudName/';
+
+  // *****************
+  // upload new image
+
+  Future<String?> uploadImageToCloudinary(
+    File imageFile, {
+    String? publicId,
+    String? folder,
+  }) async {
+    final url = Uri.parse('$_url$_upload');
+    final timestamp =
+        (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString();
+
+    // Prepare parameters for signing
+    final params = <String, String>{
+      'timestamp': timestamp,
+      if (publicId != null && publicId.isNotEmpty) 'public_id': publicId,
+      if (folder != null && folder.isNotEmpty) 'folder': folder,
+    };
+
+    // Generate signature
+    final sortedParams = params.keys.toList()..sort();
+    final paramsToSign = sortedParams.map((k) => '$k=${params[k]}').join('&');
+    final signature =
+        sha1.convert(utf8.encode(paramsToSign + _apiSecret)).toString();
 
     try {
       _loadingController.showLoading();
-      var request = http.MultipartRequest('POST', url)
-        ..fields['upload_preset'] = _uploadPreset
-        ..fields['folder'] = folder // Specify the folder (userdp or userbanner)
-        ..files.add(await http.MultipartFile.fromPath(
-          'file',
-          imageFile.path,
-        ));
+      debugPrint('Starting image upload...');
 
-      var response = await request.send();
+      final request = http.MultipartRequest('POST', url)
+        ..fields.addAll({
+          'api_key': _apiKey,
+          'timestamp': timestamp,
+          'signature': signature,
+          ...params,
+        })
+        ..files.add(await http.MultipartFile.fromPath('file', imageFile.path));
 
-      if (response.statusCode == 200) {
-        final responseData = await response.stream.bytesToString();
-        final decodedData = json.decode(responseData);
-        _loadingController.hideLoading();
-        return decodedData['secure_url'];
-      } else {
-        _loadingController.hideLoading();
-        debugPrint('-----------------------');
-        debugPrint('Failed to upload image: ${response.reasonPhrase}');
-        debugPrint('Upload failed with status: ${response.statusCode}');
-        debugPrint('-----------------------');
-        return null;
-      }
-    } catch (e) {
-      _loadingController.hideLoading();
-      debugPrint('-----------------------');
-      debugPrint('Error uploading image: $e');
-      debugPrint('-----------------------');
-      return null;
-    }
-  }
-
-  Future<String?> replaceImageInCloudinary(
-      File imageFile, String publicId, String folder) async {
-    final url = Uri.parse('$_url$_upload');
-
-    try {
-      debugPrint('Starting image replacement...');
-      debugPrint('Replacing image with public_id: $folder/$publicId');
-
-      var request = http.MultipartRequest('POST', url)
-        ..fields['upload_preset'] = _uploadPreset
-        ..fields['public_id'] = '$folder/$publicId'
-        ..files.add(await http.MultipartFile.fromPath(
-          'file',
-          imageFile.path,
-        ));
-
-      var response = await request.send();
+      final response = await request.send();
       final responseData = await response.stream.bytesToString();
       final decodedData = json.decode(responseData);
 
-      debugPrint('Full response data: $decodedData');
-
       if (response.statusCode == 200) {
-        debugPrint('Image replaced successfully!');
-        debugPrint('Secure URL: ${decodedData['secure_url']}');
+        debugPrint('Upload success: ${decodedData['secure_url']}');
         return decodedData['secure_url'];
       } else {
-        debugPrint('Failed to replace image: ${response.reasonPhrase}');
-        debugPrint('Upload failed with status: ${response.statusCode}');
-        debugPrint('Response data: $responseData');
+        debugPrint('''
+      Upload failed (${response.statusCode}):
+      ${decodedData['error']['message']}
+      ''');
         return null;
       }
     } catch (e) {
-      debugPrint('Error replacing image: $e');
+      debugPrint('Upload exception: $e');
       return null;
+    } finally {
+      _loadingController.hideLoading();
+    }
+  }
+
+  // ***********************
+  // update image
+
+  Future<String?> replaceImageInCloudinary(
+    File imageFile, {
+    required String publicId,
+    String?
+        folder, // Keep the parameter if needed elsewhere, but don't use it in params
+  }) async {
+    final url = Uri.parse('$_url$_upload');
+    final timestamp =
+        (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString();
+
+    // Prepare parameters for signing (REMOVE FOLDER FROM PARAMS)
+    final params = <String, String>{
+      'timestamp': timestamp,
+      'public_id': publicId,
+      'overwrite': 'true', // Ensure overwrite is enabled
+    };
+
+    // Generate signature
+    final sortedParams = params.keys.toList()..sort();
+    final paramsToSign = sortedParams.map((k) => '$k=${params[k]}').join('&');
+    final signature =
+        sha1.convert(utf8.encode(paramsToSign + _apiSecret)).toString();
+
+    try {
+      _loadingController.showLoading();
+      debugPrint('Attempting to replace image: $publicId');
+
+      final request = http.MultipartRequest('POST', url)
+        ..fields.addAll({
+          'api_key': _apiKey,
+          'timestamp': timestamp,
+          'signature': signature,
+          ...params,
+        })
+        ..files.add(await http.MultipartFile.fromPath('file', imageFile.path));
+
+      final response = await request.send();
+      final responseData = await response.stream.bytesToString();
+      final decodedData = json.decode(responseData);
+
+      if (response.statusCode == 200) {
+        debugPrint('Replace successful: ${decodedData['secure_url']}');
+        return decodedData['secure_url'];
+      } else {
+        debugPrint('''
+      Replace failed (${response.statusCode}):
+      ${decodedData['error']['message']}
+      ''');
+        return null;
+      }
+    } catch (e) {
+      debugPrint('Replace exception: $e');
+      return null;
+    } finally {
+      _loadingController.hideLoading();
     }
   }
 }
