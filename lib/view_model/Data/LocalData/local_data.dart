@@ -21,9 +21,17 @@ class LocalData {
         title: LanguageConst.notificationsSettings,
         icon: Icons.notifications_none_outlined),
     AccountMenuModel(
+        id: LanguageConst.shareApp,
+        title: LanguageConst.shareApp,
+        icon: Icons.share),
+    AccountMenuModel(
         id: LanguageConst.termsConditions,
         title: LanguageConst.termsConditions,
         icon: Icons.assignment_outlined),
+    AccountMenuModel(
+        id: LanguageConst.privacyPolicy,
+        title: LanguageConst.privacyPolicy,
+        icon: Icons.policy_outlined),
     AccountMenuModel(
         id: LanguageConst.helpSupport,
         title: LanguageConst.helpSupport,
@@ -46,10 +54,6 @@ class LocalData {
         id: LanguageConst.feedback,
         title: LanguageConst.feedback,
         icon: Icons.feed_outlined),
-    AccountMenuModel(
-        id: LanguageConst.shareApp,
-        title: LanguageConst.shareApp,
-        icon: Icons.share),
   ];
 
   // IMAGE PICK BOTTOM SHET LOCAL DATA
@@ -71,4 +75,6 @@ class LocalData {
         title: LanguageConst.cancel,
         icon: Icons.cancel_outlined),
   ];
+
+   
 }

@@ -3,6 +3,8 @@ import 'package:ourtalks/Views/Auth/forget_password_screen.dart';
 import 'package:ourtalks/Views/Auth/login_screen.dart';
 import 'package:ourtalks/Views/Auth/signup_screen.dart';
 import 'package:ourtalks/Views/Auth/verify_email_forget_password_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/Account_Setting/privacy_policy_screen.dart';
+import 'package:ourtalks/Views/NavBar/Account/Account_Setting/terms_and_conditions_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/HelpAndSupport/delete_account_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/HelpAndSupport/help_and_support_screen.dart';
 import 'package:ourtalks/Views/NavBar/Account/account_screen.dart';
@@ -47,7 +49,7 @@ List<GetPage<dynamic>> appRoutes = [
   GetPage(name: cnstSheet.routesName.homeScreen, page: () => HomeScreen()),
   GetPage(
       name: cnstSheet.routesName.accountScreen, page: () => AccountScreen()),
-  // ACCONT
+  // ACCOUNT
   GetPage(name: cnstSheet.routesName.themeScreen, page: () => ThemeScreen()),
   GetPage(
       name: cnstSheet.routesName.languageScreen, page: () => LanguageScreen()),
@@ -60,4 +62,11 @@ List<GetPage<dynamic>> appRoutes = [
   GetPage(
       name: cnstSheet.routesName.deleteAccountScreen,
       page: () => DeleteAccountScreen()),
+  // - ACCOUNT SETTING
+  GetPage(
+      name: cnstSheet.routesName.termsAndConditionsScreen,
+      page: () => TermsAndConditionsScreen()),
+  GetPage(
+      name: cnstSheet.routesName.privacyPolicyScreen,
+      page: () => PrivacyPolicyScreen()),
 ];

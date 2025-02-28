@@ -88,7 +88,9 @@ class LanguageConst {
   static const String theme = "theme";
   static const String language = "language";
   static const String notificationsSettings = "NotificationsSettings";
+  static const String shareApp = "share app";
   static const String termsConditions = "TermsConditions";
+  static const String privacyPolicy = "privacyPolicy";
   static const String helpSupport = "HelpSupport";
   static const String logout = "Logout";
   // - USER PROFILE UPDATE
@@ -97,8 +99,72 @@ class LanguageConst {
   static const String ourhelpline24x7sleepnight = "Ourhelpline24x7sleepnight";
   static const String help = "help";
   static const String whatsApp = "whatsApp";
-  static const String shareApp = "share app";
   static const String feedback = "feedback";
   // - SEARCH USER
   static const String bettertypeUserNotFound = "BettertypeUserNotFound";
+  // - ACCOUNT SETTING
+  // - TERMS AND CONDITIONS
+  static const String onlybravedaretoenter = "Onlybravedaretoenter";
+  static const String termsAcceptance = "termsAcceptance";
+  static const String termsAcceptanceDesc = "termsAcceptanceDesc";
+  static const String termsUserResponsibilities = "termsUserResponsibilities";
+  static const String termsUserResponsibilitiesDesc =
+      "termsUserResponsibilitiesDesc";
+  static const String termsPrivacy = "termsPrivacy";
+  static const String termsPrivacyDesc = "termsPrivacyDesc";
+  static const String termsContent = "termsContent";
+  static const String termsContentDesc = "termsContentDesc";
+  static const String termsTermination = "termsTermination";
+  static const String termsTerminationDesc = "termsTerminationDesc";
+  static const String termsLiability = "termsLiability";
+  static const String termsLiabilityDesc = "termsLiabilityDesc";
+  static const String termsChanges = "termsChanges";
+  static const String termsChangesDesc = "termsChangesDesc";
+  static const String termsGoverningLaw = "termsGoverningLaw";
+  static const String termsGoverningLawDesc = "termsGoverningLawDesc";
+  static const String termsDisputeResolution = "termsDisputeResolution";
+  static const String termsDisputeResolutionDesc = "termsDisputeResolutionDesc";
+  static const String termsContact = "termsContact";
+  static const String termsContactDesc = "termsContactDesc";
+  // - PRIVACY POLICY
+  static const String privacyPolicyTitle = "privacyPolicyTitle";
+  static const String privacyEffectiveDate = "privacyEffectiveDate";
+  static const String privacyIntro = "privacyIntro";
+  static const String privacyConsent = "privacyConsent";
+  static const String privacyInfoCollection = "privacyInfoCollection";
+  static const String privacyInfoCollectionDesc = "privacyInfoCollectionDesc";
+  static const String privacyLogData = "privacyLogData";
+  static const String privacyLogDataDesc = "privacyLogDataDesc";
+  static const String privacyCookiesTracking = "privacyCookiesTracking";
+  static const String privacyCookies = "privacyCookies";
+  static const String privacyCookiesDesc = "privacyCookiesDesc";
+  static const String privacyAnalytics = "privacyAnalytics";
+  static const String privacyAnalyticsDesc = "privacyAnalyticsDesc";
+  static const String privacyOptOut = "privacyOptOut";
+  static const String privacyOptOutDesc = "privacyOptOutDesc";
+  static const String privacyDataUsage = "privacyDataUsage";
+  static const String privacyServiceProvision = "privacyServiceProvision";
+  static const String privacyServiceProvisionDesc = "privacyServiceProvisionDesc";
+  static const String privacyAppImprovement = "privacyAppImprovement";
+  static const String privacyAppImprovementDesc = "privacyAppImprovementDesc";
+  static const String privacySecurity = "privacySecurity";
+  static const String privacySecurityDesc = "privacySecurityDesc";
+  static const String privacyDataSharing = "privacyDataSharing";
+  static const String privacyNoSelling = "privacyNoSelling";
+  static const String privacyNoSellingDesc = "privacyNoSellingDesc";
+  static const String privacyServiceProviders = "privacyServiceProviders";
+  static const String privacyServiceProvidersDesc = "privacyServiceProvidersDesc";
+  static const String privacyLegalCompliance = "privacyLegalCompliance";
+  static const String privacyLegalComplianceDesc = "privacyLegalComplianceDesc";
+  static const String privacyDataSecurity = "privacyDataSecurity";
+  static const String privacyDataSecurityDesc = "privacyDataSecurityDesc";
+  static const String privacyUserRights = "privacyUserRights";
+  static const String privacyAccessUpdate = "privacyAccessUpdate";
+  static const String privacyAccessUpdateDesc = "privacyAccessUpdateDesc";
+  static const String privacyDataDeletion = "privacyDataDeletion";
+  static const String privacyDataDeletionDesc = "privacyDataDeletionDesc";
+  static const String privacyPolicyUpdates = "privacyPolicyUpdates";
+  static const String privacyPolicyUpdatesDesc = "privacyPolicyUpdatesDesc";
+  static const String privacyContact = "privacyContact";
+  static const String privacyContactDesc = "privacyContactDesc";
 }

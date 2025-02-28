@@ -198,6 +198,10 @@ class AccountScreen extends StatelessWidget {
         Get.toNamed(cnstSheet.routesName.themeScreen);
       case LanguageConst.language:
         Get.toNamed(cnstSheet.routesName.languageScreen);
+      case LanguageConst.termsConditions:
+        Get.toNamed(cnstSheet.routesName.termsAndConditionsScreen);
+      case LanguageConst.privacyPolicy:
+        Get.toNamed(cnstSheet.routesName.privacyPolicyScreen);
       case LanguageConst.helpSupport:
         Get.toNamed(cnstSheet.routesName.helpAndSupportScreen);
       case LanguageConst.logout:
