@@ -5,7 +5,7 @@ import 'package:ourtalks/Utils/utils.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/loading_controller.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
-import 'package:ourtalks/view_model/Data/Networks/auth_function.dart';
+import 'package:ourtalks/view_model/Data/Networks/auth/auth_function.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class AuthDataHandler {

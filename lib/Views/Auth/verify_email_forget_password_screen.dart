@@ -9,7 +9,7 @@ import 'package:ourtalks/Components/loader%20animation/loading_indicator.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Utils/app_validators.dart';
 import 'package:ourtalks/main.dart';
-import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
+import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
 
 class VerifyEmailForgetPasswordScreen extends StatelessWidget {
   VerifyEmailForgetPasswordScreen({super.key});

@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/main.dart';
-import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
+import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

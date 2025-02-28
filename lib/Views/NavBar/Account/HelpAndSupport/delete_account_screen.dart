@@ -10,11 +10,13 @@ import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Utils/app_validators.dart';
 import 'package:ourtalks/Utils/utils.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
 
 class DeleteAccountScreen extends StatelessWidget {
   DeleteAccountScreen({super.key});
   final _passwordController = TextEditingController();
   final RxBool _isPasswordobscure = true.obs;
+  final _globalKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,18 +42,21 @@ class DeleteAccountScreen extends StatelessWidget {
                 Gap(30.h),
                 // PASSWORD TEXT FIELD
                 Obx(
-                  () => PrimaryTextfield(
-                    validator: PasswordValidator(),
-                    controller: _passwordController,
-                    label: LanguageConst.pleaseEnterPassword.tr,
-                    keybordtype: TextInputType.visiblePassword,
-                    isobscureText: _isPasswordobscure.value,
-                    suffixicon: _isPasswordobscure.value
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    suffixiconOnTap: () {
-                      _isPasswordobscure.value = !_isPasswordobscure.value;
-                    },
+                  () => Form(
+                    key: _globalKey,
+                    child: PrimaryTextfield(
+                      validator: PasswordValidator(),
+                      controller: _passwordController,
+                      label: LanguageConst.pleaseEnterPassword.tr,
+                      keybordtype: TextInputType.visiblePassword,
+                      isobscureText: _isPasswordobscure.value,
+                      suffixicon: _isPasswordobscure.value
+                          ? Icons.visibility_off_outlined
+                          : Icons.visibility_outlined,
+                      suffixiconOnTap: () {
+                        _isPasswordobscure.value = !_isPasswordobscure.value;
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -77,13 +82,18 @@ class DeleteAccountScreen extends StatelessWidget {
           child: PrimaryButton(
             title: LanguageConst.deleteAccount.tr,
             onPressed: () {
-              // DELETE ACCOUNT DIALOG
-              AppUtils.showPermissionDialog(
-                  title: LanguageConst.deleteAccount.tr,
-                  content: LanguageConst.deleteAccountContentLines.tr,
-                  submitButnText: LanguageConst.deleteAccount.tr,
-                  submitButnTextColorRed: true,
-                  onTap: () {});
+              if (_globalKey.currentState!.validate()) {
+                // DELETE ACCOUNT DIALOG
+                AppUtils.showPermissionDialog(
+                    title: LanguageConst.deleteAccount.tr,
+                    content: LanguageConst.deleteAccountContentLines.tr,
+                    submitButnText: LanguageConst.deleteAccount.tr,
+                    submitButnTextColorRed: true,
+                    onTap: () {
+                      AuthDataHandler.deleteUserPermanent(
+                          _passwordController.text.trim());
+                    });
+              }
             },
             isTransparent: true,
           ),

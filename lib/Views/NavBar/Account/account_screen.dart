@@ -12,7 +12,7 @@ import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dar
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/LocalData/local_data.dart';
-import 'package:ourtalks/view_model/Data/Networks/auth_datahendler.dart';
+import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
 import 'package:ourtalks/view_model/Models/account_menu_model.dart';
 
 class AccountScreen extends StatelessWidget {
