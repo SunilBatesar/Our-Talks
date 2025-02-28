@@ -13,8 +13,7 @@ import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Utils/app_validators.dart';
 import 'package:ourtalks/Views/Auth/widget/username_checker.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/user_profile_pick_widget.dart';
-import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
-import 'package:ourtalks/view_model/Data/Networks/cloudinary/cloudinary_function.dart';
+import 'package:ourtalks/view_model/Data/Functions/app_buttonhit_function.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
@@ -173,37 +172,23 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 0),
           // SAVE BUTTON
           child: LoadingIndicator(
-              widget: Obx(
-            () => PrimaryButton(
-              title: LanguageConst.save.tr,
-              onPressed: _isUserNameAvailable.value ||
-                      _userNameController.text.trim() == _userdata.userName
-                  ? () async {
-                      final publicId =
-                          _userdata.userDP!.split('/').last.split('.').first;
-
-                      final userdpURL = await CloudinaryFunctions()
-                          .replaceImageInCloudinary(
-                              imageFile!, publicId, "userdp");
-                      // final userdpURL = await CloudinaryFunctions()
-                      //     .uploadImageToCloudinary(imageFile!, "userdp");
-
-                      if (_globalKey.currentState!.validate()) {
-                        AuthDataHandler.updateUser(
-                          userId: _userdata.userID!,
-                          model: _userdata.copyWith(
-                            userDP: userdpURL,
-                            name: _nameController.text.trim(),
-                            userName: _userNameController.text.trim(),
-                            about: _aboutController.text.trim(),
-                          ),
-                        );
-                      }
-                    }
-                  : () {},
-              isTransparent: true,
-            ),
-          )),
+              widget: Obx(() => PrimaryButton(
+                    title: LanguageConst.save.tr,
+                    onPressed: _isUserNameAvailable.value ||
+                            _userNameController.text.trim() ==
+                                _userdata.userName
+                        ? () => AppButtonhitFunction.updateProfile(
+                              formKey: _globalKey,
+                              imageFile: imageFile,
+                              bannerImageFile: bannerFile,
+                              userData: _userdata,
+                              nameController: _nameController,
+                              userNameController: _userNameController,
+                              aboutController: _aboutController,
+                            )
+                        : () {},
+                    isTransparent: true,
+                  ))),
         ),
       ),
     );
