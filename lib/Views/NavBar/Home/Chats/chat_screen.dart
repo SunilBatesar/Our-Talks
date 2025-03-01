@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
@@ -8,8 +10,9 @@ import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class ChatScreen extends StatelessWidget {
   final UserModel model;
-  const ChatScreen({super.key, required this.model});
-
+  ChatScreen({super.key, required this.model});
+  final _user = types.User(id: "1234567");
+  final List<types.Message> _messages = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,9 +68,37 @@ class ChatScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Column(
-        children: [],
+      body: Chat(
+        messages: _messages, //message ki list show krna ni hai
+        onSendPressed: _handleSendPressed, // message send krn ka function
+        user: _user, // current user ki id
+        //===========STYLING================
+
+        theme: DefaultChatTheme(
+          backgroundColor: cnstSheet.colors.black,
+          inputBorderRadius: BorderRadius.circular(10.r),
+          inputContainerDecoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+              border:
+                  Border.all(color: cnstSheet.colors.primary.withAlpha(180))),
+          inputTextStyle: cnstSheet.textTheme.fs16Medium,
+          inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
+          inputMargin: EdgeInsets.all(8.sp),
+          inputTextCursorColor: cnstSheet.colors.primary,
+        ),
       ),
+    );
+  }
+
+  // jesa bhi message krna ho es ka use krna hai jese text ,image,audio;
+  void _handleSendPressed(types.PartialText message) {
+    //*********/ Yani ki ye textMessage jaye ga Firebase pr okay ****************
+    final textMessage = types.TextMessage(
+      author: _user, // current user id jo message send kr rha hai
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: "123456", // message ki id add krni hai
+      text: message
+          .text, // jo bhi message hoga jese String Url ya kuch bhi vo es me String rup me save hoga
     );
   }
 }
