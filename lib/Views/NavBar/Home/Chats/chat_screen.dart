@@ -72,8 +72,8 @@ class ChatScreen extends StatelessWidget {
         messages: _messages, //message ki list show krna ni hai
         onSendPressed: _handleSendPressed, // message send krn ka function
         user: _user, // current user ki id
-        //===========STYLING================
 
+        //===========STYLING================
         theme: DefaultChatTheme(
           backgroundColor: cnstSheet.colors.black,
           inputBorderRadius: BorderRadius.circular(10.r),
