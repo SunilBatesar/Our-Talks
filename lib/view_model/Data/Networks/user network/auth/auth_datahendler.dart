@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Res/prefs/prefs.dart';
@@ -5,7 +6,7 @@ import 'package:ourtalks/Utils/utils.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/loading_controller.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
-import 'package:ourtalks/view_model/Data/Networks/auth/auth_function.dart';
+import 'package:ourtalks/view_model/Data/Networks/user%20network/auth/auth_repository.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class AuthDataHandler {
@@ -75,33 +76,6 @@ class AuthDataHandler {
         errorMessage: 'Error during logout');
   }
 
-  // GET USER BY ID FUNCTION
-  static Future<void> getUserById(String userId) async {
-    await _handleAuthOperation(
-        operation: () => _repo.getUserById(userId),
-        onSuccess: (user) async {
-          _userController.setUser(user);
-          return;
-        },
-        successMessage: 'User data fetched successfully',
-        errorMessage: 'Error fetching user data');
-  }
-
-  // UPDATE USER FUNCTION
-  static Future<void> updateUser(
-      {required String userId, required UserModel model}) async {
-    await _handleAuthOperation(
-        operation: () async => await _repo.updateUser(userId, model),
-        onSuccess: (_) async {
-          _userController.updateUser(model);
-          Get.offAllNamed(cnstSheet.routesName.navBar);
-          debugPrint("User updated successfully: ${model.toJson()}");
-          return;
-        },
-        successMessage: 'User updated successfully',
-        errorMessage: 'Error updating user');
-  }
-
   // DELETE USER FUNCTION
   static Future<void> deleteUserPermanent(String userPassword) async {
     final uid = Prefs.getUserIdPref();
@@ -147,9 +121,15 @@ class AuthDataHandler {
       AppUtils.showSnackBar(title: 'Success', message: successMessage);
     } catch (e) {
       _loadingController.hideLoading();
-      AppUtils.showSnackBar(
-          title: 'Error', message: '$errorMessage: $e', isError: true);
-      debugPrint("$errorMessage: $e");
+      // Show snackbar only if it's NOT a FirebaseAuthException
+      if (e is! FirebaseAuthException) {
+        AppUtils.showSnackBar(
+          title: 'Error',
+          message: '$errorMessage: ${e.toString()}',
+          isError: true,
+        );
+      }
+      debugPrint("$errorMessage: ${e.toString()}");
     } finally {
       _loadingController.hideLoading();
     }
