@@ -9,8 +9,7 @@ abstract class Authentication {
   Future<UserModel> signup({required UserModel user, required String password});
   Future<void> resetPassword({required String email});
   Future<void> logout();
-  Future<UserModel> getUserById(String userId);
-  Future<void> updateUser(String userId, UserModel user);
+
   Future<void> deleteUser(String userId, String userpassword);
   Future<void> changeUserPassword(
       String userId, String currentPassword, String newPassword);
@@ -75,31 +74,6 @@ class AuthRepository extends Authentication {
       debugPrint("User successfully logged out");
     } catch (e) {
       _handleAuthError(e, 'Error logging out');
-    }
-  }
-
-  @override
-  Future<UserModel> getUserById(String userId) async {
-    try {
-      final userDoc = await FirebaseApis.userDocumentRef(userId).get();
-      if (userDoc.exists) {
-        return UserModel.fromJson(
-            userDoc.data() as Map<String, dynamic>, userDoc.id);
-      } else {
-        throw Exception("User not found");
-      }
-    } catch (e) {
-      _handleAuthError(e, 'Error fetching user data');
-      rethrow;
-    }
-  }
-
-  @override
-  Future<void> updateUser(String userId, UserModel model) async {
-    try {
-      await FirebaseApis.userDocumentRef(userId).update(model.toJson());
-    } catch (e) {
-      _handleAuthError(e, 'Error updating user data');
     }
   }
 

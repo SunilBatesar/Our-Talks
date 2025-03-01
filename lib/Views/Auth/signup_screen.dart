@@ -10,7 +10,7 @@ import 'package:ourtalks/Utils/app_validators.dart';
 import 'package:ourtalks/Views/Auth/widget/username_checker.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
-import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
+import 'package:ourtalks/view_model/Data/Networks/user%20network/auth/auth_datahendler.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class SignUpScreen extends StatelessWidget {

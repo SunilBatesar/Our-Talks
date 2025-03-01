@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ourtalks/view_model/Data/Networks/auth/auth_datahendler.dart';
+import 'package:ourtalks/view_model/Data/Networks/user%20network/Cloud%20firestore/user_datahendler.dart';
 import 'package:ourtalks/view_model/Data/Networks/cloudinary/cloudinary_function.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
@@ -59,7 +59,7 @@ class AppButtonhitFunction {
       }
 
       // Update user data with both images
-      await AuthDataHandler.updateUser(
+      await UserDataHandler.updateUser(
         userId: userData.userID!,
         model: userData.copyWith(
           userDP: newUserDpUrl ?? userData.userDP,
