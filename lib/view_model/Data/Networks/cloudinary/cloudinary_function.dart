@@ -136,4 +136,63 @@ class CloudinaryFunctions {
       _loadingController.hideLoading();
     }
   }
+
+  // ***********************
+// delete image
+
+  Future<bool> deleteImageFromCloudinary(String publicId) async {
+    final url = Uri.parse('${_url}image/destroy');
+    final timestamp =
+        (DateTime.now().millisecondsSinceEpoch ~/ 1000).toString();
+
+    // Prepare parameters for signing
+    final params = <String, String>{
+      'public_id': publicId,
+      'timestamp': timestamp,
+    };
+
+    // Generate signature
+    final sortedParams = params.keys.toList()..sort();
+    final paramsToSign = sortedParams.map((k) => '$k=${params[k]}').join('&');
+    final signature =
+        sha1.convert(utf8.encode(paramsToSign + _apiSecret)).toString();
+
+    try {
+      _loadingController.showLoading();
+      debugPrint('Attempting to delete image: $publicId');
+
+      final response = await http.post(
+        url,
+        body: {
+          'api_key': _apiKey,
+          'public_id': publicId,
+          'timestamp': timestamp,
+          'signature': signature,
+        },
+      );
+
+      final decodedData = json.decode(response.body);
+
+      if (response.statusCode == 200) {
+        if (decodedData['result'] == 'ok') {
+          debugPrint('Deletion successful for: $publicId');
+          return true;
+        } else {
+          debugPrint('Deletion failed: ${decodedData['error']['message']}');
+          return false;
+        }
+      } else {
+        debugPrint('''
+      Deletion failed (${response.statusCode}):
+      ${decodedData['error']['message']}
+      ''');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('Deletion exception: $e');
+      return false;
+    } finally {
+      _loadingController.hideLoading();
+    }
+  }
 }

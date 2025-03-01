@@ -75,21 +75,39 @@ class AppButtonhitFunction {
     }
   }
 
+  // static String? extractPublicIdFromUrl(String url) {
+  //   try {
+  //     final uri = Uri.parse(url);
+  //     final pathParts = uri.path.split('/');
+  //     final uploadIndex = pathParts.indexWhere((part) => part == 'upload');
+
+  //     if (uploadIndex == -1 || uploadIndex + 2 >= pathParts.length) {
+  //       return null;
+  //     }
+
+  //     // Extract parts after 'upload/v...' which includes folder and filename
+  //     final publicIdWithExtension =
+  //         pathParts.sublist(uploadIndex + 2).join('/');
+  //     return publicIdWithExtension.split('.').first;
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
   static String? extractPublicIdFromUrl(String url) {
     try {
       final uri = Uri.parse(url);
-      final pathParts = uri.path.split('/');
-      final uploadIndex = pathParts.indexWhere((part) => part == 'upload');
+      final pathSegments = uri.pathSegments;
+      final uploadIndex = pathSegments.indexOf('upload');
 
-      if (uploadIndex == -1 || uploadIndex + 2 >= pathParts.length) {
+      if (uploadIndex == -1 || uploadIndex >= pathSegments.length - 2) {
         return null;
       }
 
-      // Extract parts after 'upload/v...' which includes folder and filename
       final publicIdWithExtension =
-          pathParts.sublist(uploadIndex + 2).join('/');
+          pathSegments.sublist(uploadIndex + 2).join('/');
       return publicIdWithExtension.split('.').first;
     } catch (e) {
+      debugPrint('Public ID extraction error: $e');
       return null;
     }
   }
