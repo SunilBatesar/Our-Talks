@@ -1,4 +1,5 @@
 // ALL LANGUAGE TYPES
+import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 
 class LanguageType {
@@ -165,7 +166,7 @@ class LanguageType {
         "In the event of a dispute, both parties agree to attempt to resolve the issue through informal negotiations first. If unresolved, the dispute will be submitted to binding arbitration.",
     LanguageConst.termsContact: "Contact Us",
     LanguageConst.termsContactDesc:
-        "For questions, please contact us at support@our-talks.com. We aim to respond to inquiries within 48 hours.",
+        "For questions, please contact us at ${AppConfig.feedbackSendEmail}. We aim to respond to inquiries within 48 hours.",
     // - PRIVACY POLICY
     LanguageConst.yourdatanothingsecretgossip:
         "Your data is nothing less than a secret to us, and we don't gossip!\u{1F910}",
@@ -233,7 +234,7 @@ class LanguageType {
 
     LanguageConst.privacyContact: "Contact Us",
     LanguageConst.privacyContactDesc:
-        "If you have any questions or concerns regarding this Privacy Policy, please contact us at [Insert Contact Email].",
+        "If you have any questions or concerns regarding this Privacy Policy, please contact us at ${AppConfig.feedbackSendEmail}.",
   };
 
   // HINDI TYPE
@@ -398,7 +399,7 @@ class LanguageType {
         "किसी भी विवाद की स्थिति में, दोनों पक्ष पहले अनौपचारिक वार्ता के माध्यम से समाधान निकालने का प्रयास करेंगे। यदि समाधान नहीं होता है, तो विवाद को बाध्यकारी मध्यस्थता के लिए प्रस्तुत किया जाएगा।",
     LanguageConst.termsContact: "हमसे संपर्क करें",
     LanguageConst.termsContactDesc:
-        "यदि आपके कोई प्रश्न हैं, तो कृपया हमसे support@our-talks.com पर संपर्क करें। हम 48 घंटे के भीतर उत्तर देने का प्रयास करेंगे।",
+        "यदि आपके कोई प्रश्न हैं, तो कृपया हमसे ${AppConfig.feedbackSendEmail} पर संपर्क करें। हम 48 घंटे के भीतर उत्तर देने का प्रयास करेंगे।",
     // ==**==
     // - PRIVACY POLICY
     LanguageConst.yourdatanothingsecretgossip:
@@ -468,6 +469,6 @@ class LanguageType {
 
     LanguageConst.privacyContact: "संपर्क करें",
     LanguageConst.privacyContactDesc:
-        "यदि आपके पास इस गोपनीयता नीति के संबंध में कोई प्रश्न या चिंता है, तो कृपया हमसे [ईमेल डालें] पर संपर्क करें।",
+        "यदि आपके पास इस गोपनीयता नीति के संबंध में कोई प्रश्न या चिंता है, तो कृपया हमसे ${AppConfig.feedbackSendEmail} पर संपर्क करें।",
   };
 }
