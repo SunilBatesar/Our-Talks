@@ -126,7 +126,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   controller: _nameController,
                   label: LanguageConst.name.tr,
                 ),
-                Gap(10.h),
+                Gap(20.h),
                 // USER NAME TEXT FIELD
                 PrimaryTextfield(
                   validator: UserNameValidator(),
@@ -149,14 +149,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     isUserNameAvailable: _isUserNameAvailable,
                   ),
                 ),
-                Gap(10.h),
+                Gap(20.h),
                 // USER ABOUT TEXT FIELD
                 PrimaryTextfield(
                   validator: TextValidator(),
                   controller: _aboutController,
                   label: LanguageConst.about.tr,
                 ),
-                Gap(10.h),
+                Gap(20.h),
                 // USER EMAIL TEXT FIELD
                 PrimaryTextfield(
                   suffixicon: Icons.lock,
