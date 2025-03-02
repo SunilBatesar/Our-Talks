@@ -11,7 +11,7 @@ import 'package:ourtalks/view_model/Models/user_model.dart';
 class ChatScreen extends StatelessWidget {
   final UserModel model;
   ChatScreen({super.key, required this.model});
-  final _user = types.User(id: "1234567");
+  final _user = types.User(id: "11223344");
   final List<types.Message> _messages = [];
   @override
   Widget build(BuildContext context) {
@@ -96,7 +96,7 @@ class ChatScreen extends StatelessWidget {
     final textMessage = types.TextMessage(
       author: _user, // current user id jo message send kr rha hai
       createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: "123456", // message ki id add krni hai
+      id: "11223344", // message ki id add krni hai
       text: message
           .text, // jo bhi message hoga jese String Url ya kuch bhi vo es me String rup me save hoga
     );

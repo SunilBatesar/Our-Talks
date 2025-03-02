@@ -11,7 +11,7 @@ class UserModel {
   final String? pushToken;
   final bool isOnline;
   final List<String>? friends;
-  final bool? isTyping;
+  final List<String>? chatroom;
   final String? dob;
   final String? gender;
   final List<String>? blockedUsers;
@@ -29,7 +29,7 @@ class UserModel {
     this.pushToken,
     this.isOnline = false,
     this.friends,
-    this.isTyping,
+    this.chatroom,
     this.dob,
     this.gender,
     this.blockedUsers,
@@ -47,7 +47,7 @@ class UserModel {
         pushToken = json['pushToken'] ?? '',
         isOnline = json['isOnline'] ?? false,
         friends = (json['friends'] as List<dynamic>?)?.cast<String>(),
-        isTyping = json['isTyping'] ?? false,
+        chatroom = (json['chatroom'] as List<dynamic>?)?.cast<String>(),
         dob = json['dob'] ?? '',
         gender = json['gender'] ?? '',
         blockedUsers = (json['blockedUsers'] as List<dynamic>?)?.cast<String>();
@@ -64,7 +64,7 @@ class UserModel {
         'pushToken': pushToken ?? '',
         'isOnline': isOnline,
         'friends': friends ?? [],
-        'isTyping': isTyping ?? false,
+        'chatroom': chatroom ?? [],
         'dob': dob ?? '',
         'gender': gender ?? '',
         'blockedUsers': blockedUsers ?? [],
@@ -83,7 +83,7 @@ class UserModel {
     String? pushToken,
     bool? isOnline,
     List<String>? friends,
-    bool? isTyping,
+    List<String>? chatroom,
     String? dob,
     String? gender,
     List<String>? blockedUsers,
@@ -101,7 +101,7 @@ class UserModel {
       pushToken: pushToken ?? this.pushToken,
       isOnline: isOnline ?? this.isOnline,
       friends: friends ?? this.friends,
-      isTyping: isTyping ?? this.isTyping,
+      chatroom: chatroom ?? this.chatroom,
       dob: dob ?? this.dob,
       gender: gender ?? this.gender,
       blockedUsers: blockedUsers ?? this.blockedUsers,

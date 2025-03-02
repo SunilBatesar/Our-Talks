@@ -17,14 +17,14 @@ class UserDataHandler {
   // GET USER BY ID
   static Future<void> getUserById(String userId) async {
     await _handleUserOperation(
-      operation: () => _userRepo.getUserById(userId),
-      onSuccess: (user) async {
-        _userController.setUser(user);
-        return;
-      },
-      successMessage: 'User data fetched successfully',
-      errorMessage: 'Error fetching user data',
-    );
+        operation: () => _userRepo.getUserById(userId),
+        onSuccess: (user) async {
+          _userController.setUser(user);
+          return;
+        },
+        successMessage: 'User data fetched successfully',
+        errorMessage: 'Error fetching user data',
+        showSuccess: false);
   }
 
   // UPDATE USER DATA
@@ -51,13 +51,16 @@ class UserDataHandler {
     required Future<void> Function(T) onSuccess,
     required String successMessage,
     required String errorMessage,
+    bool showSuccess = true,
   }) async {
     try {
       _loadingController.showLoading();
       final result = await operation();
       await onSuccess(result);
       _loadingController.hideLoading();
-      AppUtils.showSnackBar(title: 'Success', message: successMessage);
+      if (showSuccess) {
+        AppUtils.showSnackBar(title: 'Success', message: successMessage);
+      }
     } catch (e) {
       _loadingController.hideLoading();
 
