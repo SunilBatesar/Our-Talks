@@ -20,10 +20,8 @@ class ChatRespository {
   static Future<void> sendMessage(
       ChatRomModel chatModel, UserModel userModel) async {
     try {
-      final time = DateTime.now().microsecondsSinceEpoch.toString();
-
       final ref = _getConversationID(userModel.userID!, "messeges");
-      await ref.child(time).set(chatModel.toJson());
+      await ref.set(chatModel.toJson());
     } catch (e) {
       debugPrint(e.toString());
     }

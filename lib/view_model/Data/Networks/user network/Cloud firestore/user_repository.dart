@@ -57,10 +57,9 @@ class UserRepository implements UserData {
       rethrow;
     } catch (e) {
       debugPrint("Generic error: $e");
-      rethrow;
-    }
-  }
+      rethrow;}
 
+  }
   void _handleFirestoreError(FirebaseException e, String contextMessage) {
     String errorMessage;
 
