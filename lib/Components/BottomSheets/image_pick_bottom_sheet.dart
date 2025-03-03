@@ -15,17 +15,23 @@ import 'package:permission_handler/permission_handler.dart';
 
 // IMAGE PICK BOTTOM SHEET CALL FUNCTION AND PERMISSION FUNCTION
 
-Future<void> imagePickBottomSheetFunction(Function(File) file) async {
+Future<void> imagePickBottomSheetFunction(
+    Function(File) file, {required Function deleteBtnOnTap}) async {
   bool hasPermission = await requestPermissions();
   if (hasPermission) {
-    Get.bottomSheet(ImagePickBottomSheet(file: file));
+    Get.bottomSheet(ImagePickBottomSheet(
+      file: file,
+      deleteBtnOnTap: deleteBtnOnTap,
+    ));
   }
 }
 
 // IMAGE  PICK BOTTOM SHEET
 class ImagePickBottomSheet extends StatelessWidget {
   final Function(File) file;
-  const ImagePickBottomSheet({super.key, required this.file});
+  final Function deleteBtnOnTap;
+  const ImagePickBottomSheet(
+      {super.key, required this.file, required this.deleteBtnOnTap});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +89,8 @@ class ImagePickBottomSheet extends StatelessWidget {
         Get.back();
       case LanguageConst.delete:
         // DELETE ON TAP FUNCTIONS
-        null;
+        deleteBtnOnTap();
+        Get.back();
       case LanguageConst.cancel:
         // CANCEL BUTTON
         Get.back();

@@ -17,4 +17,5 @@ class RoutesName {
   String privacyPolicyScreen = "/PrivacyPolicyScreen";
   String settingScreen = "/SettingScreen";
   String changePasswordScreen = "/ChangePasswordScreen";
+  String rofileViewScreen = "/rofileViewScreen";
 }

@@ -44,6 +44,7 @@ List<GetPage<dynamic>> appRoutes = [
   // FOLDER NAV BAR ROUTES
   GetPage(name: cnstSheet.routesName.navBar, page: () => NavBar()),
   GetPage(name: cnstSheet.routesName.homeScreen, page: () => HomeScreen()),
+
   GetPage(
       name: cnstSheet.routesName.accountScreen, page: () => AccountScreen()),
   // ACCOUNT

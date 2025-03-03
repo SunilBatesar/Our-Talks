@@ -1,13 +1,14 @@
 // user_repository.dart
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:ourtalks/Utils/utils.dart';
-import 'package:ourtalks/view_model/Models/user_model.dart';
 import 'package:ourtalks/view_model/Apis/firebase_apis.dart';
+import 'package:ourtalks/view_model/Models/user_model.dart';
 
 abstract class UserData {
   Future<UserModel> getUserById(String userId);
   Future<void> updateUser(String userId, UserModel user);
+  Future<void> updateUserKeyData(String userId, String key, dynamic value);
 }
 
 class UserRepository implements UserData {
@@ -38,6 +39,19 @@ class UserRepository implements UserData {
   Future<void> updateUser(String userId, UserModel model) async {
     try {
       await FirebaseApis.userDocumentRef(userId).update(model.toJson());
+    } on FirebaseException catch (e) {
+      _handleFirestoreError(e, 'Error updating user data');
+      rethrow;
+    } catch (e) {
+      debugPrint("Generic error: $e");
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> updateUserKeyData(String userId, String key, value) async {
+    try {
+      await FirebaseApis.userDocumentRef(userId).update({key: value});
     } on FirebaseException catch (e) {
       _handleFirestoreError(e, 'Error updating user data');
       rethrow;

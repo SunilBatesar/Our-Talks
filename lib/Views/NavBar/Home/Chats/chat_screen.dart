@@ -5,6 +5,7 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:ourtalks/Views/NavBar/Home/profile_view_screen.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
@@ -27,45 +28,50 @@ class ChatScreen extends StatelessWidget {
               size: 24.sp,
               color: cnstSheet.colors.primary,
             )),
-        title: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(1000.sp),
-              child: CachedNetworkImage(
-                imageUrl: model.userDP!,
-                height: 35.sp,
-                width: 35.sp,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Center(
-                  child: SizedBox(
-                      height: 12.sp,
-                      width: 12.sp,
-                      child: CircularProgressIndicator(
-                        color: cnstSheet.colors.white,
-                        strokeWidth: 3,
-                      )),
+        title: GestureDetector(
+          onTap: () {
+            Get.to(() => ProfileViewScreen(model: model));
+          },
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(1000.sp),
+                child: CachedNetworkImage(
+                  imageUrl: model.userDP!,
+                  height: 35.sp,
+                  width: 35.sp,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Center(
+                    child: SizedBox(
+                        height: 12.sp,
+                        width: 12.sp,
+                        child: CircularProgressIndicator(
+                          color: cnstSheet.colors.white,
+                          strokeWidth: 3,
+                        )),
+                  ),
+                  errorWidget: (context, url, error) =>
+                      Center(child: Icon(Icons.error)),
                 ),
-                errorWidget: (context, url, error) =>
-                    Center(child: Icon(Icons.error)),
               ),
-            ),
-            Gap(5.w),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  model.name,
-                  style: cnstSheet.textTheme.fs18Medium
-                      .copyWith(color: cnstSheet.colors.white),
-                ),
-                Text(
-                  model.lastActive,
-                  style: cnstSheet.textTheme.fs12Normal
-                      .copyWith(color: cnstSheet.colors.white.withAlpha(150)),
-                ),
-              ],
-            ),
-          ],
+              Gap(5.w),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    model.name,
+                    style: cnstSheet.textTheme.fs18Medium
+                        .copyWith(color: cnstSheet.colors.white),
+                  ),
+                  Text(
+                    model.lastActive,
+                    style: cnstSheet.textTheme.fs12Normal
+                        .copyWith(color: cnstSheet.colors.white.withAlpha(150)),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       body: Chat(

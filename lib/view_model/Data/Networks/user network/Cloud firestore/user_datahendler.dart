@@ -45,6 +45,27 @@ class UserDataHandler {
     );
   }
 
+  // DELETE USER DATA USE KEY
+
+  Future<void> deleteDataUseKey(
+      {required String userId,
+      required String key,
+      required dynamic value,
+      required String successMessage}) async {
+    await _handleUserOperation(
+      operation: () async =>
+          await _userRepo.updateUserKeyData(userId, key, value),
+      onSuccess: (_) async {
+        // _userController.updateUser(model);
+        Get.offAllNamed(cnstSheet.routesName.navBar);
+        debugPrint("User Delete key value successfully: $key :$value");
+        return;
+      },
+      successMessage: successMessage,
+      errorMessage: 'Error updating profile',
+    );
+  }
+
   // GENERIC OPERATION HANDLER FOR USER DATA
   static Future<void> _handleUserOperation<T>({
     required Future<T> Function() operation,

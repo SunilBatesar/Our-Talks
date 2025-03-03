@@ -97,6 +97,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           });
                         }
                       },
+                      // DELETE IMAGE FUNCTION
+                      deleteBtnOnTap: () async {
+                        print("===================");
+                      },
                     );
                   },
                 ),
@@ -108,15 +112,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   bannerFile: bannerFile,
                   onTap: () async {
                     // CALL IMAGE PICK BOTTOM SHEET
-                    await imagePickBottomSheetFunction(
-                      (value) {
-                        if (value.path.isNotEmpty) {
-                          setState(() {
-                            bannerFile = value;
-                          });
-                        }
-                      },
-                    );
+                    await imagePickBottomSheetFunction((value) {
+                      if (value.path.isNotEmpty) {
+                        setState(() {
+                          bannerFile = value;
+                        });
+                      }
+                    },
+                        // DELETE IMAGE FUNCTION
+                        deleteBtnOnTap: () {});
                   },
                 ),
                 Gap(25.h),
