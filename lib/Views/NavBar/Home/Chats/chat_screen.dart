@@ -92,11 +92,12 @@ class ChatScreen extends StatelessWidget {
 
   // jesa bhi message krna ho es ka use krna hai jese text ,image,audio;
   void _handleSendPressed(types.PartialText message) {
+    final time = DateTime.now().microsecondsSinceEpoch.toString();
     //*********/ Yani ki ye textMessage jaye ga Firebase pr okay ****************
     final textMessage = types.TextMessage(
       author: _user, // current user id jo message send kr rha hai
       createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: "11223344", // message ki id add krni hai
+      id: time, // message ki id add krni hai
       text: message
           .text, // jo bhi message hoga jese String Url ya kuch bhi vo es me String rup me save hoga
     );

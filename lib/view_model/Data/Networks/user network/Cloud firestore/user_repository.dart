@@ -47,6 +47,20 @@ class UserRepository implements UserData {
     }
   }
 
+  static Future<bool> addchatuserPersonal(
+      String userid, String username) async {
+    final userexists = await FirebaseApis.userCollectionRef
+        .where("userName", isEqualTo: username)
+        .get();
+
+    if (userexists.docs.isNotEmpty && userexists.docs.first.id != userid) {
+      FirebaseApis.userDocumentRef(userid).set({"chatroom": username});
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   void _handleFirestoreError(FirebaseException e, String contextMessage) {
     String errorMessage;
 
