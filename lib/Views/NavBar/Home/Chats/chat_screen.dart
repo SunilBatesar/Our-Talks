@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
@@ -11,8 +12,6 @@ import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
 import 'package:ourtalks/view_model/Models/chat_modal.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
-
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 
 class ChatScreen extends StatelessWidget {
   final UserModel usermodel;
@@ -81,45 +80,32 @@ class ChatScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: FirebaseAnimatedList(
-              query: ChatRespository.getAllMessages(usermodel),
-              itemBuilder: (context, snapshot, animation, index) {
-                final data = ChatRomModel.fromJson(
-                    snapshot.value! as Map<Object?, Object?>, snapshot.key);
-                final newMessages = data.messages ?? [];
-
-                messages.clear();
-                messages.addAll(newMessages);
-
-                return SizedBox
-                    .shrink(); // We just update the message list here
-              },
+      body: FirebaseAnimatedList(
+        query: ChatRespository.getAllMessages(usermodel),
+        itemBuilder: (context, snapshot, animation, index) {
+          final data = ChatRomModel.fromJson(
+              snapshot.value! as Map<Object?, Object?>, snapshot.key);
+          final newMessages = data.messages ?? [];
+          messages.clear();
+          messages.addAll(newMessages);
+          return Chat(
+            messages: messages,
+            onSendPressed: _handleSendPressed,
+            user: user,
+            theme: DefaultChatTheme(
+              backgroundColor: cnstSheet.colors.black,
+              inputBorderRadius: BorderRadius.circular(10.r),
+              inputContainerDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  border: Border.all(
+                      color: cnstSheet.colors.primary.withAlpha(180))),
+              inputTextStyle: cnstSheet.textTheme.fs16Medium,
+              inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
+              inputMargin: EdgeInsets.all(8.sp),
+              inputTextCursorColor: cnstSheet.colors.primary,
             ),
-          ),
-          Expanded(
-            flex: 3,
-            child: Chat(
-              messages: messages,
-              onSendPressed: _handleSendPressed,
-              user: user,
-              theme: DefaultChatTheme(
-                backgroundColor: cnstSheet.colors.black,
-                inputBorderRadius: BorderRadius.circular(10.r),
-                inputContainerDecoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.r),
-                    border: Border.all(
-                        color: cnstSheet.colors.primary.withAlpha(180))),
-                inputTextStyle: cnstSheet.textTheme.fs16Medium,
-                inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
-                inputMargin: EdgeInsets.all(8.sp),
-                inputTextCursorColor: cnstSheet.colors.primary,
-              ),
-            ),
-          ),
-        ],
+          ); // We just update the message list here
+        },
       ),
     );
   }

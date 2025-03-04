@@ -21,7 +21,9 @@ class ChatRomModel {
         isTyping = json['isTyping'] as bool? ?? false,
         messages = json['messages'] != null
             ? (json['messages'] as List)
-                .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
+                .whereType<List<Object?>>()
+                .map((e) => types.Message.fromJson(
+                    (e as Map<Object?, Object?>).cast<String, dynamic>()))
                 .toList()
             : [];
 
