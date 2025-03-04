@@ -26,7 +26,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String>? userIdinRoom = _userController.user!.chatroom;
+    final List<String>? serachuserlist = _userController.user!.serachuserlist;
 
     return Scaffold(
       body: SafeArea(
@@ -49,7 +49,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                     controller: _searchController,
                     iconOnTap: () async {
                       if (_searchController.text.isNotEmpty) {
-                        await UserDataHandler.addChatUserPersonal(
+                        await UserDataHandler.addserchlist(
                             _userController.user!.userID!,
                             _searchController.text.trim());
                         setState(() {
@@ -67,7 +67,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                   Expanded(
                     child: FutureBuilder<List<UserModel>>(
                       future:
-                          UserRepository().fetchUsersIdOnRomm(userIdinRoom!),
+                          UserRepository().fetchsearchListId(serachuserlist!),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {

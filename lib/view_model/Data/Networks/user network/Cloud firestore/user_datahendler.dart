@@ -66,12 +66,11 @@ class UserDataHandler {
     );
   }
 
-  static Future<void> addChatUserPersonal(
-      String userId, String searchQuery) async {
+  static Future<void> addserchlist(String userId, String searchQuery) async {
     await _handleUserOperation(
-        operation: () => _userRepo.addChatUserPersonal(userId, searchQuery),
-        onSuccess: (updatedChatroom) async {
-          _userController.updateSingleKey("chatroom", updatedChatroom);
+        operation: () => _userRepo.addserchlist(userId, searchQuery),
+        onSuccess: (serachuserlist) async {
+          _userController.updateSingleKey("serachuserlist", serachuserlist);
         },
         successMessage: "User added successfully",
         errorMessage: "Failed to add user");

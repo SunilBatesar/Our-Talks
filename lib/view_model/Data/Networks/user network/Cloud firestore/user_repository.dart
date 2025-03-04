@@ -9,8 +9,8 @@ abstract class UserData {
   Future<UserModel> getUserById(String userId);
   Future<void> updateUser(String userId, UserModel user);
   Future<void> updateUserKeyData(String userId, String key, dynamic value);
-  Future<List<String>?> addChatUserPersonal(String userid, String userName);
-  Future<List<UserModel>> fetchUsersIdOnRomm(List<String> userIds);
+  Future<List<String>?> addserchlist(String userid, String userName);
+  Future<List<UserModel>> fetchsearchListId(List<String> userIds);
 }
 
 class UserRepository implements UserData {
@@ -65,8 +65,7 @@ class UserRepository implements UserData {
   }
 
   @override
-  Future<List<String>> addChatUserPersonal(
-      String userId, String searchQuery) async {
+  Future<List<String>> addserchlist(String userId, String searchQuery) async {
     try {
       // Check if friend exists with exact username match
       final friendQuery = await FirebaseApis.userCollectionRef
@@ -92,12 +91,12 @@ class UserRepository implements UserData {
 
       // Atomically add to chatroom list using arrayUnion
       await FirebaseApis.userDocumentRef(userId).update({
-        'chatroom': FieldValue.arrayUnion([friendId])
+        'serachuserlist': FieldValue.arrayUnion([friendId])
       });
 
       // Return updated list by fetching fresh data
       final updatedDoc = await FirebaseApis.userDocumentRef(userId).get();
-      return List<String>.from(updatedDoc.get('chatroom') ?? []);
+      return List<String>.from(updatedDoc.get('serachuserlist') ?? []);
     } on FirebaseException catch (e) {
       _handleFirestoreError(e, 'Friend addition failed');
       rethrow;
@@ -108,7 +107,7 @@ class UserRepository implements UserData {
   }
 
   @override
-  Future<List<UserModel>> fetchUsersIdOnRomm(List<String> userIds) async {
+  Future<List<UserModel>> fetchsearchListId(List<String> userIds) async {
     List<UserModel> users = [];
     try {
       for (var userId in userIds) {
@@ -123,12 +122,12 @@ class UserRepository implements UserData {
       return users;
     } on FirebaseException catch (e) {
       _handleFirestoreError(e, 'Friend addition failed');
-      return [];
-      // rethrow;
+      // return [];
+      rethrow;
     } catch (e) {
       debugPrint("Error in addChatUserPersonal: ${e.runtimeType}");
-      return [];
-      // rethrow;
+      // return [];
+      rethrow;
     }
   }
 
