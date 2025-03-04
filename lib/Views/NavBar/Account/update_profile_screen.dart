@@ -13,8 +13,10 @@ import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Utils/app_validators.dart';
 import 'package:ourtalks/Views/Auth/widget/username_checker.dart';
 import 'package:ourtalks/Views/NavBar/Account/Widgets/user_profile_pick_widget.dart';
+import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/Functions/app_buttonhit_function.dart';
-import 'package:ourtalks/view_model/Models/user_model.dart';
+import 'package:ourtalks/view_model/Data/Networks/cloudinary/cloudinary_function.dart';
+import 'package:ourtalks/view_model/Data/Networks/user%20network/Cloud%20firestore/user_datahendler.dart';
 
 class UpdateProfileScreen extends StatefulWidget {
   const UpdateProfileScreen({super.key});
@@ -24,7 +26,7 @@ class UpdateProfileScreen extends StatefulWidget {
 }
 
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
-  late UserModel _userdata;
+  final _userdata = Get.find<UserController>().user!;
   // USER DP
   File? imageFile;
   late String userDp;
@@ -44,7 +46,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   void initState() {
     super.initState();
-    _userdata = Get.arguments;
     userDp = _userdata.userDP ?? '';
     bannerUrl = _userdata.banner ?? '';
 
@@ -90,16 +91,28 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   onTap: () async {
                     // CALL IMAGE PICK BOTTOM SHEET
                     await imagePickBottomSheetFunction(
-                      (value) {
+                      file: (value) {
                         if (value.path.isNotEmpty) {
                           setState(() {
                             imageFile = value;
                           });
                         }
                       },
-                      // DELETE IMAGE FUNCTION
+                      // DELETE USER DP FUNCTION
                       deleteBtnOnTap: () async {
-                        debugPrint("===================");
+                        await UserDataHandler.updatesingleKey(
+                                userId: _userdata.userID ?? "",
+                                key: "userDP",
+                                value: "",
+                                successMessage: "Delete user dp")
+                            .then(
+                          (value) {
+                            setState(() {
+                              _userdata.userDP = "";
+                              userDp = "";
+                            });
+                          },
+                        );
                       },
                     );
                   },
@@ -112,15 +125,37 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   bannerFile: bannerFile,
                   onTap: () async {
                     // CALL IMAGE PICK BOTTOM SHEET
-                    await imagePickBottomSheetFunction((value) {
+                    await imagePickBottomSheetFunction(file: (value) {
                       if (value.path.isNotEmpty) {
                         setState(() {
                           bannerFile = value;
                         });
                       }
                     },
-                        // DELETE IMAGE FUNCTION
-                        deleteBtnOnTap: () {});
+                        // DELETE USER DP FUNCTION
+                        deleteBtnOnTap: () async {
+                      String publicId =
+                          AppButtonhitFunction.extractPublicIdFromUrl(
+                                  bannerUrl) ??
+                              "";
+                      bool iscloudDelete = await CloudinaryFunctions()
+                          .deleteImageFromCloudinary(publicId);
+                      if (iscloudDelete) {
+                        await UserDataHandler.updatesingleKey(
+                                userId: _userdata.userID ?? "",
+                                key: "banner",
+                                value: "",
+                                successMessage: "Delete banner")
+                            .then(
+                          (value) {
+                            setState(() {
+                              _userdata.banner = "";
+                              bannerUrl = "";
+                            });
+                          },
+                        );
+                      }
+                    });
                   },
                 ),
                 Gap(25.h),

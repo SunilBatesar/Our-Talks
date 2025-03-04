@@ -5,8 +5,8 @@ class UserModel {
   final String createdAt;
   final String lastActive;
   final String email;
-  final String? userDP;
-  final String? banner;
+  String? userDP;
+  String? banner;
   final String? about;
   final String? pushToken;
   final bool isOnline;
@@ -18,7 +18,7 @@ class UserModel {
   final String? gender;
   final List<String>? blockedUsers;
 
-  const UserModel({
+  UserModel({
     this.userID,
     required this.userName,
     required this.name,

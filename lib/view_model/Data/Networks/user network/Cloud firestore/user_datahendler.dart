@@ -47,7 +47,7 @@ class UserDataHandler {
 
   // DELETE USER DATA USE KEY
 
-  Future<void> updatesingleKey(
+  static Future<void> updatesingleKey(
       {required String userId,
       required String key,
       required dynamic value,

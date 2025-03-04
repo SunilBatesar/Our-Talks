@@ -16,7 +16,7 @@ import 'package:permission_handler/permission_handler.dart';
 // IMAGE PICK BOTTOM SHEET CALL FUNCTION AND PERMISSION FUNCTION
 
 Future<void> imagePickBottomSheetFunction(
-    Function(File) file, {required Function deleteBtnOnTap}) async {
+    {required Function(File) file,required Function deleteBtnOnTap}) async {
   bool hasPermission = await requestPermissions();
   if (hasPermission) {
     Get.bottomSheet(ImagePickBottomSheet(
