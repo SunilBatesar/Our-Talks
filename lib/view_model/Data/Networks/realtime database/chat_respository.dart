@@ -31,7 +31,7 @@ class ChatRespository {
     try {
       final ref = _getConversationID(userModel.userID!, "messages");
       debugPrint("Writing to path: ${ref.path}");
-      await ref.push().set(chatModel.toJson());
+      await ref.set(chatModel.toJson());
       debugPrint("Message sent successfully!");
     } catch (e) {
       debugPrint(e.toString());
