@@ -12,24 +12,15 @@ class ChatRespository {
   static final _event = _firebaseDatabase.ref("chats");
 
   // *******************
-  static DatabaseReference _getConversationID(String id, String folder) =>
+  static DatabaseReference getConversationID(String id, String folder) =>
       _currentUser.uid.hashCode <= id.hashCode
           ? _event.child("${_currentUser.uid}_$id/$folder")
           : _event.child("${id}_${_currentUser.uid}/$folder");
 
-  // static Future<void> sendMessage(
-  //     ChatRomModel chatModel, UserModel userModel) async {
-  //   try {
-  //     final ref = _getConversationID(userModel.userID!, "messeges");
-  //     await ref.push().set(chatModel.toJson());
-  //   } catch (e) {
-  //     debugPrint(e.toString());
-  //   }
-  // }
   static Future<void> sendMessage(
       ChatRomModel chatModel, UserModel userModel) async {
     try {
-      final ref = _getConversationID(userModel.userID!, "messages");
+      final ref = getConversationID(userModel.userID!, "messages");
       debugPrint("Writing to path: ${ref.path}");
       await ref.set(chatModel.toJson());
       debugPrint("Message sent successfully!");
@@ -38,32 +29,15 @@ class ChatRespository {
     }
   }
 
-  // static Query getAllMessages(UserModel user) {
-  //   try {
-  //     final data = _getConversationID(user.userID!, "messages");
-
-  //     data.onValue.listen((event) {
-  //       if (event.snapshot.exists) {
-  //         print("Messages: ${event.snapshot.value}");
-  //       } else {
-  //         print("No messages found!");
-  //       }
-  //     });
-
-  //     return data;
-  //   } catch (e) {
-  //     debugPrint("Error getting messages query: $e");
-  //     rethrow;
-  //   }
-  // }
-  static Query getAllMessages(UserModel user) {
+  static getAllMessages(UserModel user) {
     try {
-      final data = _getConversationID(user.userID!, "messages");
+      final data = getConversationID(user.userID!, "messages");
       debugPrint("Reading from path: ${data.ref.path}");
 
       data.onValue.listen((event) {
         if (event.snapshot.exists) {
-          debugPrint("Messages: ${event.snapshot.value}");
+          debugPrint("Raw message data: ${event.snapshot.value}");
+          debugPrint("Data type: ${event.snapshot.value.runtimeType}");
         } else {
           debugPrint("No messages found!");
         }
