@@ -10,8 +10,10 @@ class UserModel {
   final String? about;
   final String? pushToken;
   final bool isOnline;
+  final bool pravacy;
   final List<String>? friends;
   final List<String>? chatroom;
+  final List<String>? serachuserlist;
   final String? dob;
   final String? gender;
   final List<String>? blockedUsers;
@@ -28,8 +30,10 @@ class UserModel {
     this.about,
     this.pushToken,
     this.isOnline = false,
+    this.pravacy = false,
     this.friends,
     this.chatroom,
+    this.serachuserlist,
     this.dob,
     this.gender,
     this.blockedUsers,
@@ -46,8 +50,11 @@ class UserModel {
         about = json['about'] ?? '',
         pushToken = json['pushToken'] ?? '',
         isOnline = json['isOnline'] ?? false,
+        pravacy = json['pravacy'] ?? false,
         friends = (json['friends'] as List<dynamic>?)?.cast<String>(),
         chatroom = (json['chatroom'] as List<dynamic>?)?.cast<String>(),
+        serachuserlist =
+            (json['serachuserlist'] as List<dynamic>?)?.cast<String>(),
         dob = json['dob'] ?? '',
         gender = json['gender'] ?? '',
         blockedUsers = (json['blockedUsers'] as List<dynamic>?)?.cast<String>();
@@ -63,8 +70,10 @@ class UserModel {
         'about': about ?? '',
         'pushToken': pushToken ?? '',
         'isOnline': isOnline,
+        'pravacy': pravacy,
         'friends': friends ?? [],
         'chatroom': chatroom ?? [],
+        'serachuserlist': serachuserlist ?? [],
         'dob': dob ?? '',
         'gender': gender ?? '',
         'blockedUsers': blockedUsers ?? [],
@@ -82,8 +91,10 @@ class UserModel {
     String? about,
     String? pushToken,
     bool? isOnline,
+    bool? pravacy,
     List<String>? friends,
     List<String>? chatroom,
+    List<String>? serachuserlist,
     String? dob,
     String? gender,
     List<String>? blockedUsers,
@@ -100,8 +111,10 @@ class UserModel {
       about: about ?? this.about,
       pushToken: pushToken ?? this.pushToken,
       isOnline: isOnline ?? this.isOnline,
+      pravacy: pravacy ?? this.pravacy,
       friends: friends ?? this.friends,
       chatroom: chatroom ?? this.chatroom,
+      serachuserlist: serachuserlist ?? this.serachuserlist,
       dob: dob ?? this.dob,
       gender: gender ?? this.gender,
       blockedUsers: blockedUsers ?? this.blockedUsers,
