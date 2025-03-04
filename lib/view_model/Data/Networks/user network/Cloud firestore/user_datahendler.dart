@@ -56,7 +56,7 @@ class UserDataHandler {
       operation: () async =>
           await _userRepo.updateUserKeyData(userId, key, value),
       onSuccess: (_) async {
-        // _userController.updateUser(model);
+        _userController.updateSingleKey(key, value);
 
         debugPrint("User Delete key value successfully: $key :$value");
         return;
