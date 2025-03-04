@@ -99,7 +99,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       },
                       // DELETE IMAGE FUNCTION
                       deleteBtnOnTap: () async {
-                        print("===================");
+                        debugPrint("===================");
                       },
                     );
                   },

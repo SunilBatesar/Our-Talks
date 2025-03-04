@@ -47,7 +47,7 @@ class UserDataHandler {
 
   // DELETE USER DATA USE KEY
 
-  Future<void> deleteDataUseKey(
+  Future<void> updatesingleKey(
       {required String userId,
       required String key,
       required dynamic value,
@@ -57,13 +57,24 @@ class UserDataHandler {
           await _userRepo.updateUserKeyData(userId, key, value),
       onSuccess: (_) async {
         // _userController.updateUser(model);
-        Get.offAllNamed(cnstSheet.routesName.navBar);
+
         debugPrint("User Delete key value successfully: $key :$value");
         return;
       },
       successMessage: successMessage,
       errorMessage: 'Error updating profile',
     );
+  }
+
+  static Future<void> addChatUserPersonal(
+      String userId, String searchQuery) async {
+    await _handleUserOperation(
+        operation: () => _userRepo.addChatUserPersonal(userId, searchQuery),
+        onSuccess: (updatedChatroom) async {
+          _userController.updateSingleKey("chatroom", updatedChatroom);
+        },
+        successMessage: "User added successfully",
+        errorMessage: "Failed to add user");
   }
 
   // GENERIC OPERATION HANDLER FOR USER DATA

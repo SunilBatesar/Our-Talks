@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget {
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => UserMessageTile(
+                  onTap: () {},
                   model: UserModel(
                       userName: "batesar_sunil",
                       userDP:

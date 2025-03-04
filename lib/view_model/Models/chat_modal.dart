@@ -15,19 +15,15 @@ class ChatRomModel {
     this.messages,
   });
 
-  factory ChatRomModel.fromJson(Map<String, dynamic> json) {
-    return ChatRomModel(
-      roomId: json['roomId'] as String?,
-      toUser: json['toUser'] as String?,
-      fromUser: json['fromUser'] as String?,
-      isTyping: json['isTyping'] as bool? ?? false,
-      messages: json['messages'] != null
-          ? (json['messages'] as List)
-              .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
-              .toList()
-          : [],
-    );
-  }
+  ChatRomModel.fromJson(Map<Object?, Object?> json, this.roomId)
+      : toUser = json['toUser'] as String?,
+        fromUser = json['fromUser'] as String?,
+        isTyping = json['isTyping'] as bool? ?? false,
+        messages = json['messages'] != null
+            ? (json['messages'] as List)
+                .map((e) => types.Message.fromJson(e as Map<String, dynamic>))
+                .toList()
+            : [];
 
   Map<String, dynamic> toJson() {
     return {

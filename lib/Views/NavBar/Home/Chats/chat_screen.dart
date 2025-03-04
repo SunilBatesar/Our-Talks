@@ -5,17 +5,24 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/Views/NavBar/Home/profile_view_screen.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
+import 'package:ourtalks/view_model/Models/chat_modal.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
+import 'package:firebase_database/ui/firebase_animated_list.dart';
+
 class ChatScreen extends StatelessWidget {
-  final UserModel model;
-  ChatScreen({super.key, required this.model});
-  final _user = types.User(id: "11223344");
-  final List<types.Message> _messages = [];
+  final UserModel usermodel;
+  const ChatScreen({super.key, required this.usermodel});
+
   @override
   Widget build(BuildContext context) {
+    final user = types.User(id: usermodel.userID.toString());
+    final List<types.Message> messages = [];
+
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 30.sp,
@@ -30,14 +37,14 @@ class ChatScreen extends StatelessWidget {
             )),
         title: GestureDetector(
           onTap: () {
-            Get.to(() => ProfileViewScreen(model: model));
+            Get.to(() => ProfileViewScreen(model: usermodel));
           },
           child: Row(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(1000.sp),
                 child: CachedNetworkImage(
-                  imageUrl: model.userDP!,
+                  imageUrl: usermodel.userDP!,
                   height: 35.sp,
                   width: 35.sp,
                   fit: BoxFit.cover,
@@ -59,12 +66,12 @@ class ChatScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.name,
+                    usermodel.name,
                     style: cnstSheet.textTheme.fs18Medium
                         .copyWith(color: cnstSheet.colors.white),
                   ),
                   Text(
-                    model.lastActive,
+                    usermodel.lastActive,
                     style: cnstSheet.textTheme.fs12Normal
                         .copyWith(color: cnstSheet.colors.white.withAlpha(150)),
                   ),
@@ -74,38 +81,64 @@ class ChatScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Chat(
-        messages: _messages, //message ki list show krna ni hai
-        onSendPressed: _handleSendPressed, // message send krn ka function
-        user: _user, // current user ki id
+      body: Column(
+        children: [
+          Expanded(
+            child: FirebaseAnimatedList(
+              query: ChatRespository.getAllMessages(usermodel),
+              itemBuilder: (context, snapshot, animation, index) {
+                final data = ChatRomModel.fromJson(
+                    snapshot.value! as Map<Object?, Object?>, snapshot.key);
+                final newMessages = data.messages ?? [];
 
-        //===========STYLING================
-        theme: DefaultChatTheme(
-          backgroundColor: cnstSheet.colors.black,
-          inputBorderRadius: BorderRadius.circular(10.r),
-          inputContainerDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.r),
-              border:
-                  Border.all(color: cnstSheet.colors.primary.withAlpha(180))),
-          inputTextStyle: cnstSheet.textTheme.fs16Medium,
-          inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
-          inputMargin: EdgeInsets.all(8.sp),
-          inputTextCursorColor: cnstSheet.colors.primary,
-        ),
+                messages.clear();
+                messages.addAll(newMessages);
+
+                return SizedBox
+                    .shrink(); // We just update the message list here
+              },
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Chat(
+              messages: messages,
+              onSendPressed: _handleSendPressed,
+              user: user,
+              theme: DefaultChatTheme(
+                backgroundColor: cnstSheet.colors.black,
+                inputBorderRadius: BorderRadius.circular(10.r),
+                inputContainerDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    border: Border.all(
+                        color: cnstSheet.colors.primary.withAlpha(180))),
+                inputTextStyle: cnstSheet.textTheme.fs16Medium,
+                inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
+                inputMargin: EdgeInsets.all(8.sp),
+                inputTextCursorColor: cnstSheet.colors.primary,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  // jesa bhi message krna ho es ka use krna hai jese text ,image,audio;
   void _handleSendPressed(types.PartialText message) {
     final time = DateTime.now().microsecondsSinceEpoch.toString();
-    //*********/ Yani ki ye textMessage jaye ga Firebase pr okay ****************
     final textMessage = types.TextMessage(
-      author: _user, // current user id jo message send kr rha hai
+      author: types.User(id: Prefs.getUserIdPref()),
       createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: time, // message ki id add krni hai
-      text: message
-          .text, // jo bhi message hoga jese String Url ya kuch bhi vo es me String rup me save hoga
+      id: time,
+      text: message.text,
     );
+
+    ChatRespository.sendMessage(
+        ChatRomModel(
+            fromUser: usermodel.userID,
+            messages: [textMessage],
+            roomId: time,
+            toUser: Prefs.getUserIdPref()),
+        usermodel);
   }
 }

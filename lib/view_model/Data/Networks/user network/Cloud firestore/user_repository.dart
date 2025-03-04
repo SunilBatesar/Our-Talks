@@ -9,6 +9,8 @@ abstract class UserData {
   Future<UserModel> getUserById(String userId);
   Future<void> updateUser(String userId, UserModel user);
   Future<void> updateUserKeyData(String userId, String key, dynamic value);
+  Future<List<String>?> addChatUserPersonal(String userid, String userName);
+  Future<List<UserModel>> fetchUsersIdOnRomm(List<String> userIds);
 }
 
 class UserRepository implements UserData {
@@ -49,7 +51,8 @@ class UserRepository implements UserData {
   }
 
   @override
-  Future<void> updateUserKeyData(String userId, String key, value) async {
+  Future<void> updateUserKeyData(
+      String userId, String key, dynamic value) async {
     try {
       await FirebaseApis.userDocumentRef(userId).update({key: value});
     } on FirebaseException catch (e) {
@@ -57,9 +60,78 @@ class UserRepository implements UserData {
       rethrow;
     } catch (e) {
       debugPrint("Generic error: $e");
-      rethrow;}
-
+      rethrow;
+    }
   }
+
+  @override
+  Future<List<String>> addChatUserPersonal(
+      String userId, String searchQuery) async {
+    try {
+      // Check if friend exists with exact username match
+      final friendQuery = await FirebaseApis.userCollectionRef
+          .where(Filter.or(
+              Filter('userName', isEqualTo: searchQuery.trim().toLowerCase()),
+              Filter('email', isEqualTo: searchQuery.trim().toLowerCase())))
+          .limit(1)
+          .get();
+
+      if (friendQuery.docs.isEmpty) {
+        throw FirebaseException(
+            plugin: 'user-not-found', message: 'Requested user does not exist');
+      }
+
+      final friendDoc = friendQuery.docs.first;
+      final friendId = friendDoc.id;
+
+      if (friendId == userId) {
+        throw FirebaseException(
+            plugin: 'invalid-operation',
+            message: 'Cannot add yourself as a friend');
+      }
+
+      // Atomically add to chatroom list using arrayUnion
+      await FirebaseApis.userDocumentRef(userId).update({
+        'chatroom': FieldValue.arrayUnion([friendId])
+      });
+
+      // Return updated list by fetching fresh data
+      final updatedDoc = await FirebaseApis.userDocumentRef(userId).get();
+      return List<String>.from(updatedDoc.get('chatroom') ?? []);
+    } on FirebaseException catch (e) {
+      _handleFirestoreError(e, 'Friend addition failed');
+      rethrow;
+    } catch (e) {
+      debugPrint("Error in addChatUserPersonal: ${e.runtimeType}");
+      rethrow;
+    }
+  }
+
+  @override
+  Future<List<UserModel>> fetchUsersIdOnRomm(List<String> userIds) async {
+    List<UserModel> users = [];
+    try {
+      for (var userId in userIds) {
+        var userDoc = await FirebaseFirestore.instance
+            .collection('Users')
+            .doc(userId)
+            .get();
+        if (userDoc.exists) {
+          users.add(UserModel.fromJson(userDoc.data()!, userDoc.id));
+        }
+      }
+      return users;
+    } on FirebaseException catch (e) {
+      _handleFirestoreError(e, 'Friend addition failed');
+      return [];
+      // rethrow;
+    } catch (e) {
+      debugPrint("Error in addChatUserPersonal: ${e.runtimeType}");
+      return [];
+      // rethrow;
+    }
+  }
+
   void _handleFirestoreError(FirebaseException e, String contextMessage) {
     String errorMessage;
 

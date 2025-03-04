@@ -37,7 +37,7 @@ class LanguageType {
     LanguageConst.deleteAccount: "Delete Account",
     LanguageConst.deleteAccountContentLines:
         "Are you sure you want to delete your account?\nOnce deleted, all your data will be permanently removed.\nThis action cannot be undone.\nAre you sure?",
-    LanguageConst.searchUserName: "Search User Name",
+    LanguageConst.searchUserName: "Search by Username or Email",
 
     // DILOG
     LanguageConst.openSettings: "Open Settings",
@@ -274,7 +274,7 @@ class LanguageType {
     LanguageConst.deleteAccount: "खाता हटाएं",
     LanguageConst.deleteAccountContentLines:
         "क्या आप वाकई अपना खाता हटाना चाहते हैं?\nखाता हटाने के बाद आपका सारा डेटा स्थायी रूप से हटा दिया जाएगा।\nयह प्रक्रिया वापस नहीं की जा सकती।\nक्या आप सुनिश्चित हैं?",
-    LanguageConst.searchUserName: "उपयोगकर्ता नाम खोजें",
+    LanguageConst.searchUserName: "उपयोगकर्ता नाम या ईमेल से खोजें",
 
     // DILOG
     LanguageConst.openSettings: "सेटिंग्स खोलें",
