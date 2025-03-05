@@ -34,7 +34,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   File? bannerFile;
   late String bannerUrl;
 
-  // globle key
+  // GLOBAL KEY
   final _globalKey = GlobalKey<FormState>();
 
   // TEXT FIELD CONTROLLER
