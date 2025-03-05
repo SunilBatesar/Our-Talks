@@ -9,8 +9,8 @@ import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/Views/NavBar/Home/profile_view_screen.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
-import 'package:ourtalks/view_model/Models/chat_modal.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatScreen extends StatefulWidget {
   final UserModel usermodel;
@@ -21,7 +21,9 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final List<types.Message> messages = [];
+  final List<types.Message> _messages = [];
+  final _user = types.User(id: Prefs.getUserIdPref());
+
   @override
   void initState() {
     super.initState();
@@ -30,71 +32,79 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _listenForMessages() {
     ChatRespository.getConversationID(
-            widget.usermodel.userID.toString(), "messages")
-        .onChildAdded
-        .listen((event) {
+      widget.usermodel.userID.toString(),
+      "messages",
+    ).onChildAdded.listen((event) {
       if (event.snapshot.value != null) {
-        final data = types.Message.fromJson(
-            (event.snapshot.value as Map<Object?, Object?>)
-                .cast<String, dynamic>());
+        final json = event.snapshot.value as Map<dynamic, dynamic>;
+        final message = _parseMessage(json.cast<String, dynamic>());
 
-        final newMessage = types.TextMessage(
-          author: types.User(id: data.author.id),
-          createdAt: data.createdAt,
-          id: event.snapshot.key ??
-              DateTime.now().microsecondsSinceEpoch.toString(),
-          text: (data as types.TextMessage).text,
-        );
-
-        setState(() {
-          messages.insert(0, newMessage);
-        });
+        if (message != null) {
+          setState(() {
+            _messages.insert(0, message);
+          });
+        }
       }
+    });
+  }
+
+  types.Message? _parseMessage(Map<String, dynamic> json) {
+    try {
+      switch (json['type']) {
+        case 'text':
+          return types.TextMessage.fromJson(json);
+        // Add other message types here as needed
+        default:
+          return null;
+      }
+    } catch (e) {
+      debugPrint("Error parsing message: $e");
+      return null;
+    }
+  }
+
+  void _handleSendPressed(types.PartialText message) {
+    final textMessage = types.TextMessage(
+      author: _user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: const Uuid().v4(),
+      text: message.text,
+    );
+
+    // ChatRespository.sendMessage(
+    //   receiverId: widget.usermodel.userID.toString(),
+    //   message: textMessage,
+    // );
+    ChatRespository.sendMessage(
+      text: textMessage.text,
+      receiverId: widget.usermodel.userID.toString(),
+      userModel: widget.usermodel,
+    );
+
+    setState(() {
+      _messages.insert(0, textMessage);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final user = types.User(id: widget.usermodel.userID.toString());
-
     return Scaffold(
         appBar: AppBar(
           leadingWidth: 30.sp,
           leading: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                size: 24.sp,
-                color: cnstSheet.colors.primary,
-              )),
+            onPressed: Get.back,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              size: 24.sp,
+              color: cnstSheet.colors.primary,
+            ),
+          ),
           title: GestureDetector(
-            onTap: () {
-              Get.to(() => ProfileViewScreen(model: widget.usermodel));
-            },
+            onTap: () =>
+                Get.to(() => ProfileViewScreen(model: widget.usermodel)),
             child: Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(1000.sp),
-                  child: CachedNetworkImage(
-                    imageUrl: widget.usermodel.userDP!,
-                    height: 35.sp,
-                    width: 35.sp,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) => Center(
-                      child: SizedBox(
-                          height: 12.sp,
-                          width: 12.sp,
-                          child: CircularProgressIndicator(
-                            color: cnstSheet.colors.white,
-                            strokeWidth: 3,
-                          )),
-                    ),
-                    errorWidget: (context, url, error) =>
-                        Center(child: Icon(Icons.error)),
-                  ),
-                ),
+                _buildUserAvatar(),
                 Gap(5.w),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -116,43 +126,66 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ),
         body: Chat(
-          messages: messages,
+          messages: _messages,
           onSendPressed: _handleSendPressed,
-          user: user,
+          user: _user,
           theme: DefaultChatTheme(
             backgroundColor: cnstSheet.colors.black,
+            // Message text colors
+            receivedMessageBodyTextStyle: TextStyle(
+              color: cnstSheet.colors.black, // Text color for received messages
+              fontSize: 16.sp,
+            ),
+            sentMessageBodyTextStyle: TextStyle(
+              color: cnstSheet.colors.black, // Text color for sent messages
+              fontSize: 16.sp,
+            ),
+            // Input decoration
             inputBorderRadius: BorderRadius.circular(10.r),
             inputContainerDecoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.r),
-                border:
-                    Border.all(color: cnstSheet.colors.primary.withAlpha(180))),
+              borderRadius: BorderRadius.circular(10.r),
+              border:
+                  Border.all(color: cnstSheet.colors.primary.withAlpha(180)),
+            ),
             inputTextStyle: cnstSheet.textTheme.fs16Medium,
             inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
             inputMargin: EdgeInsets.all(8.sp),
             inputTextCursorColor: cnstSheet.colors.primary,
+            // Bubble colors
+            primaryColor: cnstSheet.colors.primary, // Sent message bubble color
+            secondaryColor:
+                cnstSheet.colors.white, // Received message bubble color
+            // Additional text styles
+            // receivedMessageCaptionTextStyle: TextStyle(
+            //   color: cnstSheet.colors.black.withOpacity(0.5),
+            // ),
+            // sentMessageCaptionTextStyle: TextStyle(
+            //   color: cnstSheet.colors.white.withOpacity(0.5),
+            // ),
           ),
         ));
   }
 
-  void _handleSendPressed(types.PartialText message) {
-    final time = DateTime.now().microsecondsSinceEpoch.toString();
-    final textMessage = types.TextMessage(
-      author: types.User(id: Prefs.getUserIdPref()),
-      createdAt: DateTime.now().millisecondsSinceEpoch,
-      id: time,
-      text: message.text,
-    );
-    setState(() {
-      messages.insert(0, textMessage);
-    });
-
-    ChatRespository.sendMessage(
-      ChatRomModel(
-        fromUser: widget.usermodel.userID,
-        messages: messages,
-        toUser: Prefs.getUserIdPref(),
+  Widget _buildUserAvatar() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(1000.sp),
+      child: CachedNetworkImage(
+        imageUrl: widget.usermodel.userDP!,
+        height: 35.sp,
+        width: 35.sp,
+        fit: BoxFit.cover,
+        placeholder: (context, url) => Center(
+          child: SizedBox(
+            height: 12.sp,
+            width: 12.sp,
+            child: CircularProgressIndicator(
+              color: cnstSheet.colors.white,
+              strokeWidth: 3,
+            ),
+          ),
+        ),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       ),
-      widget.usermodel,
     );
   }
 }
