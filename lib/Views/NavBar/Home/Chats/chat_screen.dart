@@ -21,7 +21,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  final List<types.Message> messages = [];
+  final List<types.TextMessage> messages = [];
   @override
   void initState() {
     super.initState();
@@ -30,25 +30,35 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _listenForMessages() {
     ChatRespository.getConversationID(
-            widget.usermodel.userID.toString(), "messages")
+            widget.usermodel.userID.toString(), "messages/messages")
         .onChildAdded
         .listen((event) {
       if (event.snapshot.value != null) {
-        final data = types.Message.fromJson(
-            (event.snapshot.value as Map<Object?, Object?>)
-                .cast<String, dynamic>());
+        print("====================");
 
-        final newMessage = types.TextMessage(
-          author: types.User(id: data.author.id),
-          createdAt: data.createdAt,
-          id: event.snapshot.key ??
-              DateTime.now().microsecondsSinceEpoch.toString(),
-          text: (data as types.TextMessage).text,
-        );
+        print("====================");
 
-        setState(() {
-          messages.insert(0, newMessage);
-        });
+        if (event.snapshot.value is Map<Object?, Object?>) {
+          final safedata = Map<String, dynamic>.from(
+              event.snapshot.value as Map<Object?, Object?>);
+          final data = types.TextMessage.fromJson(safedata);
+          print(data);
+        }
+        // final data = types.Message.fromJson(
+        //     (event.snapshot.value as Map<Object?, Object?>)
+        //         .cast<String, dynamic>());
+
+        // final newMessage = types.TextMessage(
+        //   author: types.User(id: data.author.id),
+        //   createdAt: data.createdAt,
+        //   id: event.snapshot.key ??
+        //       DateTime.now().microsecondsSinceEpoch.toString(),
+        //   text: (data as types.TextMessage).text,
+        // );
+
+        // setState(() {
+        //   messages.insert(0, newMessage);
+        // });
       }
     });
   }

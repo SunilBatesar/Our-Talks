@@ -5,7 +5,7 @@ class ChatRomModel {
   String? toUser;
   String? fromUser;
   bool? isTyping;
-  List<types.Message>? messages;
+  List<types.TextMessage>? messages;
 
   ChatRomModel({
     this.roomId,
@@ -15,14 +15,14 @@ class ChatRomModel {
     this.messages,
   });
 
-  ChatRomModel.fromJson(Map<Object?, Object?> json, this.roomId)
+  ChatRomModel.fromJson(Map<String, dynamic> json, this.roomId)
       : toUser = json['toUser'] as String?,
         fromUser = json['fromUser'] as String?,
         isTyping = json['isTyping'] as bool? ?? false,
         messages = json['messages'] != null
             ? (json['messages'] as List)
                 .whereType<List<Object?>>()
-                .map((e) => types.Message.fromJson(
+                .map((e) => types.TextMessage.fromJson(
                     (e as Map<Object?, Object?>).cast<String, dynamic>()))
                 .toList()
             : [];
@@ -43,7 +43,7 @@ class ChatRomModel {
     String? toUser,
     String? fromUser,
     bool? isTyping,
-    List<types.Message>? messages,
+    List<types.TextMessage>? messages,
   }) {
     return ChatRomModel(
       roomId: roomId ?? this.roomId,
