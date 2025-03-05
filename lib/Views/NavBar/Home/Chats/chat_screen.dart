@@ -23,42 +23,77 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final List<types.Message> _messages = [];
   final _user = types.User(id: Prefs.getUserIdPref());
+  final _messagesRef = ChatRespository.getConversationID;
 
   @override
   void initState() {
     super.initState();
-    _listenForMessages();
+    _setupMessageListener();
   }
 
-  void _listenForMessages() {
-    ChatRespository.getConversationID(
-      widget.usermodel.userID.toString(),
-      "messages",
-    ).onChildAdded.listen((event) {
-      if (event.snapshot.value != null) {
-        final json = event.snapshot.value as Map<dynamic, dynamic>;
-        final message = _parseMessage(json.cast<String, dynamic>());
-
-        if (message != null) {
-          setState(() {
-            _messages.insert(0, message);
-          });
-        }
-      }
+  void _setupMessageListener() {
+    _messagesRef(widget.usermodel.userID.toString(), "messages")
+        .orderByChild("createdAt")
+        .limitToLast(10)
+        .onChildAdded
+        .listen((event) {
+      _handleNewMessage(event.snapshot.value);
     });
+  }
+
+  /// Processes incoming message data
+  void _handleNewMessage(dynamic messageData) {
+    if (messageData == null) return;
+
+    try {
+      final convertedData = _convertFirebaseData(messageData);
+      final message = _parseMessage(convertedData);
+      if (message != null) {
+        setState(() {
+          _messages.insert(0, message);
+        });
+      }
+    } catch (e, stackTrace) {
+      debugPrint("Error processing message: $e\n$stackTrace");
+    }
+  }
+
+  /// Converts Firebase's dynamic map to properly typed map
+  Map<String, dynamic> _convertFirebaseData(dynamic data) {
+    if (data is! Map<dynamic, dynamic>) {
+      throw const FormatException('Invalid message format');
+    }
+
+    final converted = <String, dynamic>{};
+    data.forEach((key, value) {
+      converted[key.toString()] =
+          value is Map ? _convertFirebaseData(value) : value;
+    });
+    return converted;
   }
 
   types.Message? _parseMessage(Map<String, dynamic> json) {
     try {
+      // Handle potential null values
+      json['createdAt'] ??= DateTime.now().millisecondsSinceEpoch;
+      json['id'] ??= const Uuid().v4();
+
+      // Ensure author is properly formatted
+      if (json['author'] is Map) {
+        json['author'] =
+            _convertFirebaseData(json['author'] as Map<dynamic, dynamic>);
+      }
+
       switch (json['type']) {
         case 'text':
           return types.TextMessage.fromJson(json);
-        // Add other message types here as needed
         default:
           return null;
       }
-    } catch (e) {
+    } catch (e, stackTrace) {
       debugPrint("Error parsing message: $e");
+      debugPrint("Stack trace: $stackTrace");
+      debugPrint("Problematic JSON: $json");
       return null;
     }
   }
@@ -71,19 +106,10 @@ class _ChatScreenState extends State<ChatScreen> {
       text: message.text,
     );
 
-    // ChatRespository.sendMessage(
-    //   receiverId: widget.usermodel.userID.toString(),
-    //   message: textMessage,
-    // );
     ChatRespository.sendMessage(
       text: textMessage.text,
       receiverId: widget.usermodel.userID.toString(),
-      userModel: widget.usermodel,
     );
-
-    setState(() {
-      _messages.insert(0, textMessage);
-    });
   }
 
   @override

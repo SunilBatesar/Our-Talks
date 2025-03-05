@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-import 'package:ourtalks/view_model/Models/user_model.dart';
 import 'package:uuid/uuid.dart';
 
 class ChatRespository {
@@ -62,7 +61,6 @@ class ChatRespository {
   static Future<void> sendMessage({
     required String text,
     required String receiverId,
-    required UserModel userModel,
   }) async {
     try {
       // Create proper message reference
@@ -75,10 +73,10 @@ class ChatRespository {
         id: const Uuid().v4(),
         text: text,
         // type: "text",
-      );
+      ).toJson();
 
       // Push to new child node
-      await messagesRef.push().set(newMessage.toJson());
+      await messagesRef.push().set(newMessage);
 
       debugPrint("Message sent successfully!");
     } catch (e) {
