@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -50,6 +51,33 @@ class AppFunctions {
       );
     } catch (e) {
       debugPrint("Error sharing app: $e");
+    }
+  }
+
+  //  CHAT TIME FORMAT FUNCTION
+  static String formatChatTime(DateTime dateTime) {
+    DateTime now = DateTime.now();
+    DateTime today = DateTime(now.year, now.month, now.day);
+    DateTime tomorrow = today.add(Duration(days: 1));
+    DateTime yesterday = today.subtract(Duration(days: 1));
+
+    String time = DateFormat('hh:mm a').format(dateTime);
+
+    if (dateTime.isAfter(today) && dateTime.isBefore(tomorrow)) {
+      return "Today, $time";
+    } else if (dateTime.isAfter(yesterday) && dateTime.isBefore(today)) {
+      return "Yesterday, $time";
+    } else if (dateTime.isAfter(tomorrow) &&
+        dateTime.isBefore(tomorrow.add(Duration(days: 1)))) {
+      return "Tomorrow, $time";
+    } else {
+      // Check if year is current year
+      if (dateTime.year == now.year) {
+        return DateFormat('dd/MM hh:mm a').format(dateTime); // Hide year
+      } else {
+        return DateFormat('dd/MM/yyyy hh:mm a')
+            .format(dateTime); // Show year for older dates
+      }
     }
   }
 }

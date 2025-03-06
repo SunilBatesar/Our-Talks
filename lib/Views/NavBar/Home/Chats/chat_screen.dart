@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/Views/NavBar/Home/profile_view_screen.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 import 'package:uuid/uuid.dart';
@@ -155,6 +156,7 @@ class _ChatScreenState extends State<ChatScreen> {
           messages: _messages,
           onSendPressed: _handleSendPressed,
           user: _user,
+          customDateHeaderText: (date) => AppFunctions.formatChatTime(date),
           theme: DefaultChatTheme(
             backgroundColor: cnstSheet.colors.black,
             // Message text colors
