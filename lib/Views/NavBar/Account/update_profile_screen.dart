@@ -101,11 +101,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                       // DELETE USER DP FUNCTION
                       deleteBtnOnTap: () async {
                         await UserDataHandler.updatesingleKey(
-                                userId: _userdata.userID ?? "",
-                                key: "userDP",
-                                value: "",
-                                successMessage: "Delete user dp")
-                            .then(
+                          userId: _userdata.userID ?? "",
+                          key: "userDP",
+                          value: "",
+                        ).then(
                           (value) {
                             setState(() {
                               _userdata.userDP = "";
@@ -142,11 +141,10 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           .deleteImageFromCloudinary(publicId);
                       if (iscloudDelete) {
                         await UserDataHandler.updatesingleKey(
-                                userId: _userdata.userID ?? "",
-                                key: "banner",
-                                value: "",
-                                successMessage: "Delete banner")
-                            .then(
+                          userId: _userdata.userID ?? "",
+                          key: "banner",
+                          value: "",
+                        ).then(
                           (value) {
                             setState(() {
                               _userdata.banner = "";
