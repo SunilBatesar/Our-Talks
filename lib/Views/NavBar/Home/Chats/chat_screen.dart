@@ -59,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  /// Converts Firebase's dynamic map to properly typed map
+  // Converts Firebase's dynamic map to properly typed map
   Map<String, dynamic> _convertFirebaseData(dynamic data) {
     if (data is! Map<dynamic, dynamic>) {
       throw const FormatException('Invalid message format');
