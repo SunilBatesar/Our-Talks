@@ -22,29 +22,43 @@ class UserMessageTile extends StatelessWidget {
             Get.to(() => ChatScreen(usermodel: model));
           },
       contentPadding: EdgeInsets.all(0),
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(1000.sp),
-        child: GestureDetector(
-          onTap: () => Get.to(UserProfileImageShowScreen(image: model.userDP)),
-          child: CachedNetworkImage(
-            imageUrl: model.userDP!,
-            height: 50.sp,
-            width: 50.sp,
-            fit: BoxFit.cover,
-            placeholder: (context, url) => Center(
-              child: SizedBox(
-                  height: 12.sp,
-                  width: 12.sp,
-                  child: CircularProgressIndicator(
-                    color: cnstSheet.colors.white,
-                    strokeWidth: 3,
-                  )),
+      leading: Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.bottomRight,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(1000.sp),
+              child: GestureDetector(
+                onTap: () =>
+                    Get.to(UserProfileImageShowScreen(image: model.userDP)),
+                child: CachedNetworkImage(
+                  imageUrl: model.userDP!,
+                  height: 50.sp,
+                  width: 50.sp,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Center(
+                    child: SizedBox(
+                        height: 12.sp,
+                        width: 12.sp,
+                        child: CircularProgressIndicator(
+                          color: cnstSheet.colors.white,
+                          strokeWidth: 3,
+                        )),
+                  ),
+                  errorWidget: (context, url, error) =>
+                      Center(child: Icon(Icons.error)),
+                ),
+              ),
             ),
-            errorWidget: (context, url, error) =>
-                Center(child: Icon(Icons.error)),
-          ),
-        ),
-      ),
+            model.isOnline
+                ? Container(
+                    height: 10,
+                    width: 10,
+                    decoration: BoxDecoration(
+                        color: Colors.green, shape: BoxShape.circle),
+                  )
+                : SizedBox()
+          ]),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

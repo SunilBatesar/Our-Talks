@@ -47,11 +47,11 @@ class UserDataHandler {
 
   // DELETE USER DATA USE KEY
 
-  static Future<void> updatesingleKey(
-      {required String userId,
-      required String key,
-      required dynamic value,
-      required String successMessage}) async {
+  static Future<void> updatesingleKey({
+    required String userId,
+    required String key,
+    required dynamic value,
+  }) async {
     await _handleUserOperation(
       operation: () async =>
           await _userRepo.updateUserKeyData(userId, key, value),
@@ -61,7 +61,8 @@ class UserDataHandler {
         debugPrint("User Delete key value successfully: $key :$value");
         return;
       },
-      successMessage: successMessage,
+      showSuccess: false,
+      successMessage: "successMessage",
       errorMessage: 'Error updating profile',
     );
   }

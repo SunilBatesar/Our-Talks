@@ -107,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
       text: message.text,
     );
 
-    ChatRespository.sendMessage(
+    ChatRespository.sendFirstMessage(
       text: textMessage.text,
       receiverId: widget.usermodel.userID.toString(),
     );
