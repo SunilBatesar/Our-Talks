@@ -54,9 +54,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    print(Prefs.getUserIdPref());
-    print("=====Home======");
-    print(auth.currentUser!.uid);
     return Scaffold(
       // APP BAR AND SHOW APP NAME
       appBar: AppBar(
