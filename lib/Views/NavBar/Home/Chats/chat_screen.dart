@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Views/NavBar/Home/profile_view_screen.dart';
 import 'package:ourtalks/main.dart';
+import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
@@ -21,6 +22,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final _usercontroller = Get.find<UserController>();
   final List<types.Message> _messages = [];
   late types.User _user;
   final _messagesRef = ChatRespository.getConversationID;
@@ -30,9 +32,9 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
     // ++
     _user = types.User(
-        id: widget.usermodel.userID!,
-        imageUrl: widget.usermodel.userDP,
-        firstName: widget.usermodel.name);
+        id: _usercontroller.user!.userID!,
+        imageUrl: _usercontroller.user!.userDP,
+        firstName: _usercontroller.user!.name);
 
     // *****
     _setupMessageListener();

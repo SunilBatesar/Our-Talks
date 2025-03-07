@@ -84,19 +84,19 @@ class ChatRespository {
     try {
       // Create proper message reference
       final messagesRef = getConversationID(receiverId, "messages");
-
+      final messageId = const Uuid().v4();
       // Create new message
       final newMessage = types.TextMessage(
         author: types.User(id: _currentUser),
         createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: const Uuid().v4(),
+        id: messageId,
         text: text,
         metadata: metadata,
         // type: "text",
       ).toJson();
 
       // Push to new child node
-      await messagesRef.push().set(newMessage);
+      await messagesRef.child(messageId).set(newMessage);
 
       debugPrint("Message sent successfully!");
     } catch (e) {
