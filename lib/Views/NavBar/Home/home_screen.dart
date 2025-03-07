@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
+import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/Views/NavBar/Home/Widgets/user_message_tile.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
-import 'package:ourtalks/view_model/Data/Networks/user%20network/Cloud%20firestore/user_datahendler.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,33 +18,45 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  static final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
+  static final _userData = _firebaseDatabase.ref("user_data");
   @override
   void initState() {
     super.initState();
-    _data();
+    WidgetsBinding.instance.addObserver(this); // Observer Register
   }
 
-  _data() {
-    final auth = FirebaseAuth.instance;
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this); // Observer Remov
+    super.dispose();
+  }
 
-    SystemChannels.lifecycle.setMessageHandler((message) async {
-      if (auth.currentUser != null) {
-        if (message.toString().contains('resume')) {
-          await UserDataHandler.updatesingleKey(
-              userId: auth.currentUser!.uid, key: "isOnline", value: true);
-        }
-        if (message.toString().contains('pause')) {
-          await UserDataHandler.updatesingleKey(
-              userId: auth.currentUser!.uid, key: "isOnline", value: false);
-        }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    super.didChangeAppLifecycleState(state);
+    if (auth.currentUser != null) {
+      final db = _userData.child(auth.currentUser!.uid);
+      final time = DateTime.now().microsecondsSinceEpoch.toString();
+      if (state == AppLifecycleState.resumed) {
+        await ChatRespository.userOnlineValueUpdate(
+            userId: Prefs.getUserIdPref(), value: true);
+        db.onDisconnect().update(
+            RealTimeUserModel(isOnline: false, lastSeen: time).toJson());
+      } else {
+        await ChatRespository.userOnlineValueUpdate(
+            userId: Prefs.getUserIdPref(), value: false);
       }
-      return Future.value(message);
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    print(Prefs.getUserIdPref());
+    print("=====Home======");
+    print(auth.currentUser!.uid);
     return Scaffold(
       // APP BAR AND SHOW APP NAME
       appBar: AppBar(

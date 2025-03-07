@@ -3,10 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
+import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/Views/NavBar/Account/account_screen.dart';
 import 'package:ourtalks/Views/NavBar/Home/home_screen.dart';
 import 'package:ourtalks/Views/NavBar/search_user_screen.dart';
 import 'package:ourtalks/main.dart';
+
+import '../../view_model/Data/Networks/realtime database/chat_respository.dart';
 
 class NavBar extends StatefulWidget {
   const NavBar({super.key});
@@ -16,6 +19,13 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
+  @override
+  void initState() {
+    super.initState();
+    ChatRespository.userOnlineValueUpdate(
+        userId: Prefs.getUserIdPref(), value: true);
+  }
+
   int _selectedIndex = 0; // NAV BAR INDEX
   // NAV BAR SHOW SCREEN(WIDGET) LIST
   static final List<Widget> _widgetOptions = <Widget>[
@@ -23,6 +33,7 @@ class _NavBarState extends State<NavBar> {
     SearchUserScreen(),
     AccountScreen(), // ACCOUNT SCREEN
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

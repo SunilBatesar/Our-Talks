@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:ourtalks/Utils/utils.dart';
-import 'package:ourtalks/view_model/Models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:ourtalks/Utils/utils.dart';
 import 'package:ourtalks/view_model/Apis/firebase_apis.dart';
+import 'package:ourtalks/view_model/Controllers/user_controller.dart';
+import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
+import 'package:ourtalks/view_model/Models/user_model.dart';
 
 abstract class Authentication {
   Future<UserModel> login({required String email, required String password});
@@ -49,6 +52,10 @@ class AuthRepository extends Authentication {
       final userData = user.copyWith(userID: credential.user!.uid);
       await FirebaseApis.userDocumentRef(credential.user!.uid)
           .set(userData.toJson());
+      await ChatRespository.setUserData(
+          userId: credential.user!.uid,
+          model: RealTimeUserModel(
+              isOnline: true)); // SET USER DATA REALTIME (ISONLINE KEY)
       debugPrint("User data added to Firebase: \${userData.toString()}");
       return userData;
     } catch (e) {
@@ -69,7 +76,10 @@ class AuthRepository extends Authentication {
 
   @override
   Future<void> logout() async {
+    final user = Get.find<UserController>().user;
     try {
+      await ChatRespository.userOnlineValueUpdate(
+          userId: user!.userID!, value: false); // USER OFFLINE VALUE SET
       await _firebaseAuth.signOut();
       debugPrint("User successfully logged out");
     } catch (e) {

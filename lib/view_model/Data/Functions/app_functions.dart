@@ -80,4 +80,18 @@ class AppFunctions {
       }
     }
   }
+
+  // Converts Firebase's dynamic map to properly typed map
+  static Map<String, dynamic> convertFirebaseData(dynamic data) {
+    if (data is! Map<dynamic, dynamic>) {
+      throw const FormatException('Invalid message format');
+    }
+
+    final converted = <String, dynamic>{};
+    data.forEach((key, value) {
+      converted[key.toString()] =
+          value is Map ? convertFirebaseData(value) : value;
+    });
+    return converted;
+  }
 }

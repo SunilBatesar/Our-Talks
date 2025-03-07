@@ -121,3 +121,28 @@ class UserModel {
     );
   }
 }
+
+// REALTIME DATA SAVE USER MODEL
+class RealTimeUserModel {
+  String? id;
+  bool isOnline;
+  String? lastSeen;
+  RealTimeUserModel({this.id, this.isOnline = false, this.lastSeen});
+
+  Map<String, dynamic> toJson() {
+    return {
+      "isOnline": isOnline,
+      "lastSeen": lastSeen,
+    };
+  }
+
+  Map<String, dynamic> toJsonOnlyOnlineValue() {
+    return {
+      "isOnline": isOnline,
+    };
+  }
+
+  RealTimeUserModel.fromJson(Map<String, dynamic> json)
+      : isOnline = json["isOnline"] ?? false,
+        lastSeen = json["lastSeen"] ?? "";
+}

@@ -47,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
     if (messageData == null) return;
 
     try {
-      final convertedData = _convertFirebaseData(messageData);
+      final convertedData = AppFunctions.convertFirebaseData(messageData);
       final message = _parseMessage(convertedData);
       if (message != null) {
         setState(() {
@@ -59,20 +59,6 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  // Converts Firebase's dynamic map to properly typed map
-  Map<String, dynamic> _convertFirebaseData(dynamic data) {
-    if (data is! Map<dynamic, dynamic>) {
-      throw const FormatException('Invalid message format');
-    }
-
-    final converted = <String, dynamic>{};
-    data.forEach((key, value) {
-      converted[key.toString()] =
-          value is Map ? _convertFirebaseData(value) : value;
-    });
-    return converted;
-  }
-
   types.Message? _parseMessage(Map<String, dynamic> json) {
     try {
       // Handle potential null values
@@ -81,8 +67,8 @@ class _ChatScreenState extends State<ChatScreen> {
 
       // Ensure author is properly formatted
       if (json['author'] is Map) {
-        json['author'] =
-            _convertFirebaseData(json['author'] as Map<dynamic, dynamic>);
+        json['author'] = AppFunctions.convertFirebaseData(
+            json['author'] as Map<dynamic, dynamic>);
       }
 
       switch (json['type']) {
