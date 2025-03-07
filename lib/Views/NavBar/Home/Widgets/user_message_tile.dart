@@ -5,6 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dart';
 import 'package:ourtalks/Views/NavBar/Home/Chats/chat_screen.dart';
 import 'package:ourtalks/main.dart';
@@ -72,7 +73,10 @@ class _UserMessageTileState extends State<UserMessageTile> {
                 onTap: () => Get.to(
                     UserProfileImageShowScreen(image: widget.model.userDP)),
                 child: CachedNetworkImage(
-                  imageUrl: widget.model.userDP!,
+                  scale: 1,
+                  imageUrl: widget.model.userDP!.isNotEmpty
+                      ? widget.model.userDP!
+                      : AppConfig.defaultDP,
                   height: 50.sp,
                   width: 50.sp,
                   fit: BoxFit.cover,

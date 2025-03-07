@@ -5,6 +5,7 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Views/NavBar/Home/profile_view_screen.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
@@ -26,6 +27,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final List<types.Message> _messages = [];
   late types.User _user;
   final _messagesRef = ChatRespository.getConversationID;
+  types.Message? _repliedMessage;
 
   @override
   void initState() {
@@ -124,14 +126,27 @@ class _ChatScreenState extends State<ChatScreen> {
       createdAt: DateTime.now().millisecondsSinceEpoch,
       id: const Uuid().v4(),
       text: message.text,
-      metadata: {'status': 'sent'},
+      metadata: {
+        'status': 'sent',
+        if (_repliedMessage != null) 'replyTo': _repliedMessage!.id,
+      },
     );
 
-    ChatRespository.sendFirstMessage(
-      text: textMessage.text,
-      receiverId: widget.usermodel.userID.toString(),
-      metadata: textMessage.metadata!,
-    );
+    if (_messages.isEmpty) {
+      debugPrint("first msg*************");
+      ChatRespository.sendFirstMessage(
+        text: textMessage.text,
+        receiverId: widget.usermodel.userID.toString(),
+        metadata: textMessage.metadata!,
+      );
+    } else {
+      debugPrint("reglure msg*************");
+      ChatRespository.sendMessage(
+          text: textMessage.text,
+          receiverId: widget.usermodel.userID.toString(),
+          metadata: textMessage.metadata!);
+    }
+    _clearRepliedMessage();
   }
 
   Future<void> _updateMessageStatus(
@@ -146,16 +161,31 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> _markMessagesAsRead() async {
-    final messages = _messages.where((message) =>
-        message.author.id != _user.id &&
-        message.metadata?['status'] == 'delivered');
+    final unreadMessages = _messages.where((message) =>
+        message.author.id != _usercontroller.user!.userID &&
+        message.metadata?['status'] != 'read');
 
-    for (final message in messages) {
-      await _updateMessageStatus(
-        message.id,
-        {'status': 'read'},
+    for (final message in unreadMessages) {
+      await ChatRespository.updateMessageStatus(
+        receiverId: widget.usermodel.userID!,
+        messageId: message.id,
+        metadata: {'status': 'read'},
       );
     }
+  }
+
+  // ***replay function
+
+  void _setRepliedMessage(types.Message message) {
+    setState(() {
+      _repliedMessage = message;
+    });
+  }
+
+  void _clearRepliedMessage() {
+    setState(() {
+      _repliedMessage = null;
+    });
   }
 
   @override
@@ -178,7 +208,10 @@ class _ChatScreenState extends State<ChatScreen> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(1000.sp),
                 child: CachedNetworkImage(
-                  imageUrl: widget.usermodel.userDP!,
+                  scale: 1,
+                  imageUrl: widget.usermodel.userDP!.isNotEmpty
+                      ? widget.usermodel.userDP!
+                      : AppConfig.defaultDP,
                   height: 35.sp,
                   width: 35.sp,
                   fit: BoxFit.cover,
@@ -215,34 +248,87 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ),
       ),
-      body: Chat(
-        messages: _messages,
-        onSendPressed: _handleSendPressed,
-        user: _user,
-        bubbleBuilder: _buildBubble,
-        customDateHeaderText: (date) => AppFunctions.formatChatTime(date),
-        theme: DefaultChatTheme(
-          backgroundColor: cnstSheet.colors.black,
-          receivedMessageBodyTextStyle: TextStyle(
-            color: cnstSheet.colors.black,
-            fontSize: 16.sp,
+      body: Column(
+        children: [
+          if (_repliedMessage != null && _repliedMessage is types.TextMessage)
+            Container(
+              padding: EdgeInsets.all(8.sp),
+              color: cnstSheet.colors.gray,
+              child: Row(
+                children: [
+                  Icon(Icons.reply, size: 16.sp, color: cnstSheet.colors.white),
+                  Gap(8.w),
+                  Expanded(
+                    child: Text(
+                      'Replying to: ${(_repliedMessage as types.TextMessage).text}',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: cnstSheet.colors.white,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: _clearRepliedMessage,
+                    icon: Icon(
+                      Icons.close,
+                      size: 16.sp,
+                      color: cnstSheet.colors.red,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          Expanded(
+            child: Chat(
+              messages: _messages,
+              onSendPressed: _handleSendPressed,
+              user: _user,
+              // bubbleBuilder: _buildBubble,
+              bubbleBuilder: (child,
+                  {required message, required nextMessageInGroup}) {
+                return GestureDetector(
+                  onHorizontalDragEnd: (details) {
+                    // Check if the drag is significant (e.g., more than 50 pixels)
+                    if (details.primaryVelocity != null &&
+                        details.primaryVelocity!.abs() > 50) {
+                      _setRepliedMessage(
+                          message); // Set the message to reply to
+                    }
+                  },
+                  child: _buildBubble(
+                    child,
+                    message: message,
+                    nextMessageInGroup: nextMessageInGroup,
+                  ),
+                );
+              },
+              customDateHeaderText: (date) => AppFunctions.formatChatTime(date),
+              theme: DefaultChatTheme(
+                backgroundColor: cnstSheet.colors.black,
+                receivedMessageBodyTextStyle: TextStyle(
+                  color: cnstSheet.colors.black,
+                  fontSize: 16.sp,
+                ),
+                sentMessageBodyTextStyle: TextStyle(
+                  color: cnstSheet.colors.black,
+                  fontSize: 16.sp,
+                ),
+                inputBorderRadius: BorderRadius.circular(10.r),
+                inputContainerDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.r),
+                  border: Border.all(
+                      color: cnstSheet.colors.primary.withAlpha(180)),
+                ),
+                inputTextStyle: cnstSheet.textTheme.fs16Medium,
+                inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
+                inputMargin: EdgeInsets.all(8.sp),
+                inputTextCursorColor: cnstSheet.colors.primary,
+                primaryColor: cnstSheet.colors.primary,
+                secondaryColor: cnstSheet.colors.white,
+              ),
+            ),
           ),
-          sentMessageBodyTextStyle: TextStyle(
-            color: cnstSheet.colors.black,
-            fontSize: 16.sp,
-          ),
-          inputBorderRadius: BorderRadius.circular(10.r),
-          inputContainerDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.r),
-            border: Border.all(color: cnstSheet.colors.primary.withAlpha(180)),
-          ),
-          inputTextStyle: cnstSheet.textTheme.fs16Medium,
-          inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
-          inputMargin: EdgeInsets.all(8.sp),
-          inputTextCursorColor: cnstSheet.colors.primary,
-          primaryColor: cnstSheet.colors.primary,
-          secondaryColor: cnstSheet.colors.white,
-        ),
+        ],
       ),
     );
   }
@@ -257,22 +343,50 @@ class _ChatScreenState extends State<ChatScreen> {
     final bubbleColor =
         isSent ? cnstSheet.colors.primary : cnstSheet.colors.white;
 
-    return Container(
-      decoration: BoxDecoration(
-        color: bubbleColor,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Stack(
-        children: [
-          child,
-          if (isSent)
-            Positioned(
-              bottom: 4.h,
-              right: 4.w,
-              child: _buildStatusIndicator(message.metadata?['status']),
+    // Check if this message is a reply
+    final repliedMessageId = message.metadata?['replyTo'];
+    final repliedMessage = repliedMessageId != null
+        ? _messages.firstWhere((m) => m.id == repliedMessageId)
+        : null;
+
+    return Column(
+      crossAxisAlignment:
+          isSent ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: [
+        if (repliedMessage != null && repliedMessage is types.TextMessage)
+          Container(
+            padding: EdgeInsets.all(8.sp),
+            margin: EdgeInsets.only(bottom: 4.h),
+            decoration: BoxDecoration(
+              color: bubbleColor.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(8.r),
             ),
-        ],
-      ),
+            child: Text(
+              'Replying to: ${repliedMessage.text}',
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: cnstSheet.colors.black,
+              ),
+            ),
+          ),
+        Container(
+          decoration: BoxDecoration(
+            color: bubbleColor,
+            borderRadius: BorderRadius.circular(12.r),
+          ),
+          child: Stack(
+            children: [
+              child,
+              if (isSent)
+                Positioned(
+                  bottom: 4.h,
+                  right: 4.w,
+                  child: _buildStatusIndicator(message.metadata?['status']),
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -291,7 +405,7 @@ class _ChatScreenState extends State<ChatScreen> {
         break;
       case 'read':
         icon = Icons.done_all;
-        color = cnstSheet.colors.primary;
+        color = cnstSheet.colors.blue;
         break;
       default:
         return const SizedBox.shrink();

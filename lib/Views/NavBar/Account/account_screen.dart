@@ -67,12 +67,9 @@ class AccountScreen extends StatelessWidget {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.r),
                         child: CachedNetworkImage(
-                          imageUrl:
-
-                              // userdata.userDP ??
-                              userdata.banner?.isNotEmpty == true
-                                  ? userdata.banner!
-                                  : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkBIy4nua2A6YJPNFdcLDXpuR7bU4NYH53sw&s",
+                          imageUrl: userdata.banner?.isNotEmpty == true
+                              ? userdata.banner!
+                              : AppConfig.defaultBanner,
                           fit: BoxFit.cover,
                           placeholder: (context, url) => Center(
                             child: SizedBox(
@@ -118,7 +115,7 @@ class AccountScreen extends StatelessWidget {
                             child: CachedNetworkImage(
                               imageUrl: userdata.userDP?.isNotEmpty == true
                                   ? userdata.userDP!
-                                  : "https://i.pinimg.com/736x/fa/74/d4/fa74d45f820e06fa3a178d4a9845c0b9.jpg",
+                                  : AppConfig.defaultDP,
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Center(
                                 child: SizedBox(

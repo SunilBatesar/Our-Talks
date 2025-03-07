@@ -9,4 +9,8 @@ class AppConfig {
 
   static double appScreenHeight = 783; // APP SCREEN HEIGHT
   static double appScreenWidth = 392; // APP SCREEN WIDTH
+  static String defaultDP =
+      "https://i.pinimg.com/736x/fa/74/d4/fa74d45f820e06fa3a178d4a9845c0b9.jpg"; // APP USER defaultDP
+  static String defaultBanner =
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTkBIy4nua2A6YJPNFdcLDXpuR7bU4NYH53sw&s"; // APP USER defaultBanner
 }

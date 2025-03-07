@@ -19,8 +19,9 @@ class VerifyEmailForgetPasswordScreen extends StatelessWidget {
   // final _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    final userEmail = _usercontroler.user!.email;
+    final userEmail = _usercontroler.user?.email ?? '';
     final emailController = TextEditingController(text: userEmail);
+    final isEmailEditable = userEmail.isEmpty;
     return Scaffold(
       appBar: PrimaryAppBar(),
       body: SafeArea(
@@ -55,8 +56,8 @@ class VerifyEmailForgetPasswordScreen extends StatelessWidget {
                   controller: emailController,
                   label: LanguageConst.email.tr,
                   keybordtype: TextInputType.emailAddress,
-                  readOnly: true,
-                  suffixicon: Icons.lock,
+                  readOnly: !isEmailEditable,
+                  suffixicon: isEmailEditable ? null : Icons.lock,
                 ),
               ),
               // SIGN IN BUTTON
