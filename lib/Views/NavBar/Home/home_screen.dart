@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     data();
   }
 
+  // USER ONLINE SET FUNCTION
   data() async {
     SystemChannels.lifecycle.setMessageHandler(
       (message) async {
