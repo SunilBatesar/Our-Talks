@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
@@ -18,38 +21,40 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
+class _HomeScreenState extends State<HomeScreen> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   static final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
   static final _userData = _firebaseDatabase.ref("user_data");
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this); // Observer Register
+    data();
   }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this); // Observer Remov
-    super.dispose();
-  }
+  data() async {
+    SystemChannels.lifecycle.setMessageHandler(
+      (message) async {
+        if (auth.currentUser != null) {
+          final db = _userData.child(auth.currentUser!.uid);
+          final time = DateTime.now().microsecondsSinceEpoch.toString();
+          if (message.toString().contains('resume')) {
+            // User comes online
+            await ChatRespository.userOnlineValueUpdate(
+                userId: Prefs.getUserIdPref(), value: true);
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) async {
-    super.didChangeAppLifecycleState(state);
-    if (auth.currentUser != null) {
-      final db = _userData.child(auth.currentUser!.uid);
-      final time = DateTime.now().microsecondsSinceEpoch.toString();
-      if (state == AppLifecycleState.resumed) {
-        await ChatRespository.userOnlineValueUpdate(
-            userId: Prefs.getUserIdPref(), value: true);
-        db.onDisconnect().update(
-            RealTimeUserModel(isOnline: false, lastSeen: time).toJson());
-      } else {
-        await ChatRespository.userOnlineValueUpdate(
-            userId: Prefs.getUserIdPref(), value: false);
-      }
-    }
+            // Set onDisconnect() to handle unexpected disconnects
+            await db.onDisconnect().update(
+                RealTimeUserModel(isOnline: false, lastSeen: time).toJson());
+          }
+          if (message.toString().contains('pause')) {
+            // Update last seen when app is in the background
+            await ChatRespository.userOnlineValueUpdate(
+                userId: Prefs.getUserIdPref(), value: false);
+          }
+        }
+        return Future.value(message);
+      },
+    );
   }
 
   @override

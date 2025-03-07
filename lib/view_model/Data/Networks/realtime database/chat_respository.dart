@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
@@ -31,6 +32,8 @@ class ChatRespository {
   //CHAKE UPDATE USER ISONLINE VALUE
   static Future<void> userOnlineValueUpdate(
       {required String userId, required bool value}) async {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    if (auth.currentUser == null) return;
     final db = _userData.child(userId);
     final time = DateTime.now().millisecondsSinceEpoch.toString();
     try {
