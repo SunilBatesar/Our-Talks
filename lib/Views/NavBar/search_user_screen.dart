@@ -64,36 +64,39 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                     textColor: cnstSheet.colors.white.withAlpha(150),
                   ),
                   Gap(10.h),
-                  Expanded(
-                    child: FutureBuilder<List<UserModel>>(
-                      future:
-                          UserRepository().fetchsearchListId(serachuserlist!),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                        if (snapshot.hasError) {
-                          return Center(
-                              child: Text('Error: ${snapshot.error}'));
-                        }
-                        if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                          return SizedBox();
-                        }
-                        return ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            final user = snapshot.data![index];
-                            return UserMessageTile(
-                              onTap: () {},
-                              tralingicon: Icons.message,
-                              model: user,
-                            ).marginOnly(bottom: 15.h);
-                          },
-                        );
-                      },
-                    ),
-                  ),
+                  serachuserlist != null && serachuserlist.isNotEmpty
+                      ? Expanded(
+                          child: FutureBuilder<List<UserModel>>(
+                            future: UserRepository()
+                                .fetchsearchListId(serachuserlist),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              if (snapshot.hasError) {
+                                return Center(
+                                    child: Text('Error: ${snapshot.error}'));
+                              }
+                              if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                return SizedBox();
+                              }
+                              return ListView.builder(
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  final user = snapshot.data![index];
+                                  return UserMessageTile(
+                                    onTap: () {},
+                                    tralingicon: Icons.message,
+                                    model: user,
+                                  ).marginOnly(bottom: 15.h);
+                                },
+                              );
+                            },
+                          ),
+                        )
+                      : SizedBox(),
                 ],
               ),
             ),

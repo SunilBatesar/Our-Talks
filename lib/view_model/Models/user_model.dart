@@ -13,7 +13,7 @@ class UserModel {
   final bool pravacy;
   final List<String>? friends;
   final List<String>? chatroom;
-  final List<String>? serachuserlist;
+  List<String>? serachuserlist;
   final String? dob;
   final String? gender;
   final List<String>? blockedUsers;

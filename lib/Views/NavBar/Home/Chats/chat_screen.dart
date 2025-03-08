@@ -390,6 +390,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  // BUILD STATUS INDICATOR 
   Widget _buildStatusIndicator(String? status) {
     IconData icon;
     Color color;
