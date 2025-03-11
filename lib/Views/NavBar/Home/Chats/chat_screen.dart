@@ -327,8 +327,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 primaryColor: cnstSheet.colors.primary,
                 secondaryColor: cnstSheet.colors.white,
               ),
-              //  PICK IMAGE
               onAttachmentPressed: () {
+                //  PICK IMAGE
                 chatBottomSheetFunction(file: (fileValue) {});
               },
             ),
