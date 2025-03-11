@@ -5,6 +5,7 @@ import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:ourtalks/Components/BottomSheets/chat_bottom_sheet.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Views/NavBar/Home/profile_view_screen.dart';
 import 'package:ourtalks/main.dart';
@@ -326,6 +327,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 primaryColor: cnstSheet.colors.primary,
                 secondaryColor: cnstSheet.colors.white,
               ),
+              //  PICK IMAGE
+              onAttachmentPressed: () {
+                chatBottomSheetFunction(file: (fileValue) {});
+              },
             ),
           ),
         ],
@@ -390,7 +395,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  // BUILD STATUS INDICATOR 
+  // BUILD STATUS INDICATOR
   Widget _buildStatusIndicator(String? status) {
     IconData icon;
     Color color;

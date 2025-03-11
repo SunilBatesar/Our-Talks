@@ -88,4 +88,15 @@ class LocalData {
         title: LanguageConst.cancel,
         icon: Icons.cancel_outlined),
   ];
+  // CHAT BOTTOM SHET LOCAL DATA
+  static List<AccountMenuModel> chatBottomSheetLocalData = [
+    AccountMenuModel(
+        id: LanguageConst.camera,
+        title: LanguageConst.camera,
+        icon: Icons.camera_alt_outlined),
+    AccountMenuModel(
+        id: LanguageConst.gallery,
+        title: LanguageConst.gallery,
+        icon: Icons.photo_library_outlined),
+  ];
 }
