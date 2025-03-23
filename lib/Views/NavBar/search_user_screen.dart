@@ -88,7 +88,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                   final user = snapshot.data![index];
                                   return UserMessageTile(
                                     onTap: () {},
-                                    tralingicon: Icons.message,
+                                    trailingIcon: Icons.message,
                                     model: user,
                                   ).marginOnly(bottom: 15.h);
                                 },

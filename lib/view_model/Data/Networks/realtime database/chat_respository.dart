@@ -179,4 +179,87 @@ class ChatRespository {
       rethrow;
     }
   }
+
+  // **************************
+  static Future<void> sendImageMessage({
+    required String imageUrl,
+    required String receiverId,
+    required Map<String, dynamic> metadata,
+  }) async {
+    try {
+      final messagesRef = getConversationID(receiverId, "messages");
+      final messageId = const Uuid().v4();
+
+      final newMessage = types.ImageMessage(
+        author: types.User(id: _currentUser),
+        createdAt: DateTime.now().millisecondsSinceEpoch,
+        id: messageId,
+        name: 'image',
+        size: 0,
+        uri: imageUrl,
+        metadata: metadata,
+      ).toJson();
+
+      await messagesRef.child(messageId).set(newMessage);
+    } catch (e) {
+      debugPrint("Error sending image message: $e");
+      rethrow;
+    }
+  }
+
+  static Future<void> sendFirstImageMessage({
+    required String imageUrl,
+    required String receiverId,
+    required Map<String, dynamic> metadata,
+  }) async {
+    try {
+      final userDoc = await FirebaseApis.userDocumentRef(_currentUser)
+          .collection("my_chatroom")
+          .doc(receiverId)
+          .get();
+
+      if (!userDoc.exists) {
+        await FirebaseApis.userDocumentRef(_currentUser)
+            .collection("my_chatroom")
+            .doc(receiverId)
+            .set({});
+
+        await FirebaseApis.userDocumentRef(receiverId)
+            .collection("my_chatroom")
+            .doc(_currentUser)
+            .set({});
+      }
+
+      await sendImageMessage(
+        imageUrl: imageUrl,
+        receiverId: receiverId,
+        metadata: metadata,
+      );
+    } catch (e) {
+      debugPrint("Error sending first image message: $e");
+      rethrow;
+    }
+  }
+
+  static Future<void> updateMessage({
+    required String receiverId,
+    required String messageId,
+    required String newText,
+  }) async {
+    final ref = getConversationID(receiverId, "messages").child(messageId);
+    await ref.update({'text': newText});
+  }
+
+  static Future<void> deleteMessage({
+    required String receiverId,
+    required String messageId,
+  }) async {
+    final ref = getConversationID(receiverId, "messages").child(messageId);
+    await ref.remove();
+  }
+
+  static Stream<DatabaseEvent> getLastMsg(String userID) {
+    final userData = getConversationID(userID, "messages");
+    return userData.orderByChild("createdAt").limitToLast(1).onValue;
+  }
 }

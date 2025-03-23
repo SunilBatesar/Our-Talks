@@ -11,6 +11,7 @@ import 'package:ourtalks/Views/NavBar/Home/profile_view_screen.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
+import 'package:ourtalks/view_model/Data/Networks/cloudinary/cloudinary_function.dart';
 import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 import 'package:uuid/uuid.dart';
@@ -29,10 +30,15 @@ class _ChatScreenState extends State<ChatScreen> {
   late types.User _user;
   final _messagesRef = ChatRespository.getConversationID;
   types.Message? _repliedMessage;
+  late String _conversationId;
 
   @override
   void initState() {
     super.initState();
+    // Generate conversation ID
+    final sortedIds = [_usercontroller.user!.userID!, widget.usermodel.userID!]
+      ..sort();
+    _conversationId = "${sortedIds[0]}_${sortedIds[1]}";
     // ++
     _user = types.User(
         id: _usercontroller.user!.userID!,
@@ -112,6 +118,8 @@ class _ChatScreenState extends State<ChatScreen> {
       switch (json['type']) {
         case 'text':
           return types.TextMessage.fromJson(json);
+        case 'image': // Add image case
+          return types.ImageMessage.fromJson(json);
         default:
           return null;
       }
@@ -148,6 +156,36 @@ class _ChatScreenState extends State<ChatScreen> {
           metadata: textMessage.metadata!);
     }
     _clearRepliedMessage();
+  }
+
+  // send image
+  void _sendImageMessage(String imageUrl) {
+    final imageMessage = types.ImageMessage(
+      author: _user,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      id: const Uuid().v4(),
+      name: 'image',
+      size: 0, // Add actual size if available
+      uri: imageUrl,
+      metadata: {
+        'status': 'sent',
+        if (_repliedMessage != null) 'replyTo': _repliedMessage!.id,
+      },
+    );
+
+    if (_messages.isEmpty) {
+      ChatRespository.sendFirstMessage(
+        text: imageMessage.uri,
+        receiverId: widget.usermodel.userID.toString(),
+        metadata: imageMessage.metadata!,
+      );
+    } else {
+      ChatRespository.sendImageMessage(
+        imageUrl: imageMessage.uri,
+        receiverId: widget.usermodel.userID.toString(),
+        metadata: imageMessage.metadata!,
+      );
+    }
   }
 
   Future<void> _updateMessageStatus(
@@ -281,6 +319,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           Expanded(
             child: Chat(
+              emojiEnlargementBehavior: EmojiEnlargementBehavior.never,
               messages: _messages,
               onSendPressed: _handleSendPressed,
               user: _user,
@@ -288,6 +327,7 @@ class _ChatScreenState extends State<ChatScreen> {
               bubbleBuilder: (child,
                   {required message, required nextMessageInGroup}) {
                 return GestureDetector(
+                  onLongPress: () => _showMessageOptions(context, message),
                   onHorizontalDragEnd: (details) {
                     // Check if the drag is significant (e.g., more than 50 pixels)
                     if (details.primaryVelocity != null &&
@@ -329,7 +369,18 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
               onAttachmentPressed: () {
                 //  PICK IMAGE
-                chatBottomSheetFunction(file: (fileValue) {});
+                chatBottomSheetFunction(file: (fileValue) async {
+                  try {
+                    final imageUrl =
+                        await CloudinaryFunctions().uploadImageToCloudinary(
+                      fileValue,
+                      folder: _conversationId, // Use conversation ID as folder
+                    );
+                    _sendImageMessage(imageUrl!);
+                  } catch (e) {
+                    debugPrint("Error uploading image: $e");
+                  }
+                });
               },
             ),
           ),
@@ -343,16 +394,56 @@ class _ChatScreenState extends State<ChatScreen> {
     required types.Message message,
     required bool nextMessageInGroup,
   }) {
-    // Manually apply bubble colors for older versions
     final isSent = message.author.id == _user.id;
     final bubbleColor =
         isSent ? cnstSheet.colors.primary : cnstSheet.colors.white;
 
-    // Check if this message is a reply
     final repliedMessageId = message.metadata?['replyTo'];
     final repliedMessage = repliedMessageId != null
         ? _messages.firstWhere((m) => m.id == repliedMessageId)
         : null;
+
+    if (message is types.ImageMessage) {
+      return Column(
+        crossAxisAlignment:
+            isSent ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          if (repliedMessage != null && repliedMessage is types.TextMessage)
+            Container(
+              padding: EdgeInsets.all(8.sp),
+              margin: EdgeInsets.only(bottom: 4.h),
+              decoration: BoxDecoration(
+                color: bubbleColor.withValues(alpha: 0.5),
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+              child: Text(
+                'Replying to: ${repliedMessage.text}',
+                style: TextStyle(
+                  fontSize: 12.sp,
+                  color: cnstSheet.colors.black,
+                ),
+              ),
+            ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12.r),
+              color: bubbleColor,
+            ),
+            child: CachedNetworkImage(
+              imageUrl: message.uri,
+              width: 200.w,
+              height: 200.h,
+              fit: BoxFit.cover,
+            ),
+          ),
+          if (isSent)
+            Padding(
+              padding: EdgeInsets.only(top: 4.h),
+              child: _buildStatusIndicator(message.metadata?['status']),
+            ),
+        ],
+      );
+    }
 
     return Column(
       crossAxisAlignment:
@@ -418,5 +509,111 @@ class _ChatScreenState extends State<ChatScreen> {
     }
 
     return Icon(icon, size: 14.sp, color: color);
+  }
+
+  // **
+  void _showMessageOptions(BuildContext context, types.Message message) {
+    final RenderBox renderBox = context.findRenderObject() as RenderBox;
+    final Offset position = renderBox.localToGlobal(Offset.zero);
+    final bool isUserMessage = message.author.id == _user.id;
+    final bool isTextMessage = message is types.TextMessage;
+
+    showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        position.dx,
+        position.dy,
+        position.dx + renderBox.size.width,
+        position.dy + renderBox.size.height,
+      ),
+      items: [
+        if (isUserMessage && isTextMessage)
+          PopupMenuItem(
+            child: const Text('Edit'),
+            onTap: () => _handleEditMessage(message),
+          ),
+        PopupMenuItem(
+          child: const Text('Delete'),
+          onTap: () => _handleDeleteMessage(message),
+        ),
+        const PopupMenuItem(
+          child: Text('Close'),
+        ),
+      ],
+    );
+  }
+
+  void _handleEditMessage(types.TextMessage message) {
+    TextEditingController controller =
+        TextEditingController(text: message.text);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Edit Message'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              final newText = controller.text.trim();
+              if (newText.isNotEmpty && newText != message.text) {
+                ChatRespository.updateMessage(
+                  receiverId: widget.usermodel.userID!,
+                  messageId: message.id,
+                  newText: newText,
+                ).then((_) {
+                  final index = _messages.indexWhere((m) => m.id == message.id);
+                  if (index != -1) {
+                    final updatedMessage = types.TextMessage(
+                      id: message.id,
+                      author: message.author,
+                      createdAt: message.createdAt,
+                      text: newText,
+                      metadata: message.metadata,
+                    );
+                    setState(() => _messages[index] = updatedMessage);
+                  }
+                });
+              }
+              Navigator.pop(context);
+            },
+            child: const Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _handleDeleteMessage(types.Message message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Message'),
+        content: const Text('Are you sure you want to delete this message?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              ChatRespository.deleteMessage(
+                receiverId: widget.usermodel.userID!,
+                messageId: message.id,
+              ).then((_) => setState(
+                  () => _messages.removeWhere((m) => m.id == message.id)));
+              Navigator.pop(context);
+            },
+            child: const Text('Delete', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
   }
 }

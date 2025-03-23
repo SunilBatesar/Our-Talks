@@ -10,14 +10,20 @@ import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dar
 import 'package:ourtalks/Views/NavBar/Home/Chats/chat_screen.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
+import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class UserMessageTile extends StatefulWidget {
   final UserModel model;
   final VoidCallback? onTap;
-  final IconData? tralingicon;
-  const UserMessageTile(
-      {super.key, required this.model, this.onTap, this.tralingicon});
+  final IconData? trailingIcon;
+
+  const UserMessageTile({
+    super.key,
+    required this.model,
+    this.onTap,
+    this.trailingIcon,
+  });
 
   @override
   State<UserMessageTile> createState() => _UserMessageTileState();
@@ -26,33 +32,65 @@ class UserMessageTile extends StatefulWidget {
 class _UserMessageTileState extends State<UserMessageTile> {
   final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
   StreamSubscription<DatabaseEvent>? _userStatusSubscription;
+  StreamSubscription<DatabaseEvent>? _lastMsgSubscription;
   RealTimeUserModel? _isOnlineData;
+  String? lastMessage;
+  int? lastMessageTime;
+  // int unreadCount = 0; // Track unread messages
+  bool _isDisposed = false;
+
   @override
   void initState() {
     super.initState();
-    _data();
+    _getUserStatus();
+    _listenToLastMsg();
   }
 
-  _data() async {
+  /// Listen to user online/offline status
+  _getUserStatus() {
     final userData = _firebaseDatabase.ref("user_data");
     _userStatusSubscription =
-        userData.child(widget.model.userID!).onValue.listen(
-      (event) {
-        if (event.snapshot.value != null) {
-          final response =
-              AppFunctions.convertFirebaseData(event.snapshot.value);
-          setState(() {
-            _isOnlineData = RealTimeUserModel.fromJson(response);
-          });
-        }
-      },
-    );
+        userData.child(widget.model.userID!).onValue.listen((event) {
+      if (_isDisposed || !mounted) return;
+      if (event.snapshot.value != null) {
+        final response = AppFunctions.convertFirebaseData(event.snapshot.value);
+        setState(() {
+          _isOnlineData = RealTimeUserModel.fromJson(response);
+        });
+      }
+    });
+  }
+
+  /// Listen to the last message in the chat
+  _listenToLastMsg() {
+    _lastMsgSubscription =
+        ChatRespository.getLastMsg(widget.model.userID!).listen((event) {
+      if (_isDisposed || !mounted) return;
+      if (event.snapshot.value != null) {
+        final response = AppFunctions.convertFirebaseData(event.snapshot.value);
+        final lastMsgData = response.values.first;
+
+        setState(() {
+          lastMessage = lastMsgData['text'] ?? 'Media message';
+          lastMessageTime = lastMsgData['createdAt'];
+          // unreadCount = lastMsgData['unreadCount'] ?? 0; // Fetch unread count
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
+    _isDisposed = true;
     _userStatusSubscription?.cancel();
+    _lastMsgSubscription?.cancel();
     super.dispose();
+  }
+
+  String _formatTime(int? timestamp) {
+    if (timestamp == null) return "10/02/2003"; // Default date if no message
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp);
+    return "${date.day}/${date.month}/${date.year}";
   }
 
   @override
@@ -62,80 +100,69 @@ class _UserMessageTileState extends State<UserMessageTile> {
           () {
             Get.to(() => ChatScreen(usermodel: widget.model));
           },
-      contentPadding: EdgeInsets.all(0),
+      contentPadding: EdgeInsets.zero,
       leading: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.bottomRight,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(1000.sp),
-              child: GestureDetector(
-                onTap: () => Get.to(
-                    UserProfileImageShowScreen(image: widget.model.userDP)),
-                child: CachedNetworkImage(
-                  scale: 1,
-                  imageUrl: widget.model.userDP!.isNotEmpty
-                      ? widget.model.userDP!
-                      : AppConfig.defaultDP,
-                  height: 50.sp,
-                  width: 50.sp,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Center(
-                    child: SizedBox(
-                        height: 12.sp,
-                        width: 12.sp,
-                        child: CircularProgressIndicator(
-                          color: cnstSheet.colors.white,
-                          strokeWidth: 3,
-                        )),
-                  ),
-                  errorWidget: (context, url, error) =>
-                      Center(child: Icon(Icons.error)),
-                ),
-              ),
-            ),
-            _isOnlineData != null && _isOnlineData!.isOnline == true
-                ? Container(
-                    height: 10,
-                    width: 10,
-                    decoration: BoxDecoration(
-                        color: Colors.green, shape: BoxShape.circle),
-                  )
-                : SizedBox()
-          ]),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomRight,
         children: [
-          Text(
-            widget.model.name,
-            style: cnstSheet.textTheme.fs20Medium
-                .copyWith(color: cnstSheet.colors.white),
+          GestureDetector(
+            onTap: () =>
+                Get.to(UserProfileImageShowScreen(image: widget.model.userDP)),
+            child: CircleAvatar(
+              backgroundImage: CachedNetworkImageProvider(
+                widget.model.userDP!.isNotEmpty
+                    ? widget.model.userDP!
+                    : AppConfig.defaultDP,
+              ),
+              radius: 25.sp,
+            ),
           ),
-          Text(
-            widget.model.userName,
-            style: cnstSheet.textTheme.fs14Normal
-                .copyWith(color: cnstSheet.colors.white.withAlpha(150)),
-          ),
+          if (_isOnlineData?.isOnline == true)
+            const CircleAvatar(
+              backgroundColor: Colors.green,
+              radius: 5,
+            ),
         ],
       ),
-      trailing: widget.tralingicon != null
+      title: Text(
+        widget.model.name,
+        style: cnstSheet.textTheme.fs20Medium
+            .copyWith(color: cnstSheet.colors.white),
+      ),
+      subtitle: Text(
+        lastMessage ?? 'No messages yet',
+        style: cnstSheet.textTheme.fs14Normal
+            .copyWith(color: cnstSheet.colors.white.withAlpha(150)),
+      ),
+      trailing: widget.trailingIcon != null
           ? IconButton(
               onPressed: () =>
                   Get.to(() => ChatScreen(usermodel: widget.model)),
               icon: Icon(
-                widget.tralingicon,
+                widget.trailingIcon,
                 color: cnstSheet.colors.white,
               ))
-          : Container(
-              padding: EdgeInsets.all(3.sp),
-              decoration: BoxDecoration(
-                  border: Border.all(color: cnstSheet.colors.primary),
-                  shape: BoxShape.circle),
-              child: Text(
-                "5",
-                style: cnstSheet.textTheme.fs12Normal
-                    .copyWith(color: cnstSheet.colors.white),
-              ),
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                // if (unreadCount > 0)
+                //   Container(
+                //     padding: EdgeInsets.all(3.sp),
+                //     decoration: BoxDecoration(
+                //         border: Border.all(color: cnstSheet.colors.primary),
+                //         shape: BoxShape.circle),
+                //     child: Text(
+                //       unreadCount.toString(), // Show actual unread count
+                //       style: cnstSheet.textTheme.fs12Normal
+                //           .copyWith(color: cnstSheet.colors.white),
+                //     ),
+                //   ),
+                Text(
+                  _formatTime(lastMessageTime),
+                  style: cnstSheet.textTheme.fs12Normal
+                      .copyWith(color: cnstSheet.colors.white),
+                ),
+              ],
             ),
     );
   }
