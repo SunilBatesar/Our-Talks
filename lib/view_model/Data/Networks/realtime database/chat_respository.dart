@@ -12,8 +12,6 @@ import 'package:uuid/uuid.dart';
 
 class ChatRespository {
   // static final FirebaseAuth _auth = FirebaseAuth.instance
-  static final _usercontroller = Get.find<UserController>();
-  static final String _currentUser = _usercontroller.user!.userID!;
 
   static final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
   static final _event = _firebaseDatabase.ref("chats");
@@ -73,8 +71,10 @@ class ChatRespository {
 
   static DatabaseReference getConversationID(
       String otherUserId, String folder) {
+    final usercontroller = Get.find<UserController>();
+    final String currentUser = usercontroller.user!.userID!;
     // Sort user IDs lexicographically for consistent room IDs
-    final sortedIds = [_currentUser, otherUserId]..sort();
+    final sortedIds = [currentUser, otherUserId]..sort();
     return _event.child("${sortedIds[0]}_${sortedIds[1]}/$folder");
   }
 
@@ -84,13 +84,16 @@ class ChatRespository {
     required String receiverId,
     required Map<String, dynamic> metadata,
   }) async {
+    final usercontroller = Get.find<UserController>();
+    final String currentUser = usercontroller.user!.userID!;
+    print("Crunt User Id => $currentUser");
     try {
       // Create proper message reference
       final messagesRef = getConversationID(receiverId, "messages");
       final messageId = const Uuid().v4();
       // Create new message
       final newMessage = types.TextMessage(
-        author: types.User(id: _currentUser),
+        author: types.User(id: currentUser),
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: messageId,
         text: text,
@@ -109,8 +112,11 @@ class ChatRespository {
   }
 
   static Future<List<DocumentSnapshot>> getMyChatroomUser() async {
+    final usercontroller = Get.find<UserController>();
+    final String currentUser = usercontroller.user!.userID!;
+    print("=================$currentUser=========================");
     try {
-      final chatroomSnapshot = await FirebaseApis.userDocumentRef(_currentUser)
+      final chatroomSnapshot = await FirebaseApis.userDocumentRef(currentUser)
           .collection("my_chatroom")
           .get();
 
@@ -135,15 +141,17 @@ class ChatRespository {
     required String receiverId,
     required Map<String, dynamic> metadata,
   }) async {
+    final usercontroller = Get.find<UserController>();
+    final String currentUser = usercontroller.user!.userID!;
     try {
-      final userDoc = await FirebaseApis.userDocumentRef(_currentUser)
+      final userDoc = await FirebaseApis.userDocumentRef(currentUser)
           .collection("my_chatroom")
           .doc(receiverId)
           .get();
 
       if (!userDoc.exists) {
         // Add receiver to the current user's "my_chatroom"
-        FirebaseApis.userDocumentRef(_currentUser)
+        FirebaseApis.userDocumentRef(currentUser)
             .collection("my_chatroom")
             .doc(receiverId)
             .set({});
@@ -151,7 +159,7 @@ class ChatRespository {
         // Also add current user to receiver's "my_chatroom"
         FirebaseApis.userDocumentRef(receiverId)
             .collection("my_chatroom")
-            .doc(_currentUser)
+            .doc(currentUser)
             .set({});
       }
 
@@ -187,11 +195,13 @@ class ChatRespository {
     required Map<String, dynamic> metadata,
   }) async {
     try {
+      final usercontroller = Get.find<UserController>();
+      final String currentUser = usercontroller.user!.userID!;
       final messagesRef = getConversationID(receiverId, "messages");
       final messageId = const Uuid().v4();
 
       final newMessage = types.ImageMessage(
-        author: types.User(id: _currentUser),
+        author: types.User(id: currentUser),
         createdAt: DateTime.now().millisecondsSinceEpoch,
         id: messageId,
         name: 'image',
@@ -213,20 +223,22 @@ class ChatRespository {
     required Map<String, dynamic> metadata,
   }) async {
     try {
-      final userDoc = await FirebaseApis.userDocumentRef(_currentUser)
+      final usercontroller = Get.find<UserController>();
+      final String currentUser = usercontroller.user!.userID!;
+      final userDoc = await FirebaseApis.userDocumentRef(currentUser)
           .collection("my_chatroom")
           .doc(receiverId)
           .get();
 
       if (!userDoc.exists) {
-        await FirebaseApis.userDocumentRef(_currentUser)
+        await FirebaseApis.userDocumentRef(currentUser)
             .collection("my_chatroom")
             .doc(receiverId)
             .set({});
 
         await FirebaseApis.userDocumentRef(receiverId)
             .collection("my_chatroom")
-            .doc(_currentUser)
+            .doc(currentUser)
             .set({});
       }
 

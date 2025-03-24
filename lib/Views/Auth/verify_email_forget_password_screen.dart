@@ -92,7 +92,7 @@ class VerifyEmailForgetPasswordScreen extends StatelessWidget {
                 shape: BoxShape.circle, color: cnstSheet.colors.primary),
           ),
         ),
-      ),
+      ).marginOnly(bottom: 15.h),
     );
   }
 }

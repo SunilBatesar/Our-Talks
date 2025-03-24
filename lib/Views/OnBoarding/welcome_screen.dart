@@ -128,6 +128,7 @@ class WelcomeScreen extends StatelessWidget {
                         )),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // SIGN IN BUTTON
                       Expanded(
@@ -153,7 +154,7 @@ class WelcomeScreen extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ).marginOnly(bottom: 15.h)
                 ],
               ),
             ],
