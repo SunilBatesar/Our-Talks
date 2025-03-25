@@ -51,18 +51,21 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDGukSm04-y5A2TyS1sozNC2E4hBgga5cw',
-    appId: '1:487246472291:android:48d9b2232e46fc0814c456',
+    appId: '1:487246472291:android:665ac35e6cf7d82914c456',
     messagingSenderId: '487246472291',
     projectId: 'ourtalks-6a660',
+    databaseURL: 'https://ourtalks-6a660-default-rtdb.firebaseio.com',
     storageBucket: 'ourtalks-6a660.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyAEeNiopkRrOfuMpRNJRsH3z2qG7lvu4RU',
-    appId: '1:487246472291:ios:411b285769617f1414c456',
+    appId: '1:487246472291:ios:8e1b5bd1eca2883c14c456',
     messagingSenderId: '487246472291',
     projectId: 'ourtalks-6a660',
+    databaseURL: 'https://ourtalks-6a660-default-rtdb.firebaseio.com',
     storageBucket: 'ourtalks-6a660.firebasestorage.app',
-    iosBundleId: 'com.example.ourtalks',
+    iosBundleId: 'com.ourtalks.app',
   );
+
 }

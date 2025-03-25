@@ -1,15 +1,16 @@
 {
   "project_info": {
     "project_number": "487246472291",
+    "firebase_url": "https://ourtalks-6a660-default-rtdb.firebaseio.com",
     "project_id": "ourtalks-6a660",
     "storage_bucket": "ourtalks-6a660.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:487246472291:android:48d9b2232e46fc0814c456",
+        "mobilesdk_app_id": "1:487246472291:android:665ac35e6cf7d82914c456",
         "android_client_info": {
-          "package_name": "com.example.ourtalks"
+          "package_name": "com.ourtalks.app"
         }
       },
       "oauth_client": [],
