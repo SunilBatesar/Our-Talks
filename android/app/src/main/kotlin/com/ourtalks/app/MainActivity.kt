@@ -1,5 +1,6 @@
-package com.ourtalks.app-talks.app
+package com.ourtalks.app
 
 import io.flutter.embedding.android.FlutterActivity
 
-class MainActivity: FlutterActivity()
+class MainActivity: FlutterActivity() {
+}
