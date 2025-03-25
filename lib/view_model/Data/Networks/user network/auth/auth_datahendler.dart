@@ -66,6 +66,8 @@ class AuthDataHandler {
           await _repo.logout();
           _userController.clearUser();
           await Prefs.clearPrefsData();
+          // await DatabaseHelper()
+          //     .clearFriendsTable(); // CLEAR FRIENDS LIST IN LOCAL DATA
         },
         onSuccess: (_) async {
           Get.offAllNamed(cnstSheet.routesName.welcomeScreen);

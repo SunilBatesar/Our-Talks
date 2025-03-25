@@ -9,12 +9,10 @@ import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dart';
 import 'package:ourtalks/Views/NavBar/Home/Chats/chat_screen.dart';
 import 'package:ourtalks/main.dart';
-import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
-import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
-import 'package:ourtalks/view_model/Models/user_model.dart';
+import 'package:ourtalks/view_model/Models/friend_model.dart';
 
 class UserMessageTile extends StatefulWidget {
-  final UserModel model;
+  final FriendModel model;
   final VoidCallback? onTap;
   final IconData? trailingIcon;
 
@@ -30,58 +28,37 @@ class UserMessageTile extends StatefulWidget {
 }
 
 class _UserMessageTileState extends State<UserMessageTile> {
-  final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
+  // final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
   StreamSubscription<DatabaseEvent>? _userStatusSubscription;
   StreamSubscription<DatabaseEvent>? _lastMsgSubscription;
-  RealTimeUserModel? _isOnlineData;
-  String? lastMessage;
-  int? lastMessageTime;
+  // RealTimeUserModel? _isOnlineData;
   // int unreadCount = 0; // Track unread messages
-  bool _isDisposed = false;
+  // bool _isDisposed = false;
 
   @override
   void initState() {
     super.initState();
-    _getUserStatus();
-    _listenToLastMsg();
+    // _getUserStatus();
   }
 
   /// Listen to user online/offline status
-  _getUserStatus() {
-    final userData = _firebaseDatabase.ref("user_data");
-    _userStatusSubscription =
-        userData.child(widget.model.userID!).onValue.listen((event) {
-      if (_isDisposed || !mounted) return;
-      if (event.snapshot.value != null) {
-        final response = AppFunctions.convertFirebaseData(event.snapshot.value);
-        setState(() {
-          _isOnlineData = RealTimeUserModel.fromJson(response);
-        });
-      }
-    });
-  }
-
-  /// Listen to the last message in the chat
-  _listenToLastMsg() {
-    _lastMsgSubscription =
-        ChatRespository.getLastMsg(widget.model.userID!).listen((event) {
-      if (_isDisposed || !mounted) return;
-      if (event.snapshot.value != null) {
-        final response = AppFunctions.convertFirebaseData(event.snapshot.value);
-        final lastMsgData = response.values.first;
-
-        setState(() {
-          lastMessage = lastMsgData['text'] ?? 'Media message';
-          lastMessageTime = lastMsgData['createdAt'];
-          // unreadCount = lastMsgData['unreadCount'] ?? 0; // Fetch unread count
-        });
-      }
-    });
-  }
+  // _getUserStatus() {
+  //   final userData = _firebaseDatabase.ref("user_data");
+  //   _userStatusSubscription =
+  //       userData.child(widget.model.users.userID!).onValue.listen((event) {
+  //     if (_isDisposed || !mounted) return;
+  //     if (event.snapshot.value != null) {
+  //       final response = AppFunctions.convertFirebaseData(event.snapshot.value);
+  //       setState(() {
+  //         _isOnlineData = RealTimeUserModel.fromJson(response);
+  //       });
+  //     }
+  //   });
+  // }
 
   @override
   void dispose() {
-    _isDisposed = true;
+    // _isDisposed = true;
     _userStatusSubscription?.cancel();
     _lastMsgSubscription?.cancel();
     super.dispose();
@@ -106,18 +83,18 @@ class _UserMessageTileState extends State<UserMessageTile> {
         alignment: Alignment.bottomRight,
         children: [
           GestureDetector(
-            onTap: () =>
-                Get.to(UserProfileImageShowScreen(image: widget.model.userDP)),
+            onTap: () => Get.to(
+                UserProfileImageShowScreen(image: widget.model.users.userDP)),
             child: CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(
-                widget.model.userDP!.isNotEmpty
-                    ? widget.model.userDP!
+                widget.model.users.userDP!.isNotEmpty
+                    ? widget.model.users.userDP!
                     : AppConfig.defaultDP,
               ),
               radius: 25.sp,
             ),
           ),
-          if (_isOnlineData?.isOnline == true)
+          if (widget.model.isOnlineData?.isOnline == true)
             const CircleAvatar(
               backgroundColor: Colors.green,
               radius: 5,
@@ -125,12 +102,12 @@ class _UserMessageTileState extends State<UserMessageTile> {
         ],
       ),
       title: Text(
-        widget.model.name,
+        widget.model.users.name,
         style: cnstSheet.textTheme.fs20Medium
             .copyWith(color: cnstSheet.colors.white),
       ),
       subtitle: Text(
-        lastMessage ?? 'No messages yet',
+        widget.model.message ?? 'No messages yet',
         style: cnstSheet.textTheme.fs14Normal
             .copyWith(color: cnstSheet.colors.white.withAlpha(150)),
       ),
@@ -158,7 +135,7 @@ class _UserMessageTileState extends State<UserMessageTile> {
                 //     ),
                 //   ),
                 Text(
-                  _formatTime(lastMessageTime),
+                  _formatTime(int.tryParse(widget.model.messagetime!)),
                   style: cnstSheet.textTheme.fs12Normal
                       .copyWith(color: cnstSheet.colors.white),
                 ),

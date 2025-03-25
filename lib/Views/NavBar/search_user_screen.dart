@@ -10,6 +10,7 @@ import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/Networks/user%20network/Cloud%20firestore/user_datahendler.dart';
 import 'package:ourtalks/view_model/Data/Networks/user%20network/Cloud%20firestore/user_repository.dart';
+import 'package:ourtalks/view_model/Models/friend_model.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
 
 class SearchUserScreen extends StatefulWidget {
@@ -89,7 +90,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                   return UserMessageTile(
                                     onTap: () {},
                                     trailingIcon: Icons.message,
-                                    model: user,
+                                    model: FriendModel(users: user),
                                   ).marginOnly(bottom: 15.h);
                                 },
                               );

@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void nextScreenPushFunction() async {
-    Future.delayed(Duration(seconds: 3), () async {
+    Future.delayed(Duration(milliseconds: 0), () async {
       final praf = Prefs.getUserIdPref();
 
       if (praf == null) {

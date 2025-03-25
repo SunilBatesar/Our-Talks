@@ -7,6 +7,7 @@ import 'package:ourtalks/Classes/constant_sheet.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:ourtalks/Res/i18n/language_translations.dart';
 import 'package:ourtalks/Res/prefs/prefs.dart';
+import 'package:ourtalks/SQL/database_helper.dart';
 import 'package:ourtalks/Utils/Routes/routes.dart';
 import 'package:ourtalks/firebase_options.dart';
 import 'package:ourtalks/view_model/Getx_binding/app_initialbinding.dart';
@@ -24,6 +25,9 @@ Future<void> main() async {
 
   // Initialize shared preferences
   await Prefs.getPref();
+
+  // DATABASE
+  await DatabaseHelper().database;
 
   // Lock device orientation to portrait mode
   SystemChrome.setPreferredOrientations([

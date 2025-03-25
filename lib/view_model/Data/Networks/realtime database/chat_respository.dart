@@ -86,7 +86,6 @@ class ChatRespository {
   }) async {
     final usercontroller = Get.find<UserController>();
     final String currentUser = usercontroller.user!.userID!;
-    print("Crunt User Id => $currentUser");
     try {
       // Create proper message reference
       final messagesRef = getConversationID(receiverId, "messages");
@@ -114,7 +113,6 @@ class ChatRespository {
   static Future<List<DocumentSnapshot>> getMyChatroomUser() async {
     final usercontroller = Get.find<UserController>();
     final String currentUser = usercontroller.user!.userID!;
-    print("=================$currentUser=========================");
     try {
       final chatroomSnapshot = await FirebaseApis.userDocumentRef(currentUser)
           .collection("my_chatroom")

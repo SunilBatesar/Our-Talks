@@ -1,9 +1,11 @@
+import 'package:ourtalks/SQL/database_helper.dart';
+
 class UserModel {
   final String? userID;
   final String userName;
   final String name;
-  final String createdAt;
-  final String lastActive;
+  final String? createdAt;
+  final String? lastActive;
   final String email;
   String? userDP;
   String? banner;
@@ -22,8 +24,8 @@ class UserModel {
     this.userID,
     required this.userName,
     required this.name,
-    required this.createdAt,
-    required this.lastActive,
+    this.createdAt,
+    this.lastActive,
     required this.email,
     this.userDP,
     this.banner,
@@ -119,6 +121,18 @@ class UserModel {
       gender: gender ?? this.gender,
       blockedUsers: blockedUsers ?? this.blockedUsers,
     );
+  }
+
+  // LOCAL DATA STORE (TO MAP)
+  Map<String, dynamic> tomapLocalStore() {
+    return {
+      DatabaseHelper.userIDKey: userID ?? "0",
+      DatabaseHelper.nameKey: name,
+      DatabaseHelper.userNameKey: userName,
+      DatabaseHelper.emailKey: email,
+      DatabaseHelper.dpKey: userDP ?? "",
+      DatabaseHelper.benerKey: banner ?? "",
+    };
   }
 }
 
