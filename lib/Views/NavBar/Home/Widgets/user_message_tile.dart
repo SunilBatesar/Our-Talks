@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
+import 'package:ourtalks/Res/Services/date_time_pars.dart';
 import 'package:ourtalks/Views/NavBar/Account/user_profile_image_show_screen.dart';
 import 'package:ourtalks/Views/NavBar/Home/Chats/chat_screen.dart';
 import 'package:ourtalks/main.dart';
@@ -84,11 +85,11 @@ class _UserMessageTileState extends State<UserMessageTile> {
         children: [
           GestureDetector(
             onTap: () => Get.to(
-                UserProfileImageShowScreen(image: widget.model.users.userDP)),
+                UserProfileImageShowScreen(image: widget.model.user.userDP)),
             child: CircleAvatar(
               backgroundImage: CachedNetworkImageProvider(
-                widget.model.users.userDP!.isNotEmpty
-                    ? widget.model.users.userDP!
+                widget.model.user.userDP!.isNotEmpty
+                    ? widget.model.user.userDP!
                     : AppConfig.defaultDP,
               ),
               radius: 25.sp,
@@ -102,12 +103,12 @@ class _UserMessageTileState extends State<UserMessageTile> {
         ],
       ),
       title: Text(
-        widget.model.users.name,
+        widget.model.user.name,
         style: cnstSheet.textTheme.fs20Medium
             .copyWith(color: cnstSheet.colors.white),
       ),
       subtitle: Text(
-        widget.model.message ?? 'No messages yet',
+        widget.model.message ?? widget.model.user.userName,
         style: cnstSheet.textTheme.fs14Normal
             .copyWith(color: cnstSheet.colors.white.withAlpha(150)),
       ),
@@ -135,7 +136,8 @@ class _UserMessageTileState extends State<UserMessageTile> {
                 //     ),
                 //   ),
                 Text(
-                  _formatTime(int.tryParse(widget.model.messagetime!)),
+                  DatetimePars.getFormatedTime(
+                      context, widget.model.messagetime!),
                   style: cnstSheet.textTheme.fs12Normal
                       .copyWith(color: cnstSheet.colors.white),
                 ),

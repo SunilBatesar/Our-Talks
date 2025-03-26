@@ -27,15 +27,15 @@ AppBar chatScreenAppBar(
       ),
     ),
     title: GestureDetector(
-      onTap: () => Get.to(() => ProfileViewScreen(model: model.users)),
+      onTap: () => Get.to(() => ProfileViewScreen(model: model.user)),
       child: Row(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(1000.sp),
             child: CachedNetworkImage(
               scale: 1,
-              imageUrl: model.users.userDP!.isNotEmpty
-                  ? model.users.userDP!
+              imageUrl: model.user.userDP!.isNotEmpty
+                  ? model.user.userDP!
                   : AppConfig.defaultDP,
               height: 35.sp,
               width: 35.sp,
@@ -58,7 +58,7 @@ AppBar chatScreenAppBar(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                model.users.name,
+                model.user.name,
                 style: cnstSheet.textTheme.fs18Medium
                     .copyWith(color: cnstSheet.colors.white),
               ),
@@ -68,7 +68,7 @@ AppBar chatScreenAppBar(
                     ? model.isOnlineData!.isOnline
                         ? "Online"
                         : time
-                    : model.users.userName,
+                    : model.user.userName,
                 style: cnstSheet.textTheme.fs12Normal
                     .copyWith(color: cnstSheet.colors.primary.withAlpha(180)),
               ),

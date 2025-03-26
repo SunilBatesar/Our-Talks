@@ -4,13 +4,13 @@ class FriendModel {
   String? id;
   String? messagetime;
   String? message;
-  UserModel users;
+  UserModel user;
   RealTimeUserModel? isOnlineData;
   FriendModel(
       {this.id,
       this.messagetime,
       this.message,
-      required this.users,
+      required this.user,
       this.isOnlineData});
 
   FriendModel copyWith({
@@ -18,14 +18,14 @@ class FriendModel {
     String? messagetime,
     String? message,
     String? messagetype,
-    UserModel? users,
+    UserModel? user,
     RealTimeUserModel? isOnlineData,
   }) {
     return FriendModel(
       id: id ?? this.id,
       messagetime: messagetime ?? this.messagetime,
       message: message ?? this.message,
-      users: users ?? this.users,
+      user: user ?? this.user,
       isOnlineData: isOnlineData ?? this.isOnlineData,
     );
   }

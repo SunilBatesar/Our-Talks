@@ -66,37 +66,34 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: SafeArea(
-        child: Expanded(
-          child: Obx(
-            () {
-              final data = friendController.sortedUsers;
-              if (friendController.isUpdateUsersStatus.value &&
-                  data.isNotEmpty) {
-                friendController.getUserStatus();
-                friendController.updateisUpdateUsersStatus(false);
-              }
-              return data.isNotEmpty
-                  ? ListView.builder(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.all(15.0.sp),
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        final user = data[index];
-                        return UserMessageTile(
-                          model: user,
-                        ).marginOnly(bottom: 15.h);
-                      },
-                    )
-                  : Padding(
-                      padding: EdgeInsets.all(15.0.sp),
-                      child: Text(
-                        LanguageConst.yourchatemptyFindfriendsstartfun.tr,
-                        style: cnstSheet.textTheme.fs16Medium.copyWith(
-                            color: cnstSheet.colors.primary.withAlpha(150)),
-                      ),
-                    );
-            },
-          ),
+        child: Obx(
+          () {
+            final data = friendController.sortedUsers;
+            if (friendController.isUpdateUsersStatus.value && data.isNotEmpty) {
+              friendController.getUserStatus();
+              friendController.updateisUpdateUsersStatus(false);
+            }
+            return data.isNotEmpty
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(15.0.sp),
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      final user = data[index];
+                      return UserMessageTile(
+                        model: user,
+                      ).marginOnly(bottom: 15.h);
+                    },
+                  )
+                : Padding(
+                    padding: EdgeInsets.all(15.0.sp),
+                    child: Text(
+                      LanguageConst.yourchatemptyFindfriendsstartfun.tr,
+                      style: cnstSheet.textTheme.fs16Medium.copyWith(
+                          color: cnstSheet.colors.primary.withAlpha(150)),
+                    ),
+                  );
+          },
         ),
       ),
     );

@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Components/AppBar/chat_screeen_app_bar.dart';
 import 'package:ourtalks/Components/BottomSheets/chat_bottom_sheet.dart';
+import 'package:ourtalks/Res/Services/date_time_pars.dart';
 import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
@@ -38,7 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
     // Generate conversation ID
     final sortedIds = [
       _usercontroller.user!.userID!,
-      widget.usermodel.users.userID!
+      widget.usermodel.user.userID!
     ]..sort();
     _conversationId = "${sortedIds[0]}_${sortedIds[1]}";
     // ++
@@ -53,7 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _setupMessageListener() {
-    _messagesRef(widget.usermodel.users.userID.toString(), "messages")
+    _messagesRef(widget.usermodel.user.userID.toString(), "messages")
         .orderByChild("createdAt")
         .limitToLast(100)
         .onChildAdded
@@ -61,7 +62,7 @@ class _ChatScreenState extends State<ChatScreen> {
       _handleNewMessage(event.snapshot.value);
     });
 
-    _messagesRef(widget.usermodel.users.userID.toString(), "messages")
+    _messagesRef(widget.usermodel.user.userID.toString(), "messages")
         .onChildChanged
         .listen((event) {
       _handleMessageUpdate(event.snapshot.value);
@@ -147,14 +148,14 @@ class _ChatScreenState extends State<ChatScreen> {
       debugPrint("first msg*************");
       ChatRespository.sendFirstMessage(
         text: textMessage.text,
-        receiverId: widget.usermodel.users.userID.toString(),
+        receiverId: widget.usermodel.user.userID.toString(),
         metadata: textMessage.metadata!,
       );
     } else {
       debugPrint("reglure msg*************");
       ChatRespository.sendMessage(
           text: textMessage.text,
-          receiverId: widget.usermodel.users.userID.toString(),
+          receiverId: widget.usermodel.user.userID.toString(),
           metadata: textMessage.metadata!);
     }
     _clearRepliedMessage();
@@ -178,13 +179,13 @@ class _ChatScreenState extends State<ChatScreen> {
     if (_messages.isEmpty) {
       ChatRespository.sendFirstMessage(
         text: imageMessage.uri,
-        receiverId: widget.usermodel.users.userID.toString(),
+        receiverId: widget.usermodel.user.userID.toString(),
         metadata: imageMessage.metadata!,
       );
     } else {
       ChatRespository.sendImageMessage(
         imageUrl: imageMessage.uri,
-        receiverId: widget.usermodel.users.userID.toString(),
+        receiverId: widget.usermodel.user.userID.toString(),
         metadata: imageMessage.metadata!,
       );
     }
@@ -195,7 +196,7 @@ class _ChatScreenState extends State<ChatScreen> {
     Map<String, dynamic> metadata,
   ) async {
     await ChatRespository.updateMessageStatus(
-      receiverId: widget.usermodel.users.userID.toString(),
+      receiverId: widget.usermodel.user.userID.toString(),
       messageId: messageId,
       metadata: metadata,
     );
@@ -208,7 +209,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     for (final message in unreadMessages) {
       await ChatRespository.updateMessageStatus(
-        receiverId: widget.usermodel.users.userID!,
+        receiverId: widget.usermodel.user.userID!,
         messageId: message.id,
         metadata: {'status': 'read'},
       );
@@ -297,8 +298,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   );
                 },
-                customDateHeaderText: (date) =>
-                    AppFunctions.formatChatTime(date),
+                customDateHeaderText: (date) => DatetimePars.getLastMsgTime(
+                    context: context, time: date, seeYear: true),
                 theme: DefaultChatTheme(
                   inputPadding: EdgeInsets.all(15),
                   backgroundColor: cnstSheet.colors.black,
@@ -521,7 +522,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     .copyWith(color: cnstSheet.colors.white)),
             onTap: () {
               ChatRespository.deleteMessage(
-                receiverId: widget.usermodel.users.userID!,
+                receiverId: widget.usermodel.user.userID!,
                 messageId: message.id,
               ).then((_) => setState(
                   () => _messages.removeWhere((m) => m.id == message.id)));
@@ -557,7 +558,7 @@ class _ChatScreenState extends State<ChatScreen> {
               final newText = controller.text.trim();
               if (newText.isNotEmpty && newText != message.text) {
                 ChatRespository.updateMessage(
-                  receiverId: widget.usermodel.users.userID!,
+                  receiverId: widget.usermodel.user.userID!,
                   messageId: message.id,
                   newText: newText,
                 ).then((_) {

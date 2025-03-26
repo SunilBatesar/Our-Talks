@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:get/get.dart';
 import 'package:ourtalks/view_model/Apis/firebase_apis.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
@@ -8,6 +9,7 @@ import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/view_model/Data/Networks/realtime%20database/chat_respository.dart';
 import 'package:ourtalks/view_model/Models/friend_model.dart';
 import 'package:ourtalks/view_model/Models/user_model.dart';
+import 'package:uuid/uuid.dart';
 
 class FriendController extends GetxController {
   final FirebaseDatabase _firebaseDatabase = FirebaseDatabase.instance;
@@ -105,11 +107,16 @@ class FriendController extends GetxController {
           id: user.userID,
           messagetime: lastMessageTime,
           message: message,
-          users: user,
+          user: user,
         );
 
         if (index >= 0) {
-          _sortedUsers[index] = data;
+          _sortedUsers[index] = _sortedUsers[index].copyWith(
+            id: user.userID,
+            messagetime: lastMessageTime,
+            message: message,
+            user: user,
+          );
         } else {
           _sortedUsers.add(data);
         }
@@ -125,8 +132,8 @@ class FriendController extends GetxController {
     if (_sortedUsers.isEmpty) return;
     final userData = _firebaseDatabase.ref("user_data");
     for (var user in _sortedUsers) {
-      userData.child(user.users.userID!).onValue.listen((event) {
-        final index = _sortedUsers.indexWhere((e) => e.id == user.users.userID);
+      userData.child(user.user.userID!).onValue.listen((event) {
+        final index = _sortedUsers.indexWhere((e) => e.id == user.user.userID);
         if (event.snapshot.value != null) {
           final response =
               AppFunctions.convertFirebaseData(event.snapshot.value);
@@ -146,4 +153,26 @@ class FriendController extends GetxController {
   //   if (db.isEmpty) return [];
   //   return db;
   // }
+  types.Message? parseMessage(Map<String, dynamic> json) {
+    try {
+      json['createdAt'] ??= DateTime.now().millisecondsSinceEpoch;
+      json['id'] ??= const Uuid().v4();
+
+      if (json['author'] is Map) {
+        json['author'] = AppFunctions.convertFirebaseData(json['author']);
+      }
+
+      switch (json['type']) {
+        case 'text':
+          return types.TextMessage.fromJson(json);
+        case 'image': // Add image case
+          return types.ImageMessage.fromJson(json);
+        default:
+          return null;
+      }
+    } catch (e) {
+      debugPrint("Error parsing message: $e");
+      return null;
+    }
+  }
 }

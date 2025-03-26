@@ -99,7 +99,7 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
                                   return UserMessageTile(
                                     onTap: () {},
                                     trailingIcon: Icons.message,
-                                    model: FriendModel(users: user),
+                                    model: FriendModel(user: user),
                                   ).marginOnly(bottom: 15.h);
                                 },
                               );

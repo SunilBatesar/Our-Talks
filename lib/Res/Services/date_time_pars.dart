@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class DatetimePars {
   static String getFormatedTime(BuildContext context, String time) {
-    final date = DateTime.fromMicrosecondsSinceEpoch(int.parse(time));
+    final date = DateTime.fromMillisecondsSinceEpoch(int.parse(time));
     return TimeOfDay.fromDateTime(date).format(context);
   }
 
   static String getLastMsgTime(
       {required BuildContext context,
-      required String time,
+      required DateTime time,
       bool seeYear = false}) {
-    final sendTime = DateTime.fromMicrosecondsSinceEpoch(int.parse(time));
+    final sendTime = time;
     final nowTime = DateTime.now();
 
     if (nowTime.day == sendTime.day &&
