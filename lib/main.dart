@@ -1,4 +1,6 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +16,7 @@ import 'package:ourtalks/view_model/Getx_binding/app_initialbinding.dart';
 
 // Global instance of ConstantSheet
 late ConstantSheet cnstSheet;
+late FirebaseAnalytics analytics;
 
 // Main entry point of the application
 Future<void> main() async {
@@ -28,6 +31,14 @@ Future<void> main() async {
 
   // DATABASE
   await DatabaseHelper().database;
+
+  // crashlytics
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+
+// analytics instance
+  analytics = FirebaseAnalytics.instance;
 
   // Lock device orientation to portrait mode
   SystemChrome.setPreferredOrientations([
