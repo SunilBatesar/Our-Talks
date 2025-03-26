@@ -37,7 +37,7 @@ Future<void> main() async {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
 
-// analytics instance
+  // analytics instance
   analytics = FirebaseAnalytics.instance;
 
   // Lock device orientation to portrait mode
