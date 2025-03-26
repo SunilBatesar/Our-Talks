@@ -47,18 +47,27 @@ class _SearchUserScreenState extends State<SearchUserScreen> {
               child: Column(
                 children: [
                   SearchTextField(
-                    controller: _searchController,
-                    iconOnTap: () async {
-                      if (_searchController.text.isNotEmpty) {
-                        await UserDataHandler.addserchlist(
-                            _userController.user!.userID!,
-                            _searchController.text.trim());
-                        setState(() {
-                          _searchController.clear();
-                        });
-                      }
-                    },
-                  ),
+                      controller: _searchController,
+                      iconOnTap: () async {
+                        if (_searchController.text.isNotEmpty) {
+                          await UserDataHandler.addserchlist(
+                              _userController.user!.userID!,
+                              _searchController.text.trim());
+                          setState(() {
+                            _searchController.clear();
+                          });
+                        }
+                      },
+                      onFieldSubmitted: (value) async {
+                        if (_searchController.text.isNotEmpty) {
+                          await UserDataHandler.addserchlist(
+                              _userController.user!.userID!,
+                              _searchController.text.trim());
+                          setState(() {
+                            _searchController.clear();
+                          });
+                        }
+                      }),
                   Gap(10.h),
                   HeadingText2(
                     text: LanguageConst.bettertypeUserNotFound.tr,

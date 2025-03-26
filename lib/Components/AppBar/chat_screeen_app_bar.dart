@@ -10,9 +10,12 @@ import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/view_model/Models/friend_model.dart';
 
 AppBar chatScreenAppBar({required FriendModel model}) {
-  DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
-      int.parse(model.isOnlineData!.lastSeen ?? ""));
-  final time = AppFunctions.formatChatTime(dateTime);
+  String time = "";
+  if (model.isOnlineData != null && model.isOnlineData!.lastSeen!.isNotEmpty) {
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
+        int.parse(model.isOnlineData!.lastSeen ?? ""));
+    time = AppFunctions.formatChatTime(dateTime);
+  }
   return AppBar(
     leadingWidth: 30.w,
     leading: IconButton(
@@ -61,7 +64,11 @@ AppBar chatScreenAppBar({required FriendModel model}) {
               ),
               Gap(5.h),
               Text(
-                model.isOnlineData!.isOnline ? "Online" : time,
+                model.isOnlineData != null
+                    ? model.isOnlineData!.isOnline
+                        ? "Online"
+                        : time
+                    : model.users.userName,
                 style: cnstSheet.textTheme.fs12Normal
                     .copyWith(color: cnstSheet.colors.primary.withAlpha(180)),
               ),

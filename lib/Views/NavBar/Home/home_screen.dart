@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
+import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/Res/prefs/prefs.dart';
 import 'package:ourtalks/Views/NavBar/Home/Widgets/user_message_tile.dart';
 import 'package:ourtalks/main.dart';
@@ -72,17 +73,26 @@ class _HomeScreenState extends State<HomeScreen> {
               friendController.getUserStatus();
               friendController.updateisUpdateUsersStatus(false);
             }
-            return ListView.builder(
-              shrinkWrap: true,
-              padding: EdgeInsets.all(15.0.sp),
-              itemCount: data.length,
-              itemBuilder: (context, index) {
-                final user = data[index];
-                return UserMessageTile(
-                  model: user,
-                ).marginOnly(bottom: 15.h);
-              },
-            );
+            return data.isNotEmpty
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.all(15.0.sp),
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      final user = data[index];
+                      return UserMessageTile(
+                        model: user,
+                      ).marginOnly(bottom: 15.h);
+                    },
+                  )
+                : Padding(
+                    padding: EdgeInsets.all(15.0.sp),
+                    child: Text(
+                      LanguageConst.yourchatemptyFindfriendsstartfun.tr,
+                      style: cnstSheet.textTheme.fs16Medium.copyWith(
+                          color: cnstSheet.colors.primary.withAlpha(150)),
+                    ),
+                  );
           },
         ),
       ),

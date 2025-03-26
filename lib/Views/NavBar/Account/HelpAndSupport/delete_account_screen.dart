@@ -77,7 +77,7 @@ class DeleteAccountScreen extends StatelessWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 0),
+          padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 20.h),
           // DELETE ACCOUNT BUTTON
           child: PrimaryButton(
             title: LanguageConst.deleteAccount.tr,

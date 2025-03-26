@@ -34,6 +34,7 @@ class LanguageType {
     LanguageConst.done: "Done",
     LanguageConst.cancel: "Cancel",
     LanguageConst.delete: "Delete",
+    LanguageConst.edit: "Edit",
     LanguageConst.deleteAccount: "Delete Account",
     LanguageConst.deleteAccountContentLines:
         "Are you sure you want to delete your account?\nOnce deleted, all your data will be permanently removed.\nThis action cannot be undone.\nAre you sure?",
@@ -49,6 +50,12 @@ class LanguageType {
     LanguageConst.waitLoggingout: "Wait! Logging out?",
     LanguageConst.ohThinklogoutstillrememberpassword:
         "Oh no! \u{1F632} Think before you go...If you log out, do you still remember the password?\u{1F602}",
+
+    // HOME SCREEN
+    LanguageConst.yourchatemptyFindfriendsstartfun:
+        "Your chat is empty… Find friends and start the fun!\u{1F4AC}",
+    // CHAT SCREEN
+    LanguageConst.replayto: "Replying to",
 
     // APP VALIDATORS
     LanguageConst.pleaseEnterField: "Please enter this field",
@@ -271,6 +278,7 @@ class LanguageType {
     LanguageConst.done: "समाप्त",
     LanguageConst.cancel: "रद्द करें",
     LanguageConst.delete: "हटाएं",
+    LanguageConst.edit: "संपादित करें",
     LanguageConst.deleteAccount: "खाता हटाएं",
     LanguageConst.deleteAccountContentLines:
         "क्या आप वाकई अपना खाता हटाना चाहते हैं?\nखाता हटाने के बाद आपका सारा डेटा स्थायी रूप से हटा दिया जाएगा।\nयह प्रक्रिया वापस नहीं की जा सकती।\nक्या आप सुनिश्चित हैं?",
@@ -286,6 +294,13 @@ class LanguageType {
     LanguageConst.waitLoggingout: "रुको! लॉगआउट कर रहे हो?",
     LanguageConst.ohThinklogoutstillrememberpassword:
         "अरे-अरे! \u{1F632} जाने से पहले सोच लो... लॉगआउट किया तो फिर पासवर्ड याद है ना? \u{1F602}",
+
+    // HOME SCREEN
+    LanguageConst.yourchatemptyFindfriendsstartfun:
+        "अभी चैट खाली है... दोस्तों को ढूंढो और मस्ती शुरू करो!\u{1F4AC}",
+
+    // CHAT SCREEN
+    LanguageConst.replayto: "इसके जवाब में",
 
     // APP VALIDATORS
     LanguageConst.pleaseEnterField: "कृपया यह फ़ील्ड दर्ज करें",

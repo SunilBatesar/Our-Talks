@@ -44,10 +44,10 @@ class LocalData {
         id: LanguageConst.language,
         title: LanguageConst.language,
         icon: Icons.language_outlined),
-    AccountMenuModel(
-        id: LanguageConst.notificationsSettings,
-        title: LanguageConst.notificationsSettings,
-        icon: Icons.notifications_none_outlined),
+    // AccountMenuModel(
+    //     id: LanguageConst.notificationsSettings,
+    //     title: LanguageConst.notificationsSettings,
+    //     icon: Icons.notifications_none_outlined),
     AccountMenuModel(
         id: LanguageConst.changepassword,
         title: LanguageConst.changepassword,
@@ -55,10 +55,10 @@ class LocalData {
   ];
   // HELP AND SUPPORT SCREEN DATA
   static List<AccountMenuModel> helpAndSupportDataList = [
-    AccountMenuModel(
-        id: LanguageConst.help,
-        title: LanguageConst.help,
-        icon: Icons.person_2_outlined),
+    // AccountMenuModel(
+    //     id: LanguageConst.help,
+    //     title: LanguageConst.help,
+    //     icon: Icons.person_2_outlined),
     AccountMenuModel(
         id: LanguageConst.whatsApp,
         title: LanguageConst.whatsApp,

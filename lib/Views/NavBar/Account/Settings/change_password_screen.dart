@@ -111,7 +111,7 @@ class ChangePasswordScreen extends StatelessWidget {
       bottomNavigationBar: LoadingIndicator(
           widget: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(15.0).copyWith(bottom: 20.h),
           // SAVE BUTTON
           child: PrimaryButton(
             title: LanguageConst.save.tr,

@@ -10,11 +10,13 @@ class SearchTextField extends StatelessWidget {
   TextEditingController controller;
   AppValidator? validator;
   Function(String)? onchanged;
+  Function(String) onFieldSubmitted;
   Function iconOnTap;
   SearchTextField({
     super.key,
     required this.controller,
     required this.iconOnTap,
+    required this.onFieldSubmitted,
     this.validator,
     this.onchanged,
   });
@@ -25,6 +27,7 @@ class SearchTextField extends StatelessWidget {
       validator:
           validator == null ? null : (value) => validator!.validate(value),
       onChanged: onchanged == null ? null : (v) => onchanged!(v),
+      onFieldSubmitted: onFieldSubmitted ,
       controller: controller,
       cursorColor: cnstSheet.colors.primary,
       style: cnstSheet.textTheme.fs14Normal

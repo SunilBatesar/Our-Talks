@@ -28,6 +28,7 @@ class LanguageConst {
   static const String done = "done";
   static const String cancel = "cancel";
   static const String delete = "delete";
+  static const String edit = "edit";
   static const String deleteAccount = "deleteAccount";
   static const String deleteAccountContentLines = "deleteAccountContentLines";
   static const String searchUserName = "searchUserName";
@@ -42,6 +43,11 @@ class LanguageConst {
   static const String ohThinklogoutstillrememberpassword =
       "OhThinklogoutstillrememberpassword";
 
+  // HOME SCREEN
+  static const String yourchatemptyFindfriendsstartfun =
+      "YourchatemptyFindfriendsstartfun";
+  // CHAT SCREEN
+  static const String replayto = "Replyingto";
   // APP VALIDATORS
   static const String pleaseEnterField = "Pleaseenterthisfield";
   static const String pleaseEnterYourEmail = "Pleaseenteryouremail";

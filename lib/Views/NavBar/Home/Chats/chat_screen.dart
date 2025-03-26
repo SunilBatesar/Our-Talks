@@ -7,6 +7,7 @@ import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Components/AppBar/chat_screeen_app_bar.dart';
 import 'package:ourtalks/Components/BottomSheets/chat_bottom_sheet.dart';
+import 'package:ourtalks/Res/i18n/language_const.dart';
 import 'package:ourtalks/main.dart';
 import 'package:ourtalks/view_model/Controllers/user_controller.dart';
 import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
@@ -234,106 +235,113 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar:
           chatScreenAppBar(model: widget.usermodel), // CHAT SCREEN AAP BAR CALL
       //  BODY
-      body: Column(
-        children: [
-          if (_repliedMessage != null && _repliedMessage is types.TextMessage)
-            Container(
-              padding: EdgeInsets.all(8.sp),
-              color: cnstSheet.colors.gray,
-              child: Row(
-                children: [
-                  Icon(Icons.reply, size: 16.sp, color: cnstSheet.colors.white),
-                  Gap(8.w),
-                  Expanded(
-                    child: Text(
-                      'Replying to: ${(_repliedMessage as types.TextMessage).text}',
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        color: cnstSheet.colors.white,
+      body: Padding(
+        padding: EdgeInsets.all(8.0.sp),
+        child: Column(
+          children: [
+            if (_repliedMessage != null && _repliedMessage is types.TextMessage)
+              Container(
+                padding: EdgeInsets.all(8.sp),
+                color: cnstSheet.colors.gray,
+                child: Row(
+                  children: [
+                    Icon(Icons.reply,
+                        size: 16.sp, color: cnstSheet.colors.white),
+                    Gap(8.w),
+                    Expanded(
+                      child: Text(
+                        'Replying to: ${(_repliedMessage as types.TextMessage).text}',
+                        style: TextStyle(
+                          fontSize: 14.sp,
+                          color: cnstSheet.colors.white,
+                        ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    onPressed: _clearRepliedMessage,
-                    icon: Icon(
-                      Icons.close,
-                      size: 16.sp,
-                      color: cnstSheet.colors.red,
+                    IconButton(
+                      onPressed: _clearRepliedMessage,
+                      icon: Icon(
+                        Icons.close,
+                        size: 16.sp,
+                        color: cnstSheet.colors.red,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          Expanded(
-            // CHAT WIDGET
-            child: Chat(
-              emojiEnlargementBehavior: EmojiEnlargementBehavior.never,
-              messages: _messages,
-              onSendPressed: _handleSendPressed,
-              user: _user,
-              // bubbleBuilder: _buildBubble,
-              bubbleBuilder: (child,
-                  {required message, required nextMessageInGroup}) {
-                return GestureDetector(
-                  onLongPress: () => _showMessageOptions(context, message),
-                  onHorizontalDragEnd: (details) {
-                    // Check if the drag is significant (e.g., more than 50 pixels)
-                    if (details.primaryVelocity != null &&
-                        details.primaryVelocity!.abs() > 50) {
-                      _setRepliedMessage(
-                          message); // Set the message to reply to
+            Expanded(
+              // CHAT WIDGET
+              child: Chat(
+                emojiEnlargementBehavior: EmojiEnlargementBehavior.never,
+                messages: _messages,
+                onSendPressed: _handleSendPressed,
+                user: _user,
+                // bubbleBuilder: _buildBubble,
+                bubbleBuilder: (child,
+                    {required message, required nextMessageInGroup}) {
+                  return GestureDetector(
+                    onLongPressStart: (details) => _showMessageOptions(
+                        context, message, details.globalPosition),
+                    onHorizontalDragEnd: (details) {
+                      // Check if the drag is significant (e.g., more than 50 pixels)
+                      if (details.primaryVelocity != null &&
+                          details.primaryVelocity!.abs() > 50) {
+                        _setRepliedMessage(
+                            message); // Set the message to reply to
+                      }
+                    },
+                    child: _buildBubble(
+                      child,
+                      message: message,
+                      nextMessageInGroup: nextMessageInGroup,
+                    ),
+                  );
+                },
+                customDateHeaderText: (date) =>
+                    AppFunctions.formatChatTime(date),
+                theme: DefaultChatTheme(
+                  inputPadding: EdgeInsets.all(15),
+                  backgroundColor: cnstSheet.colors.black,
+                  receivedMessageBodyTextStyle: TextStyle(
+                    color: cnstSheet.colors.black,
+                    fontSize: 16.sp,
+                  ),
+                  sentMessageBodyTextStyle: TextStyle(
+                    color: cnstSheet.colors.black,
+                    fontSize: 16.sp,
+                  ),
+                  inputBorderRadius: BorderRadius.circular(10.r),
+                  inputContainerDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.r),
+                    border: Border.all(
+                        color: cnstSheet.colors.primary.withAlpha(180)),
+                  ),
+                  inputTextStyle: cnstSheet.textTheme.fs16Medium,
+                  inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
+                  inputMargin: EdgeInsets.all(8.sp),
+                  inputTextCursorColor: cnstSheet.colors.primary,
+                  primaryColor: cnstSheet.colors.primary,
+                  secondaryColor: cnstSheet.colors.white,
+                ),
+                onAttachmentPressed: () {
+                  //  PICK IMAGE
+                  chatBottomSheetFunction(file: (fileValue) async {
+                    try {
+                      final imageUrl =
+                          await CloudinaryFunctions().uploadImageToCloudinary(
+                        fileValue,
+                        folder:
+                            _conversationId, // Use conversation ID as folder
+                      );
+                      _sendImageMessage(imageUrl!);
+                    } catch (e) {
+                      debugPrint("Error uploading image: $e");
                     }
-                  },
-                  child: _buildBubble(
-                    child,
-                    message: message,
-                    nextMessageInGroup: nextMessageInGroup,
-                  ),
-                );
-              },
-              customDateHeaderText: (date) => AppFunctions.formatChatTime(date),
-              theme: DefaultChatTheme(
-                inputPadding: EdgeInsets.all(15),
-                backgroundColor: cnstSheet.colors.black,
-                receivedMessageBodyTextStyle: TextStyle(
-                  color: cnstSheet.colors.black,
-                  fontSize: 16.sp,
-                ),
-                sentMessageBodyTextStyle: TextStyle(
-                  color: cnstSheet.colors.black,
-                  fontSize: 16.sp,
-                ),
-                inputBorderRadius: BorderRadius.circular(10.r),
-                inputContainerDecoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.r),
-                  border: Border.all(
-                      color: cnstSheet.colors.primary.withAlpha(180)),
-                ),
-                inputTextStyle: cnstSheet.textTheme.fs16Medium,
-                inputBackgroundColor: cnstSheet.colors.gray.withAlpha(120),
-                inputMargin: EdgeInsets.all(8.sp),
-                inputTextCursorColor: cnstSheet.colors.primary,
-                primaryColor: cnstSheet.colors.primary,
-                secondaryColor: cnstSheet.colors.white,
+                  });
+                },
               ),
-              onAttachmentPressed: () {
-                //  PICK IMAGE
-                chatBottomSheetFunction(file: (fileValue) async {
-                  try {
-                    final imageUrl =
-                        await CloudinaryFunctions().uploadImageToCloudinary(
-                      fileValue,
-                      folder: _conversationId, // Use conversation ID as folder
-                    );
-                    _sendImageMessage(imageUrl!);
-                  } catch (e) {
-                    debugPrint("Error uploading image: $e");
-                  }
-                });
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -366,7 +374,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 borderRadius: BorderRadius.circular(8.r),
               ),
               child: Text(
-                'Replying to: ${repliedMessage.text}',
+                '${LanguageConst.replayto.tr}: ${repliedMessage.text}',
                 style: TextStyle(
                   fontSize: 12.sp,
                   color: cnstSheet.colors.black,
@@ -407,7 +415,7 @@ class _ChatScreenState extends State<ChatScreen> {
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: Text(
-              'Replying to: ${repliedMessage.text}',
+              '${LanguageConst.replayto.tr}: ${repliedMessage.text}',
               style: TextStyle(
                 fontSize: 12.sp,
                 color: cnstSheet.colors.black,
@@ -460,38 +468,67 @@ class _ChatScreenState extends State<ChatScreen> {
     return Icon(icon, size: 14.sp, color: color);
   }
 
-  // **
-  void _showMessageOptions(BuildContext context, types.Message message) {
-    final RenderBox renderBox = context.findRenderObject() as RenderBox;
-    final Offset position = renderBox.localToGlobal(Offset.zero);
+  //  SHOW MESSAGE OPTIONS
+  void _showMessageOptions(
+      BuildContext context, types.Message message, Offset position) {
+    // POSITION
+    final RenderBox overlay =
+        Overlay.of(context).context.findRenderObject() as RenderBox;
+    final localPosition = overlay.globalToLocal(position);
+    double menuHeight = 100;
+    double yOffset = localPosition.dy;
+
+    if (yOffset + menuHeight > cnstSheet.services.screenHeight(context)) {
+      yOffset -= menuHeight;
+    }
+
+    // DATA
     final bool isUserMessage = message.author.id == _user.id;
     final bool isTextMessage = message is types.TextMessage;
 
     showMenu(
       context: context,
       position: RelativeRect.fromLTRB(
-        position.dx,
-        position.dy,
-        position.dx + renderBox.size.width,
-        position.dy + renderBox.size.height,
+        localPosition.dx, // X Position
+        yOffset, // Y Position
+        localPosition.dx + 50, // Width
+        yOffset + 50, // Height
       ),
+      color: cnstSheet.colors.gray.withAlpha(200),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15.r)),
+          side: BorderSide(color: cnstSheet.colors.primary)),
       items: [
         if (isUserMessage && isTextMessage)
           PopupMenuItem(
-            child: const Text('Edit'),
+            child: Text(
+              LanguageConst.edit.tr,
+              style: cnstSheet.textTheme.fs15Normal
+                  .copyWith(color: cnstSheet.colors.white),
+            ),
             onTap: () => _handleEditMessage(message),
           ),
         PopupMenuItem(
-          child: const Text('Delete'),
-          onTap: () => _handleDeleteMessage(message),
-        ),
-        const PopupMenuItem(
-          child: Text('Close'),
+            child: Text(LanguageConst.delete.tr,
+                style: cnstSheet.textTheme.fs15Normal
+                    .copyWith(color: cnstSheet.colors.white)),
+            onTap: () {
+              ChatRespository.deleteMessage(
+                receiverId: widget.usermodel.users.userID!,
+                messageId: message.id,
+              ).then((_) => setState(
+                  () => _messages.removeWhere((m) => m.id == message.id)));
+            }),
+        PopupMenuItem(
+          child: Text(LanguageConst.cancel.tr,
+              style: cnstSheet.textTheme.fs15Normal
+                  .copyWith(color: cnstSheet.colors.white)),
         ),
       ],
     );
   }
 
+  // EDIT MESSAGE
   void _handleEditMessage(types.TextMessage message) {
     TextEditingController controller =
         TextEditingController(text: message.text);
@@ -539,30 +576,30 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _handleDeleteMessage(types.Message message) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Delete Message'),
-        content: const Text('Are you sure you want to delete this message?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              ChatRespository.deleteMessage(
-                receiverId: widget.usermodel.users.userID!,
-                messageId: message.id,
-              ).then((_) => setState(
-                  () => _messages.removeWhere((m) => m.id == message.id)));
-              Navigator.pop(context);
-            },
-            child: const Text('Delete', style: TextStyle(color: Colors.red)),
-          ),
-        ],
-      ),
-    );
-  }
+  // void _handleDeleteMessage(types.Message message) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Delete Message'),
+  //       content: const Text('Are you sure you want to delete this message?'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text('Cancel'),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             ChatRespository.deleteMessage(
+  //               receiverId: widget.usermodel.users.userID!,
+  //               messageId: message.id,
+  //             ).then((_) => setState(
+  //                 () => _messages.removeWhere((m) => m.id == message.id)));
+  //             Navigator.pop(context);
+  //           },
+  //           child: const Text('Delete', style: TextStyle(color: Colors.red)),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

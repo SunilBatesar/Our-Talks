@@ -70,6 +70,8 @@ class TermsAndConditionsScreen extends StatelessWidget {
                         side: BorderSide(
                             color: cnstSheet.colors.primary.withAlpha(200))),
                     child: ExpansionTile(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
                       iconColor: cnstSheet.colors.primary,
                       collapsedIconColor:
                           cnstSheet.colors.primary.withAlpha(150),

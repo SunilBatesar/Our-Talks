@@ -208,7 +208,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 0),
+          padding: EdgeInsets.all(15.0.sp).copyWith(bottom: 20.h),
           // SAVE BUTTON
           child: LoadingIndicator(
               widget: PrimaryButton(
