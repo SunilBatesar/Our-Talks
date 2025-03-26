@@ -4,17 +4,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
+import 'package:ourtalks/Res/Services/date_time_pars.dart';
 import 'package:ourtalks/Views/NavBar/Home/profile_view_screen.dart';
 import 'package:ourtalks/main.dart';
-import 'package:ourtalks/view_model/Data/Functions/app_functions.dart';
 import 'package:ourtalks/view_model/Models/friend_model.dart';
 
-AppBar chatScreenAppBar({required FriendModel model}) {
+AppBar chatScreenAppBar(
+    {required FriendModel model, required BuildContext context}) {
   String time = "";
   if (model.isOnlineData != null && model.isOnlineData!.lastSeen!.isNotEmpty) {
-    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
-        int.parse(model.isOnlineData!.lastSeen ?? ""));
-    time = AppFunctions.formatChatTime(dateTime);
+    final value = model.isOnlineData!.lastSeen ?? "";
+    time = DatetimePars.getLastActiveTime(context, value);
   }
   return AppBar(
     leadingWidth: 30.w,

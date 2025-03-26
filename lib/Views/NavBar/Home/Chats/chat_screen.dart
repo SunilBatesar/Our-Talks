@@ -232,8 +232,9 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          chatScreenAppBar(model: widget.usermodel), // CHAT SCREEN AAP BAR CALL
+      appBar: chatScreenAppBar(
+          model: widget.usermodel,
+          context: context), // CHAT SCREEN AAP BAR CALL
       //  BODY
       body: Padding(
         padding: EdgeInsets.all(8.0.sp),
@@ -357,7 +358,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
     final repliedMessageId = message.metadata?['replyTo'];
     final repliedMessage = repliedMessageId != null
-        ? _messages.firstWhere((m) => m.id == repliedMessageId)
+        ? _messages.firstWhere(
+            (m) => m.id == repliedMessageId,
+            orElse: () => types.TextMessage(
+                author: types.User(id: ""),
+                id: "",
+                text: LanguageConst.deletedMessage.tr),
+          )
         : null;
 
     if (message is types.ImageMessage) {
@@ -409,7 +416,7 @@ class _ChatScreenState extends State<ChatScreen> {
         if (repliedMessage != null && repliedMessage is types.TextMessage)
           Container(
             padding: EdgeInsets.all(8.sp),
-            margin: EdgeInsets.only(bottom: 4.h),
+            margin: EdgeInsets.only(bottom: 4.h, top: 8.h),
             decoration: BoxDecoration(
               color: bubbleColor.withValues(alpha: 0.5),
               borderRadius: BorderRadius.circular(8.r),

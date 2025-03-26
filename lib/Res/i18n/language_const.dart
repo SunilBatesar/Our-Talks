@@ -48,6 +48,7 @@ class LanguageConst {
       "YourchatemptyFindfriendsstartfun";
   // CHAT SCREEN
   static const String replayto = "Replyingto";
+  static const String deletedMessage = "Deleted Message";
   // APP VALIDATORS
   static const String pleaseEnterField = "Pleaseenterthisfield";
   static const String pleaseEnterYourEmail = "Pleaseenteryouremail";

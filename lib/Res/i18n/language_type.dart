@@ -56,6 +56,7 @@ class LanguageType {
         "Your chat is empty… Find friends and start the fun!\u{1F4AC}",
     // CHAT SCREEN
     LanguageConst.replayto: "Replying to",
+    LanguageConst.deletedMessage: "Deleted Message",
 
     // APP VALIDATORS
     LanguageConst.pleaseEnterField: "Please enter this field",
@@ -301,6 +302,7 @@ class LanguageType {
 
     // CHAT SCREEN
     LanguageConst.replayto: "इसके जवाब में",
+    LanguageConst.deletedMessage: "संदेश हटा दिया गया",
 
     // APP VALIDATORS
     LanguageConst.pleaseEnterField: "कृपया यह फ़ील्ड दर्ज करें",

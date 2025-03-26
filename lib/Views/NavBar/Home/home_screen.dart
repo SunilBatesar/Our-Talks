@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     SystemChannels.lifecycle.setMessageHandler((message) async {
       if (auth.currentUser != null) {
         final db = _userData.child(auth.currentUser!.uid);
-        final time = DateTime.now().microsecondsSinceEpoch.toString();
+        final time = DateTime.now().millisecondsSinceEpoch.toString();
         if (message.toString().contains('resume')) {
           await ChatRespository.userOnlineValueUpdate(
               userId: Prefs.getUserIdPref(), value: true);
