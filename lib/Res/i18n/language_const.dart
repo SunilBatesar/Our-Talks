@@ -90,8 +90,6 @@ class LanguageConst {
       "NowedontAlienlanguagePichuman";
   static const String colorchangedupgradedfun = "Colorchangedupgradedfun";
 
-  // USER PROFILE IMAGE SHOW SCREEN
-  static const String ohWhohandsomeGuyMe = "OhWhohandsomeGuyMe";
 
   // ACCOUNT
   static const String updateProfile = "UpdateProfile";

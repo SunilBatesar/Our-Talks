@@ -74,7 +74,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     try {
       final convertedData = AppFunctions.convertFirebaseData(messageData);
-      final message = _parseMessage(convertedData);
+      final message = AppFunctions.parseMessage(convertedData);
       if (message != null) {
         setState(() => _messages.insert(0, message));
 
@@ -97,7 +97,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
     try {
       final convertedData = AppFunctions.convertFirebaseData(messageData);
-      final message = _parseMessage(convertedData);
+      final message = AppFunctions.parseMessage(convertedData);
       if (message != null) {
         final index = _messages.indexWhere((m) => m.id == message.id);
         if (index != -1) {
@@ -109,29 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  types.Message? _parseMessage(Map<String, dynamic> json) {
-    try {
-      json['createdAt'] ??= DateTime.now().millisecondsSinceEpoch;
-      json['id'] ??= const Uuid().v4();
-
-      if (json['author'] is Map) {
-        json['author'] = AppFunctions.convertFirebaseData(json['author']);
-      }
-
-      switch (json['type']) {
-        case 'text':
-          return types.TextMessage.fromJson(json);
-        case 'image': // Add image case
-          return types.ImageMessage.fromJson(json);
-        default:
-          return null;
-      }
-    } catch (e) {
-      debugPrint("Error parsing message: $e");
-      return null;
-    }
-  }
-
+  //  SEND FUNCTION
   void _handleSendPressed(types.PartialText message) {
     final textMessage = types.TextMessage(
       author: _user,

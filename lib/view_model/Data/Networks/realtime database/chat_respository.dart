@@ -66,6 +66,9 @@ class ChatRespository {
     }
     return data;
   }
+  // ------------------------------------------------------------
+
+  // ------------------------------------------------------------
 
   // *******************
 
@@ -133,7 +136,7 @@ class ChatRespository {
     }
   }
 
-  // *****************
+  // *****************FIRST MESSAGE
   static Future<void> sendFirstMessage({
     required String text,
     required String receiverId,
@@ -215,6 +218,7 @@ class ChatRespository {
     }
   }
 
+  // SEND FIRST IMAGE
   static Future<void> sendFirstImageMessage({
     required String imageUrl,
     required String receiverId,
@@ -268,6 +272,7 @@ class ChatRespository {
     await ref.remove();
   }
 
+  //  GET LAST MESSAGE
   static Stream<DatabaseEvent> getLastMsg(String userID) {
     final userData = getConversationID(userID, "messages");
     return userData.orderByChild("createdAt").limitToLast(1).onValue;

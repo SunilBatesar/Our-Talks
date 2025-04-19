@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:intl/intl.dart';
 import 'package:ourtalks/Res/Services/app_config.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:uuid/uuid.dart';
 
 class AppFunctions {
   static bool isKeyboardOpen(BuildContext context) {
@@ -93,5 +95,29 @@ class AppFunctions {
           value is Map ? convertFirebaseData(value) : value;
     });
     return converted;
+  }
+
+  // CONVERTS MAP<STRING,DYNAMIC> to TYPE MESSAGE
+  static types.Message? parseMessage(Map<String, dynamic> json) {
+    try {
+      json['createdAt'] ??= DateTime.now().millisecondsSinceEpoch;
+      json['id'] ??= const Uuid().v4();
+
+      if (json['author'] is Map) {
+        json['author'] = AppFunctions.convertFirebaseData(json['author']);
+      }
+
+      switch (json['type']) {
+        case 'text':
+          return types.TextMessage.fromJson(json);
+        case 'image': // Add image case
+          return types.ImageMessage.fromJson(json);
+        default:
+          return null;
+      }
+    } catch (e) {
+      debugPrint("Error parsing message: $e");
+      return null;
+    }
   }
 }

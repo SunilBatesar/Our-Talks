@@ -1,1 +1,1 @@
-class AppEnums {}
+enum ChatRoomType { SINGLECHAT, GROUPCHAT }

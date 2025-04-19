@@ -104,9 +104,6 @@ class LanguageType {
     LanguageConst.colorchangedupgradedfun:
         "Color changed, style upgraded, now double the fun!\u{1F47B}",
 
-    // USER PROFILE IMAGE SHOW SCREEN
-    LanguageConst.ohWhohandsomeGuyMe:
-        "Oh! Who is this handsome guy? Oh... It's me!\u{1F60E}",
 
     // ACCOUNT
     LanguageConst.updateProfile: "Update Profile",
@@ -348,9 +345,6 @@ class LanguageType {
     LanguageConst.colorchangedupgradedfun:
         "रंग बदला, अंदाज़ बदला, अब मज़ा दोगुना!\u{1F47B}",
 
-    // USER PROFILE IMAGE SHOW SCREEN
-    LanguageConst.ohWhohandsomeGuyMe:
-        "अरे! इतना हैंडसम कौन है? ओह… मैं ही हूँ!\u{1F60E}",
 
     // ACCOUNT
     LanguageConst.updateProfile: "प्रोफ़ाइल अपडेट करें",
